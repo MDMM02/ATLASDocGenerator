@@ -147,6 +147,10 @@ namespace ATLASDocGenerator.Services
                 "/Content/Template_tech/Documents nécessaires.htm",
                 "/Content/" + folderName + "/Documents_" + safeReference + ".htm"
             );
+            map.Add(
+                "/Content/Template_tech/Duree_inter_Remplacements.htm",
+                "/Content/" + folderName + "/Duree_inter_Remplacements_" + safeReference + ".htm"
+            );
 
             map.Add(
                 "/Content/Template_tech/Prérequis.htm",

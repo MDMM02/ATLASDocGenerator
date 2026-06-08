@@ -252,7 +252,7 @@ namespace ATLASDocGenerator.Forms
                 throw new Exception("Le titre doc abrégé est obligatoire.");
 
             if (txtShortTitle.Text.Length > 40)
-                throw new Exception("Le titre doc abrégé doit faire 35 caractères maximum.");
+                throw new Exception("Le titre doc abrégé doit faire 40 caractères maximum.");
 
             if (ContainsForbiddenCharacters(txtShortTitle.Text))
                 throw new Exception("Le titre doc abrégé contient des caractères interdits.");

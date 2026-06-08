@@ -95,6 +95,12 @@ namespace ATLASDocGenerator.Services
                 },
                 new TopicCopyRule
                 {
+                    SourceRelativePath = @"Content\Template_tech\Duree_inter_Remplacements.htm",
+                    TargetFileNamePattern = "Duree_inter_Remplacements_{ref}.htm"
+                },
+
+                new TopicCopyRule
+                {
                     SourceRelativePath = @"Content\Template_tech\Prérequis.htm",
                     TargetFileNamePattern = "Prerequis_{ref}.htm"
                 },
