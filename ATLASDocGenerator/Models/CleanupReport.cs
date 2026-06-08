@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace ATLASDocGenerator.Models
+{
+    public class CleanupReport
+    {
+        public CleanupReport()
+        {
+            StartedAt = DateTime.Now;
+            Errors = new List<string>();
+            Warnings = new List<string>();
+        }
+
+        public DateTime StartedAt { get; set; }
+
+        public DateTime FinishedAt { get; set; }
+
+        public string ScanRoot { get; set; }
+
+        public int FilesScanned { get; set; }
+
+        public int ActionResultListsTransformed { get; set; }
+
+        public int BulletListsTransformed { get; set; }
+
+        public int CalloutsTransformed { get; set; }
+
+        public int FiguresTransformed { get; set; }
+
+        public int StylesCleaned { get; set; }
+
+        public int IhmItemsDetected { get; set; }
+
+        public string LogFilePath { get; set; }
+
+        public List<string> Errors { get; set; }
+
+        public List<string> Warnings { get; set; }
+    }
+}

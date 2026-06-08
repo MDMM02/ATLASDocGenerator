@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using ATLASDocGenerator.Models;
+using ATLASDocGenerator.Services.AitCleanup;
 
 namespace ATLASDocGenerator.Forms
 {
@@ -193,16 +195,15 @@ namespace ATLASDocGenerator.Forms
 
         private void UpdateScopeState()
         {
-            bool folderMode = rbSelectedFolder.Checked;
-            txtSelectedFolder.Enabled = folderMode;
-            btnBrowseFolder.Enabled = folderMode;
+            txtSelectedFolder.Enabled = true;
+            btnBrowseFolder.Enabled = true;
         }
 
         private void OnBrowseFolderClicked(object sender, EventArgs e)
         {
             using (FolderBrowserDialog dialog = new FolderBrowserDialog())
             {
-                dialog.Description = "Sélectionner le sous-dossier importé depuis Author-it";
+                dialog.Description = "Sélectionner le dossier du projet, le projet Content, ou le sous-dossier importé depuis Author-it";
 
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
@@ -213,10 +214,10 @@ namespace ATLASDocGenerator.Forms
 
         private void OnRunClicked(object sender, EventArgs e)
         {
-            if (rbSelectedFolder.Checked && string.IsNullOrWhiteSpace(txtSelectedFolder.Text))
+            if (string.IsNullOrWhiteSpace(txtSelectedFolder.Text))
             {
                 MessageBox.Show(
-                    "Veuillez sélectionner un sous-dossier avant de lancer le cleanup.",
+                    "Veuillez sélectionner un dossier avant de lancer le cleanup.",
                     "AIT Cleanup",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
@@ -224,33 +225,46 @@ namespace ATLASDocGenerator.Forms
                 return;
             }
 
-            StringBuilder summary = new StringBuilder();
-            summary.AppendLine("AIT Cleanup prêt à être lancé.");
-            summary.AppendLine();
-            summary.AppendLine("Type de documentation : " + (rbUserDoc.Checked ? "Doc user / STR" : "Doc tech"));
-            summary.AppendLine("Scope : " + (rbWholeProject.Checked ? "Tout le projet" : "Sous-dossier sélectionné"));
-
-            if (rbSelectedFolder.Checked)
+            AitCleanupOptions options = new AitCleanupOptions
             {
-                summary.AppendLine("Dossier : " + txtSelectedFolder.Text);
-            }
+                DocumentationType = rbUserDoc.Checked ? "Doc user / STR" : "Doc tech",
+                Scope = rbWholeProject.Checked ? AitCleanupScope.WholeProject : AitCleanupScope.SelectedFolder,
+                TargetPath = txtSelectedFolder.Text,
+                ProcessActionResults = cbActionResults.Checked,
+                ProcessBulletLists = cbBulletLists.Checked,
+                ProcessCallouts = cbCallouts.Checked,
+                ProcessFigures = cbFigures.Checked,
+                ProcessStyleCleanup = cbStyleCleanup.Checked,
+                ProcessIhm = cbIhm.Checked
+            };
 
+            AitCleanupService service = new AitCleanupService();
+            CleanupReport report = service.Run(options);
+
+            StringBuilder summary = new StringBuilder();
+
+            summary.AppendLine("AIT Cleanup terminé.");
             summary.AppendLine();
-            summary.AppendLine("Traitements sélectionnés :");
-            summary.AppendLine("- Listes actions/résultats : " + YesNo(cbActionResults.Checked));
-            summary.AppendLine("- Listes à tirets : " + YesNo(cbBulletLists.Checked));
-            summary.AppendLine("- Encadrés : " + YesNo(cbCallouts.Checked));
-            summary.AppendLine("- Images avec légendes : " + YesNo(cbFigures.Checked));
-            summary.AppendLine("- Cleanup styles simples : " + YesNo(cbStyleCleanup.Checked));
-            summary.AppendLine("- IHM / variables : " + YesNo(cbIhm.Checked));
+            summary.AppendLine("Fichiers scannés : " + report.FilesScanned);
+            summary.AppendLine("Dossier analysé : " + report.ScanRoot);
             summary.AppendLine();
-            summary.AppendLine("Aucune transformation XML n'est encore exécutée à cette étape.");
+            summary.AppendLine("Transformations effectuées à cette étape : aucune.");
+            summary.AppendLine();
+            summary.AppendLine("Log généré :");
+            summary.AppendLine(report.LogFilePath);
+
+            if (report.Errors.Count > 0)
+            {
+                summary.AppendLine();
+                summary.AppendLine("Erreurs : " + report.Errors.Count);
+                summary.AppendLine("Consulte le log pour plus de détails.");
+            }
 
             MessageBox.Show(
                 summary.ToString(),
                 "AIT Cleanup",
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Information
+                report.Errors.Count > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information
             );
         }
 

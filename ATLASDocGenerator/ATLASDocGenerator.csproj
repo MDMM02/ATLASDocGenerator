@@ -55,6 +55,8 @@
     <Compile Include="Forms\AitCleanupForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Models\AitCleanupOptions.cs" />
+    <Compile Include="Models\CleanupReport.cs" />
     <Compile Include="Models\DocGeneratorRequest.cs" />
     <Compile Include="Models\GenerationResult.cs" />
     <Compile Include="Models\TopicCopyRule.cs" />
@@ -64,6 +66,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AitCleanup\AitCleanupService.cs" />
+    <Compile Include="Services\AitCleanup\CleanupLogService.cs" />
+    <Compile Include="Services\AitCleanup\HtmlFileScanner.cs" />
     <Compile Include="Services\AtlasDocGenerationService.cs" />
     <Compile Include="Services\Checklist\ChecklisstGeneratorService.cs" />
     <Compile Include="Services\FileNameSanitizer.cs" />
@@ -71,6 +76,9 @@
     <Compile Include="Services\TocDuplicator.cs" />
     <Compile Include="Services\TopicDuplicator.cs" />
     <Compile Include="Services\TopicPostProcessor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\AitCleanupScope.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
