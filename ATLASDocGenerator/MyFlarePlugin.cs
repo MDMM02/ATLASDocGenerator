@@ -110,6 +110,19 @@ namespace ATLASDocGenerator
                 "Generate a checklist from H1 sections in the active topic.",
                 "G"
             );
+
+            IRibbonGroup aitCleanupGroup = atlasTab.AddNewRibbonGroup("Author-it");
+
+            aitCleanupGroup.AddRibbonButton(
+                "AIT Cleanup",
+                new RelayCommand(OpenAitCleanupPopup),
+                null,
+                null,
+                RibbonIconSize.Collapsed,
+                "AIT Cleanup",
+                "Open Author-it cleanup options.",
+                "A"
+            );
         }
 
         private void OpenDocGeneratorPopup(object parameter)
@@ -128,6 +141,28 @@ namespace ATLASDocGenerator
                 MessageBox.Show(
                     "Erreur pendant l'ouverture du Doc Generator :\n\n" + ex,
                     "ATLAS Doc Generator",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+        }
+
+        private void OpenAitCleanupPopup(object parameter)
+        {
+            try
+            {
+                Form parentForm = _navContext.GetParentForm();
+
+                using (AitCleanupForm form = new AitCleanupForm())
+                {
+                    form.ShowDialog(parentForm);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Erreur pendant l'ouverture du AIT Cleanup :\n\n" + ex,
+                    "AIT Cleanup",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );

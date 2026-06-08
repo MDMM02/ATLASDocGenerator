@@ -52,6 +52,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AitCleanupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Models\DocGeneratorRequest.cs" />
     <Compile Include="Models\GenerationResult.cs" />
     <Compile Include="Models\TopicCopyRule.cs" />
