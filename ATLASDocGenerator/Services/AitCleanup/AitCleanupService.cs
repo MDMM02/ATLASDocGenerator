@@ -8,11 +8,13 @@ namespace ATLASDocGenerator.Services.AitCleanup
     {
         private readonly HtmlFileScanner _scanner;
         private readonly CleanupLogService _logService;
+        private readonly ActionResultListDetector _actionResultDetector;
 
         public AitCleanupService()
         {
             _scanner = new HtmlFileScanner();
             _logService = new CleanupLogService();
+            _actionResultDetector = new ActionResultListDetector();
         }
 
         public CleanupReport Run(AitCleanupOptions options)
@@ -27,9 +29,12 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 report.ScanRoot = scanRoot;
                 report.FilesScanned = files.Count;
 
-                // Foundation phase only:
-                // We scan files, but we do not modify anything yet.
-                report.Warnings.Add("Foundation phase only: no XML/HTML transformation has been applied.");
+                if (options.ProcessActionResults)
+                {
+                    _actionResultDetector.Detect(files, report);
+                }
+
+                report.Warnings.Add("Detection phase only: no XML/HTML transformation has been applied yet.");
             }
             catch (Exception ex)
             {

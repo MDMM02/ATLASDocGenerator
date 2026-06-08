@@ -10,6 +10,7 @@ namespace ATLASDocGenerator.Models
             StartedAt = DateTime.Now;
             Errors = new List<string>();
             Warnings = new List<string>();
+            ActionResultDetectionDetails = new List<string>();
         }
 
         public DateTime StartedAt { get; set; }
@@ -37,5 +38,13 @@ namespace ATLASDocGenerator.Models
         public List<string> Errors { get; set; }
 
         public List<string> Warnings { get; set; }
+
+        public int ActionNumParagraphsDetected { get; set; }
+
+        public int ActionBulletParagraphsDetected { get; set; }
+
+        public int ResultParagraphsDetected { get; set; }
+
+        public List<string> ActionResultDetectionDetails { get; set; }
     }
 }

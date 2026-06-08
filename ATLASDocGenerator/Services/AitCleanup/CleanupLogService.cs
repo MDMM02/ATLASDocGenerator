@@ -49,6 +49,9 @@ namespace ATLASDocGenerator.Services.AitCleanup
             log.AppendLine("RESULTS");
             log.AppendLine("------------------------------");
             log.AppendLine("Files scanned: " + report.FilesScanned);
+            log.AppendLine("Action num paragraphs detected: " + report.ActionNumParagraphsDetected);
+            log.AppendLine("Action bullet paragraphs detected: " + report.ActionBulletParagraphsDetected);
+            log.AppendLine("Result paragraphs detected: " + report.ResultParagraphsDetected); 
             log.AppendLine("Action/result lists transformed: " + report.ActionResultListsTransformed);
             log.AppendLine("Bullet lists transformed: " + report.BulletListsTransformed);
             log.AppendLine("Callouts transformed: " + report.CalloutsTransformed);
@@ -56,6 +59,22 @@ namespace ATLASDocGenerator.Services.AitCleanup
             log.AppendLine("Styles cleaned: " + report.StylesCleaned);
             log.AppendLine("IHM items detected: " + report.IhmItemsDetected);
             log.AppendLine();
+            log.AppendLine();
+
+            log.AppendLine("ACTION / RESULT DETECTION DETAILS");
+            log.AppendLine("------------------------------");
+
+            if (report.ActionResultDetectionDetails.Count == 0)
+            {
+                log.AppendLine("No action/result paragraph detected.");
+            }
+            else
+            {
+                foreach (string detail in report.ActionResultDetectionDetails)
+                {
+                    log.AppendLine("- " + detail);
+                }
+            }
 
             log.AppendLine("WARNINGS");
             log.AppendLine("------------------------------");

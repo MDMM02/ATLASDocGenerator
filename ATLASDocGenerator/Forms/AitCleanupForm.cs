@@ -246,9 +246,12 @@ namespace ATLASDocGenerator.Forms
             summary.AppendLine("AIT Cleanup terminé.");
             summary.AppendLine();
             summary.AppendLine("Fichiers scannés : " + report.FilesScanned);
+            summary.AppendLine("Actions numérotées détectées : " + report.ActionNumParagraphsDetected);
+            summary.AppendLine("Actions bullet détectées : " + report.ActionBulletParagraphsDetected);
+            summary.AppendLine("Résultats détectés : " + report.ResultParagraphsDetected); 
             summary.AppendLine("Dossier analysé : " + report.ScanRoot);
             summary.AppendLine();
-            summary.AppendLine("Transformations effectuées à cette étape : aucune.");
+            summary.AppendLine("Transformations effectuées à cette étape : aucune, détection uniquement");
             summary.AppendLine();
             summary.AppendLine("Log généré :");
             summary.AppendLine(report.LogFilePath);
