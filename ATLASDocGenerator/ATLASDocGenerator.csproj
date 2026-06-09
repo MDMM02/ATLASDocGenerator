@@ -70,6 +70,7 @@
     <Compile Include="Services\AitCleanup\ActionResultListTransformer.cs" />
     <Compile Include="Services\AitCleanup\AitCleanupService.cs" />
     <Compile Include="Services\AitCleanup\BulletListTransformer.cs" />
+    <Compile Include="Services\AitCleanup\CalloutTransformer.cs" />
     <Compile Include="Services\AitCleanup\CleanupLogService.cs" />
     <Compile Include="Services\AitCleanup\HtmlFileScanner.cs" />
     <Compile Include="Services\AtlasDocGenerationService.cs" />

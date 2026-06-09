@@ -94,6 +94,22 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 }
             }
             log.AppendLine();
+
+            log.AppendLine("CALLOUT TRANSFORMATION DETAILS");
+            log.AppendLine("------------------------------");
+
+            if (report.CalloutTransformationDetails.Count == 0)
+            {
+                log.AppendLine("No callout transformed.");
+            }
+            else
+            {
+                foreach (string detail in report.CalloutTransformationDetails)
+                {
+                    log.AppendLine("- " + detail);
+                }
+            }
+            log.AppendLine();
             log.AppendLine("WARNINGS");
             log.AppendLine("------------------------------");
 
