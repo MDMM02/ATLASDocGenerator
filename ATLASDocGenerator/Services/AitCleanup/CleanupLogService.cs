@@ -75,7 +75,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
                     log.AppendLine("- " + detail);
                 }
             }
-
+            log.AppendLine();
             log.AppendLine("WARNINGS");
             log.AppendLine("------------------------------");
 
@@ -111,8 +111,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             log.AppendLine();
             log.AppendLine("NOTE");
             log.AppendLine("------------------------------");
-            log.AppendLine("No XML/HTML transformation is executed yet in this foundation phase.");
-
+            log.AppendLine("Selected transformations may have been applied. Check the counters and details above.");
             File.WriteAllText(logPath, log.ToString(), Encoding.UTF8);
 
             report.LogFilePath = logPath;

@@ -9,12 +9,14 @@ namespace ATLASDocGenerator.Services.AitCleanup
         private readonly HtmlFileScanner _scanner;
         private readonly CleanupLogService _logService;
         private readonly ActionResultListDetector _actionResultDetector;
+        private readonly ActionResultListTransformer _actionResultTransformer;
 
         public AitCleanupService()
         {
             _scanner = new HtmlFileScanner();
             _logService = new CleanupLogService();
             _actionResultDetector = new ActionResultListDetector();
+            _actionResultTransformer = new ActionResultListTransformer();
         }
 
         public CleanupReport Run(AitCleanupOptions options)
@@ -31,10 +33,10 @@ namespace ATLASDocGenerator.Services.AitCleanup
 
                 if (options.ProcessActionResults)
                 {
-                    _actionResultDetector.Detect(files, report);
+                    _actionResultTransformer.Transform(files, report);
                 }
 
-                report.Warnings.Add("Detection phase only: no XML/HTML transformation has been applied yet.");
+                report.Warnings.Add("Action/result transformation phase: selected HTML files may have been modified.");
             }
             catch (Exception ex)
             {

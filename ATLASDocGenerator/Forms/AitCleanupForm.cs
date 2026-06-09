@@ -251,8 +251,9 @@ namespace ATLASDocGenerator.Forms
             summary.AppendLine("Résultats détectés : " + report.ResultParagraphsDetected); 
             summary.AppendLine("Dossier analysé : " + report.ScanRoot);
             summary.AppendLine();
-            summary.AppendLine("Transformations effectuées à cette étape : aucune, détection uniquement");
+            summary.AppendLine("Transformations actions/résultats appliquées : " + report.ActionResultListsTransformed); summary.AppendLine();
             summary.AppendLine();
+            summary.AppendLine("Important : vérifie le topic dans MadCap et le log avant de relancer le cleanup."); 
             summary.AppendLine("Log généré :");
             summary.AppendLine(report.LogFilePath);
 
