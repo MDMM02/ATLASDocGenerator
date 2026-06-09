@@ -95,6 +95,22 @@ namespace ATLASDocGenerator.Services.AitCleanup
             }
             log.AppendLine();
 
+            log.AppendLine("FIGURE TRANSFORMATION DETAILS");
+            log.AppendLine("------------------------------");
+
+            if (report.FigureTransformationDetails.Count == 0)
+            {
+                log.AppendLine("No figure transformed.");
+            }
+            else
+            {
+                foreach (string detail in report.FigureTransformationDetails)
+                {
+                    log.AppendLine("- " + detail);
+                }
+            }
+            log.AppendLine();
+
             log.AppendLine("CALLOUT TRANSFORMATION DETAILS");
             log.AppendLine("------------------------------");
 

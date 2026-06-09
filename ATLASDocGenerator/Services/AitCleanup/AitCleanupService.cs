@@ -12,6 +12,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
         private readonly ActionResultListTransformer _actionResultTransformer;
         private readonly BulletListTransformer _bulletListTransformer;
         private readonly CalloutTransformer _calloutTransformer;
+        private readonly FigureTransformer _figureTransformer;
 
         public AitCleanupService()
         {
@@ -21,6 +22,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             _actionResultTransformer = new ActionResultListTransformer();
             _bulletListTransformer = new BulletListTransformer();
             _calloutTransformer = new CalloutTransformer();
+            _figureTransformer = new FigureTransformer();
         }
 
 
@@ -39,6 +41,10 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 if (options.ProcessCallouts)
                 {
                     _calloutTransformer.Transform(files, report);
+                }
+                if (options.ProcessFigures)
+                {
+                    _figureTransformer.Transform(files, report);
                 }
 
                 if (options.ProcessActionResults)
