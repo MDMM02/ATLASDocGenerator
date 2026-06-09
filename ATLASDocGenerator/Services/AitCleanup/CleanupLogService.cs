@@ -54,6 +54,8 @@ namespace ATLASDocGenerator.Services.AitCleanup
             log.AppendLine("Result paragraphs detected: " + report.ResultParagraphsDetected); 
             log.AppendLine("Action/result lists transformed: " + report.ActionResultListsTransformed);
             log.AppendLine("Bullet lists transformed: " + report.BulletListsTransformed);
+            log.AppendLine("Bullet paragraphs detected: " + report.BulletParagraphsDetected);
+            log.AppendLine("a_NOpagebreak blocks created: " + report.NoPageBreakBlocksCreated);
             log.AppendLine("Callouts transformed: " + report.CalloutsTransformed);
             log.AppendLine("Figures transformed: " + report.FiguresTransformed);
             log.AppendLine("Styles cleaned: " + report.StylesCleaned);
@@ -61,7 +63,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             log.AppendLine();
             log.AppendLine();
 
-            log.AppendLine("ACTION / RESULT DETECTION DETAILS");
+            log.AppendLine("ACTION / RESULT TRANSFORMATION DETAILS");
             log.AppendLine("------------------------------");
 
             if (report.ActionResultDetectionDetails.Count == 0)
@@ -71,6 +73,22 @@ namespace ATLASDocGenerator.Services.AitCleanup
             else
             {
                 foreach (string detail in report.ActionResultDetectionDetails)
+                {
+                    log.AppendLine("- " + detail);
+                }
+            }
+            log.AppendLine();
+
+            log.AppendLine("BULLET LIST TRANSFORMATION DETAILS");
+            log.AppendLine("------------------------------");
+
+            if (report.BulletListTransformationDetails.Count == 0)
+            {
+                log.AppendLine("No bullet list paragraph transformed.");
+            }
+            else
+            {
+                foreach (string detail in report.BulletListTransformationDetails)
                 {
                     log.AppendLine("- " + detail);
                 }

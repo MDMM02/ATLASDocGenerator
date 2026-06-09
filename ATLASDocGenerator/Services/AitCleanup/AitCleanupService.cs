@@ -10,6 +10,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
         private readonly CleanupLogService _logService;
         private readonly ActionResultListDetector _actionResultDetector;
         private readonly ActionResultListTransformer _actionResultTransformer;
+        private readonly BulletListTransformer _bulletListTransformer;
 
         public AitCleanupService()
         {
@@ -17,7 +18,9 @@ namespace ATLASDocGenerator.Services.AitCleanup
             _logService = new CleanupLogService();
             _actionResultDetector = new ActionResultListDetector();
             _actionResultTransformer = new ActionResultListTransformer();
+            _bulletListTransformer = new BulletListTransformer();
         }
+
 
         public CleanupReport Run(AitCleanupOptions options)
         {
@@ -35,8 +38,12 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 {
                     _actionResultTransformer.Transform(files, report);
                 }
+                if (options.ProcessBulletLists)
+                {
+                    _bulletListTransformer.Transform(files, report);
+                }
 
-                report.Warnings.Add("Action/result transformation phase: selected HTML files may have been modified.");
+                report.Warnings.Add("Selected cleanup transformations may have modified HTML files.");
             }
             catch (Exception ex)
             {

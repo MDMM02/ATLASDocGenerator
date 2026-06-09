@@ -11,6 +11,7 @@ namespace ATLASDocGenerator.Models
             Errors = new List<string>();
             Warnings = new List<string>();
             ActionResultDetectionDetails = new List<string>();
+            BulletListTransformationDetails = new List<string>();
         }
 
         public DateTime StartedAt { get; set; }
@@ -46,5 +47,11 @@ namespace ATLASDocGenerator.Models
         public int ResultParagraphsDetected { get; set; }
 
         public List<string> ActionResultDetectionDetails { get; set; }
+
+        public int BulletParagraphsDetected { get; set; }
+
+        public int NoPageBreakBlocksCreated { get; set; }
+
+        public List<string> BulletListTransformationDetails { get; set; }
     }
 }
