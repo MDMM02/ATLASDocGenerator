@@ -13,6 +13,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
         private readonly BulletListTransformer _bulletListTransformer;
         private readonly CalloutTransformer _calloutTransformer;
         private readonly FigureTransformer _figureTransformer;
+        private readonly SimpleStyleCleanupTransformer _simpleStyleCleanupTransformer;
 
         public AitCleanupService()
         {
@@ -23,6 +24,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             _bulletListTransformer = new BulletListTransformer();
             _calloutTransformer = new CalloutTransformer();
             _figureTransformer = new FigureTransformer();
+            _simpleStyleCleanupTransformer = new SimpleStyleCleanupTransformer();
         }
 
 
@@ -54,6 +56,10 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 if (options.ProcessBulletLists)
                 {
                     _bulletListTransformer.Transform(files, report);
+                }
+                if (options.ProcessStyleCleanup)
+                {
+                    _simpleStyleCleanupTransformer.Transform(files, report);
                 }
 
                 report.Warnings.Add("Selected cleanup transformations may have modified HTML files.");

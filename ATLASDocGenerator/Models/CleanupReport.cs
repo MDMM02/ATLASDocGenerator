@@ -14,6 +14,7 @@ namespace ATLASDocGenerator.Models
             BulletListTransformationDetails = new List<string>();
             CalloutTransformationDetails = new List<string>();
             FigureTransformationDetails = new List<string>();
+            StyleCleanupDetails = new List<string>();
         }
 
         public DateTime StartedAt { get; set; }
@@ -60,5 +61,6 @@ namespace ATLASDocGenerator.Models
 
         public List<string> FigureTransformationDetails { get; set; }
 
+        public List<string> StyleCleanupDetails { get; set; }
     }
 }

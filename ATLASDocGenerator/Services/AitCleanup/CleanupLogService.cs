@@ -126,6 +126,22 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 }
             }
             log.AppendLine();
+
+            log.AppendLine("STYLE CLEANUP DETAILS");
+            log.AppendLine("------------------------------");
+
+            if (report.StyleCleanupDetails.Count == 0)
+            {
+                log.AppendLine("No simple style cleaned.");
+            }
+            else
+            {
+                foreach (string detail in report.StyleCleanupDetails)
+                {
+                    log.AppendLine("- " + detail);
+                }
+            }
+            log.AppendLine();
             log.AppendLine("WARNINGS");
             log.AppendLine("------------------------------");
 
