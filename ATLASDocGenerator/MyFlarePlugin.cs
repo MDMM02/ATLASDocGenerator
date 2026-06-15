@@ -36,7 +36,7 @@ namespace ATLASDocGenerator
 
         public string GetDescription()
         {
-            return "Adds an ATLAS tab and opens the Doc Generator popup.";
+            return "Adds an ATLAS tab and opens ATLAS documentation tools.";
         }
 
         public void Initialize(IHost host)
@@ -71,7 +71,9 @@ namespace ATLASDocGenerator
             try
             {
                 if (_host != null)
+                {
                     _host.Dispose();
+                }
             }
             finally
             {
@@ -111,9 +113,9 @@ namespace ATLASDocGenerator
                 "G"
             );
 
-            IRibbonGroup aitCleanupGroup = atlasTab.AddNewRibbonGroup("Author-it");
+            IRibbonGroup authorItGroup = atlasTab.AddNewRibbonGroup("Author-it");
 
-            aitCleanupGroup.AddRibbonButton(
+            authorItGroup.AddRibbonButton(
                 "AIT Cleanup",
                 new RelayCommand(OpenAitCleanupPopup),
                 null,
@@ -121,7 +123,18 @@ namespace ATLASDocGenerator
                 RibbonIconSize.Collapsed,
                 "AIT Cleanup",
                 "Open Author-it cleanup options.",
-                "A"
+                "C"
+            );
+
+            authorItGroup.AddRibbonButton(
+                "AIT Import Finalizer",
+                new RelayCommand(OpenAitImportFinalizerPopup),
+                null,
+                null,
+                RibbonIconSize.Collapsed,
+                "AIT Import Finalizer",
+                "Finalize an Author-it import: TOC, resources, variables, target and cleanup.",
+                "F"
             );
         }
 
@@ -163,6 +176,28 @@ namespace ATLASDocGenerator
                 MessageBox.Show(
                     "Erreur pendant l'ouverture du AIT Cleanup :\n\n" + ex,
                     "AIT Cleanup",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+        }
+
+        private void OpenAitImportFinalizerPopup(object parameter)
+        {
+            try
+            {
+                Form parentForm = _navContext.GetParentForm();
+
+                using (AitImportFinalizerForm form = new AitImportFinalizerForm())
+                {
+                    form.ShowDialog(parentForm);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Erreur pendant l'ouverture du AIT Import Finalizer :\n\n" + ex,
+                    "AIT Import Finalizer",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
