@@ -16,6 +16,8 @@ namespace ATLASDocGenerator.Forms
         private TextBox indexTextBox;
         private TextBox languageTextBox;
         private TextBox mrefTextBox;
+        private TextBox tocPathTextBox;
+        private Button browseTocButton;
 
         private CheckBox copyResourcesCheckBox;
         private CheckBox cleanTocCheckBox;
@@ -63,6 +65,38 @@ namespace ATLASDocGenerator.Forms
                 Width = 350,
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
+            int top = 105;
+
+            Label tocLabel = new Label
+            {
+                Text = "TOC MadCap :",
+                Left = 20,
+                Top = top + 4,
+                Width = 160
+            };
+
+            tocPathTextBox = new TextBox
+            {
+                Left = 190,
+                Top = top,
+                Width = 260
+            };
+
+            browseTocButton = new Button
+            {
+                Text = "Parcourir",
+                Left = 460,
+                Top = top - 1,
+                Width = 80
+            };
+
+            browseTocButton.Click += BrowseTocButton_Click;
+
+            Controls.Add(tocLabel);
+            Controls.Add(tocPathTextBox);
+            Controls.Add(browseTocButton);
+
+            top += 40;
 
             documentTypeComboBox.Items.Add(new ComboItem("Bulletin Technique", AitDocumentType.TechnicalBulletin));
             documentTypeComboBox.Items.Add(new ComboItem("Notice utilisateur", AitDocumentType.UserNotice));
@@ -72,7 +106,7 @@ namespace ATLASDocGenerator.Forms
             documentTypeComboBox.Items.Add(new ComboItem("Document technique multi-instrument", AitDocumentType.MultiInstrumentTechnicalDocument));
             documentTypeComboBox.SelectedIndex = 0;
 
-            int top = 105;
+            
 
             titleTextBox = AddTextField("Titre document :", top);
             top += 35;
@@ -172,6 +206,19 @@ namespace ATLASDocGenerator.Forms
             return checkBox;
         }
 
+        private void BrowseTocButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Title = "Sélectionner la TOC MadCap";
+                dialog.Filter = "MadCap TOC (*.fltoc)|*.fltoc|All files (*.*)|*.*";
+
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    tocPathTextBox.Text = dialog.FileName;
+                }
+            }
+        }
         private void RunButton_Click(object sender, EventArgs e)
         {
             ComboItem selectedItem = documentTypeComboBox.SelectedItem as ComboItem;
@@ -188,6 +235,7 @@ namespace ATLASDocGenerator.Forms
                 DocumentTitle = titleTextBox.Text,
                 DeviceName = deviceTextBox.Text,
                 DocumentReference = referenceTextBox.Text,
+                TocPath = tocPathTextBox.Text,
                 DocumentIndex = indexTextBox.Text,
                 Language = languageTextBox.Text,
                 MrefReference = mrefTextBox.Text,

@@ -1,0 +1,1581 @@
+/*<meta conditions="Stago_Gestion.En cours de rédaction" />*/
+
+div.a_div_Precaution
+{
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	background-size: 8mm;
+	background-position: 6px 10px;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	page-break-inside: avoid;
+	padding-bottom: 15px;
+	color: var(--Precaution);
+	padding: 10px 50px 11px;
+	background-image: url('../Images/Picto_doc/MULTI_pic_PAT_precaution2020.png');
+}
+
+div.a_div_Info
+{
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	background-size: 8mm;
+	background-position: 15px 10px;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	page-break-inside: avoid;
+	padding: 10px 50px 11px;
+	background-image: url('../Images/Picto_doc/MULTI_pic_PAT_Information2020.png');
+	color: var(--Information);
+}
+
+.b_magenta_comment
+{
+	color: #f60be0;
+	display: none;
+}
+
+.b_noir_gras_char
+{
+	font-weight: bold;
+}
+
+th.a_titre_tableau_centre
+{
+	font-weight: bold;
+	margin-bottom: 3pt;
+	margin-left: 0pt;
+	margin-right: 0pt;
+	margin-top: 3pt;
+	text-align: center;
+}
+
+.notesinternesstago
+{
+	font-weight: bold;
+	color: #f60be0;
+	display: none;
+}
+
+.b_ihm
+{
+	font-weight: bold;
+}
+
+p.a_normal_centered
+{
+	text-align: center;
+}
+
+.b_bleu_char
+{
+	color: #008DA8;
+}
+
+.b_bleu_gras_char
+{
+	color: #008DA8;
+	font-weight: bold;
+}
+
+.b_orange_char
+{
+	color: #F6A01A;
+}
+
+.b_orange_gras_char
+{
+	color: #F6A01A;
+	font-weight: bold;
+}
+
+.b_rouge_gras_char
+{
+	color: #EE3524;
+	font-weight: bold;
+}
+
+.b_rouge_char
+{
+	color: #EE3524;
+}
+
+.b_info_gras
+{
+	font-weight: bold;
+	color: var(--Information);
+}
+
+.b_precaution_gras
+{
+	font-weight: bold;
+	color: var(--Precaution);
+}
+
+.b_attention_gras
+{
+	font-weight: bold;
+	color: var(--Attention);
+}
+
+.b_resultat
+{
+	margin-right: 0pt;
+	margin-top: 3pt;
+	text-align: left;
+	list-style-image: url('../Images/Picto_doc/resultat_sthem.png');
+	vertical-align: middle;
+	list-style-position: inside;
+	margin-bottom: 0;
+	margin-left: 15px;
+}
+
+body
+{
+	font-family: var(--FontFamily);
+	mc-hyphenate: never;
+	color: var(--Darkest);
+	font-size: 10pt;
+	margin-bottom: 3pt;
+	margin-top: 3pt;
+	widows: 10;
+	orphans: 10;
+	line-height: 140%;
+	margin: 3px 8px;
+}
+
+.body-container
+{
+	padding-left: 1%;
+	padding-top: 2%;
+}
+
+/* Backmatter */
+
+div.GlossaryPageDefinition
+{
+	font-size: 10pt;
+}
+
+div.GlossaryPageHeading
+{
+	font-size: 21pt;
+	font-weight: normal;
+	margin-bottom: 15px;
+	margin-top: 15px;
+	border-bottom-color: var(--Medium);
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	text-align: left;
+	color: inherit;
+	padding-left: 10px;
+	padding-bottom: 20px;
+	padding-top: 20px;
+	padding-right: 10px;
+	background-image: url('../Images/Backmatter-Heading-Background.png');
+	background-repeat: no-repeat;
+}
+
+div.GlossaryPageTerm
+{
+	font-size: 12pt;
+	font-weight: bold;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+MadCap|glossaryProxy
+{
+	border-top: none;
+}
+
+MadCap|indexProxy
+{
+	border-top: none;
+}
+
+p.Index1
+{
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+p.Index2
+{
+	font-size: 10pt;
+	font-weight: normal;
+}
+
+p.IndexHeading
+{
+	font-size: 21pt;
+	font-weight: normal;
+	margin-bottom: 15px;
+	margin-top: 15px;
+	border-bottom-color: var(--Medium);
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	text-align: left;
+	color: inherit;
+	padding-left: 10px;
+	padding-bottom: 20px;
+	padding-top: 12px;
+	padding-right: 10px;
+	background-image: url('../Images/Backmatter-Heading-Background.png');
+	background-repeat: no-repeat;
+}
+
+/* Content */
+
+img
+{
+	border: none;
+	width: 50%;
+}
+
+p
+{
+	margin-top: 3px;
+	margin-bottom: 3px;
+	letter-spacing: 0.25px;
+	orphans: 5;
+	widows: 5;
+	line-height: normal;
+}
+
+p.table-text
+{
+	font-size: 12pt;
+}
+
+/* Frontmatter */
+
+hr.title-page
+{
+	border: solid 0px transparent;
+	background-color: var(--Light);
+	height: 1px;
+	width: 100%;
+	margin-bottom: 30px;
+	margin-top: 370px;
+}
+
+MadCap|tocProxy
+{
+	border-top: none;
+	margin-right: 0.25in;
+}
+
+p.created-using-flare
+{
+	color: var(--Darkest);
+	font-weight: bold;
+	margin-top: 18px;
+	font-size: 9pt;
+	line-height: 15pt;
+	text-transform: uppercase;
+}
+
+p.title
+{
+	margin-top: 30px;
+	mc-hyphenate: never;
+	color: var(--Medium);
+	font-size: 42pt;
+	font-weight: bold;
+}
+
+p.title-page-footer
+{
+	color: var(--Dark);
+	font-size: 9pt;
+	frame-break-before: always;
+	line-height: 15pt;
+	margin-top: 30px;
+}
+
+p.title-page-url
+{
+	color: var(--Dark);
+	font-size: 9pt;
+	line-height: 15pt;
+}
+
+p.TOC1
+{
+	page-break-after: avoid;
+	color: var(--Darkest);
+	font-weight: bold;
+	font-size: 12pt;
+	margin-bottom: 3pt;
+	margin-top: 10pt;
+	mc-leader-offset: 5;
+	line-height: 140%;
+}
+
+p.TOC2
+{
+	font-weight: normal;
+	line-height: 21pt;
+	color: var(--Darkest);
+	font-size: 11pt;
+	margin-bottom: 3px;
+	margin-top: 3px;
+	margin-left: 5mm;
+}
+
+p.TOC3
+{
+	font-weight: normal;
+	color: var(--Darkest);
+	font-size: 10pt;
+	line-height: 140% pt;
+	margin-left: 10mm;
+	margin-bottom: 3pt;
+	margin-top: 3pt;
+}
+
+/* Headings */
+
+h1
+{
+	font-weight: bold;
+	color: var(--Medium);
+	mc-auto-number-offset: 0;
+	font-size: 15.0pt;
+	page-break-before: always;
+	margin: 3pt 0px;
+}
+
+h2
+{
+	font-weight: bold;
+	mc-auto-number-format: 'CH:{chapnum}.{n+}. ';
+	font-size: 14.0pt;
+	margin: 0;
+	margin-bottom: 0;
+	color: var(--Medium);
+}
+
+h3
+{
+	font-weight: bold;
+	font-size: 13.0pt;
+	color: var(--Medium);
+}
+
+h4
+{
+	font-weight: bold;
+	font-size: 11.0pt;
+	color: var(--Medium);
+	mc-heading-level: 4;
+}
+
+h5
+{
+	font-weight: bold;
+	font-size: 10.0pt;
+	mc-heading-level: 0;
+	color: var(--Medium);
+	mc-auto-number-format: 'inherit';
+}
+
+h6
+{
+	font-weight: bold;
+	mc-heading-level: 0;
+	font-size: 10pt;
+	color: var(--Medium);
+}
+
+/* Home page topic */
+
+div.home-layout
+{
+	padding: 2% 5%;
+	background-color: var(--Lightest);
+}
+
+div.home-section
+{
+	padding: 5% 0;
+	border-bottom: solid 1px var(--Light);
+}
+
+div.home-tiles	/*This is a custom responsive layout row style (div class) in your stylesheet. To provide your own description for this style: (1) Open the stylesheet; (2) Find and select the div class with this name; and (3) In the Comment field, replace this text with your own. For more information on adding comments to styles, see the online Help.*/
+{
+	mc-grid-row: true;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.home-tiles::before
+{
+	content: ' ';
+	display: table;
+}
+
+div.home-tiles::after
+{
+	content: ' ';
+	display: table;
+	clear: both;
+}
+
+div.home-tiles > div
+{
+	float: left;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	background-color: var(--Secondary);
+	padding: 2%;
+	color: var(--Darkest);
+}
+
+div.home-tiles > div:nth-child(1)
+{
+	width: 48%;
+	margin-left: 0%;
+}
+
+div.home-tiles > div:nth-child(2)
+{
+	width: 48%;
+	margin-left: 4%;
+}
+
+div.home-tiles-layout	/*This is a custom responsive layout row style (div class) in your stylesheet. To provide your own description for this style: (1) Open the stylesheet; (2) Find and select the div class with this name; and (3) In the Comment field, replace this text with your own. For more information on adding comments to styles, see the online Help.*/
+{
+	mc-grid-row: true;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.home-tiles-layout::before
+{
+	content: ' ';
+	display: table;
+}
+
+div.home-tiles-layout::after
+{
+	content: ' ';
+	display: table;
+	clear: both;
+}
+
+div.home-tiles-layout > div
+{
+	float: left;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+div.home-tiles-layout > div:nth-child(1)
+{
+	width: 33.33333%;
+	margin-left: 0%;
+}
+
+div.home-tiles-layout > div:nth-child(2)
+{
+	width: 66.66667%;
+	margin-left: 0%;
+}
+
+div.home-tiles-layout p
+{
+	line-height: 1.2;
+}
+
+div.quick-links	/*This is a custom responsive layout row style (div class) in your stylesheet. To provide your own description for this style: (1) Open the stylesheet; (2) Find and select the div class with this name; and (3) In the Comment field, replace this text with your own. For more information on adding comments to styles, see the online Help.*/
+{
+	mc-grid-row: true;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.quick-links::before
+{
+	content: ' ';
+	display: table;
+}
+
+div.quick-links::after
+{
+	content: ' ';
+	display: table;
+	clear: both;
+}
+
+div.quick-links > div
+{
+	float: left;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+div.quick-links > div:nth-child(1)
+{
+	width: 16.66666%;
+	margin-left: 2%;
+}
+
+div.quick-links > div:nth-child(2)
+{
+	width: 16.66666%;
+	margin-left: 3%;
+}
+
+div.quick-links > div:nth-child(3)
+{
+	width: 16.66666%;
+	margin-left: 3%;
+}
+
+div.quick-links > div:nth-child(4)
+{
+	width: 16.66666%;
+	margin-left: 3%;
+}
+
+div.quick-links > div:nth-child(5)
+{
+	width: 16.66666%;
+	margin-left: 3%;
+}
+
+div.quick-links *	/*Text-align center set to all elements within div.quick-links*/
+{
+	text-align: center;
+}
+
+div.topic-hero
+{
+	padding: 5%;
+	background-image: var(--HeroImage);
+	background-size: cover;
+	background-attachment: scroll;
+}
+
+div.topic-hero h1
+{
+	color: var(--Light);
+	font-size: 48pt;
+	text-align: center;
+}
+
+html.home-topic	/*Used on home topic to override padding set in the skin*/
+{
+	
+}
+
+html.home-topic .body-container	/*Overrides padding set in the skin*/
+{
+	padding: 0;
+}
+
+html.home-topic .main-section > .outer-row	/*Overrides padding set in the skin when in tablet/mobile*/
+{
+	max-width: 100%;
+	padding: 0;
+}
+
+MadCap|breadcrumbsProxy
+{
+	border-bottom-width: 0;
+	color: var(--Dark);
+}
+
+.title-bar-container	/*header dans le html */
+{
+	z-index: 1000;
+	box-shadow: 0px -13px 14px 8px;
+}
+
+.header-title
+{
+	/* font-family: segoe UI; */
+	font-weight: lighter;
+	font-size: 31pt;
+	padding-left: 50px;
+	color: var(--Primary);
+}
+
+/* Links */
+
+a
+{
+	color: var(--Primary);
+}
+
+a:link
+{
+	color: var(--Primary);
+}
+
+a:visited
+{
+	color: var(--Primary);
+}
+
+MadCap|dropDown
+{
+	border-bottom: 1px solid var(--Light);
+	mc-image-position: left;
+	mc-image-spacing: 10px;
+	mc-open-image: url('../Images/Minus.png');
+	mc-closed-image: url('../Images/Plus.png');
+	padding: 10px 0;
+}
+
+MadCap|dropDownBody
+{
+	padding: 10px 30px 0;
+}
+
+MadCap|dropDownHotspot
+{
+	cursor: hand;
+	text-decoration: none;
+	color: var(--Dark);
+	font-size: 20pt;
+	font-weight: bold;
+	border-bottom: none;
+}
+
+MadCap|expandingBody
+{
+	color: var(--Dark);
+	font-style: italic;
+}
+
+MadCap|expandingHead
+{
+	font-style: italic;
+	font-weight: normal;
+	cursor: hand;
+	text-decoration: none;
+	color: var(--Primary);
+}
+
+MadCap|xref
+{
+	font-weight: bold;
+	text-decoration: underline;
+	mc-format: '{quote}{para}{quote}';
+	color: #000000;
+	font-style: italic;
+}
+
+/* Lists */
+
+dd,
+dd p,
+dt,
+dt p,
+li,
+li p
+{
+	margin-bottom: 8px;
+	margin-top: 8px;
+}
+
+dl,
+ol,
+ul
+{
+	letter-spacing: .25px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+/* Page layout */
+
+p.frame-footer-page-number
+{
+	color: var(--Medium);
+	text-align: right;
+	font-size: 10pt;
+	line-height: 12pt;
+}
+
+p.frame-footer-text
+{
+	color: var(--Medium);
+	font-size: 11pt;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.page-layout-front-header
+{
+	background-color: var(--Primary);
+	height: 155px;
+	width: 825px;
+}
+
+.page-layout-front-logo
+{
+	height: 90px;
+	width: 724px;
+	background-color: transparent;
+	background-image: var(--LogoImagePrint);
+	background-repeat: no-repeat;
+	background-size: auto 100%;
+}
+
+.page-layout-front-main
+{
+	background-color: var(--Secondary);
+	height: 650px;
+	margin: 0px;
+}
+
+.page-layout-front-footer
+{
+	height: 275px;
+	margin: 0px;
+	background-color: var(--Dark);
+	background-image: var(--HeroImage);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+/* Master page */
+
+div.home-footer
+{
+	padding: 2% 0%;
+}
+
+.home-footer-logo
+{
+	background-image: var(--LogoImage);
+	background-repeat: no-repeat;
+	background-position: right center;
+	width: 400px;
+}
+
+p.footer
+{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	line-height: 13pt;
+	color: var(--Lightest);
+}
+
+p.footer-sub
+{
+	color: var(--Lightest);
+	font-size: 14pt;
+	margin-top: 14px;
+}
+
+ul
+{
+	margin-left: 0;
+	margin: 0;
+	page-break-inside: avoid;
+	page-break-before: avoid;
+}
+
+ol
+{
+	margin-bottom: 0;
+	margin-right: 0pt;
+	margin-top: 3pt;
+	text-align: left;
+	vertical-align: middle;
+	list-style-position: outside;
+	margin-left: 20px;
+}
+
+ul.a_action > li > ul
+{
+	margin-bottom: 0;
+	margin-right: 0pt;
+	margin-top: 3pt;
+	text-align: left;
+	vertical-align: middle;
+	content: inherit;
+	margin-left: 22px;
+	list-style-position: outside;
+	list-style-image: url('../Images/Picto_doc/resultat_sthem.png');
+}
+
+p.a_Figure
+{
+	text-align: center;
+	mc-auto-number-format: 'GF:Fig {n+} - ';
+}
+
+div.a_Figure
+{
+	page-break-inside: avoid;
+	page-break-before: avoid;
+}
+
+td.A_NORMAL_Center
+{
+	text-align: center;
+}
+
+ul.a_tiret > li > ul
+{
+	letter-spacing: .25px;
+	list-style-position: outside;
+	list-style-type: disc;
+	margin-bottom: 0;
+	margin-right: 0pt;
+	margin-top: 3pt;
+	text-align: left;
+	vertical-align: middle;
+	padding-left: 6pt;
+	margin-left: 20px;
+}
+
+ul.a_tiret > li > ul > li > ul
+{
+	letter-spacing: .25px;
+	list-style-position: outside;
+	list-style-type: disc;
+	margin-bottom: 0;
+	margin-right: 0pt;
+	margin-top: 3pt;
+	text-align: left;
+	vertical-align: middle;
+	margin-left: 20px;
+	padding-left: 8pt;
+}
+
+td.footer_Ref
+{
+	color: var(--Medium);
+	text-align: center;
+}
+
+p.version_interne
+{
+	text-align: right;
+	color: var(--Secondary);
+	font-style: italic;
+	font-size: 7pt;
+}
+
+:root
+{
+	--Precaution: #f6a01a;
+	--Attention: #ee3524;
+	--HeroImage: url('../Images/Logos/STAGO-Logoblock-Address-CORPORATE.png');
+	--Information: #008da8;
+}
+
+div.a_Figure > p:nth-child(1)
+{
+	text-align: center;
+	mc-auto-number-format: 'GF:Fig {n+}. ';
+}
+
+div.a_Figure > p:nth-child(2)
+{
+	text-align: center;
+}
+
+div.a_div_Precaution:nth-child
+{
+	color: var(--Precaution);
+}
+
+div.a_div_Info:nth-child
+{
+	color: var(--Information);
+}
+
+ul.a_resultat_isole
+{
+	list-style-position: outside;
+	margin-bottom: 0;
+	margin-left: 22px;
+	margin-right: 0pt;
+	margin-top: 3pt;
+	text-align: left;
+	vertical-align: middle;
+	list-style-type: none;
+}
+
+/* je garde cette liste sous forme de commentaire en bck mais normalement, il suffit d'utiliser le bouton Bullet list
+ ul.a_tiret
+{
+	margin-left: 15px;
+	letter-spacing: .25px;
+	list-style-position: outside;
+	list-style-type: disc;
+	margin-bottom: 0;
+	margin-right: 0pt;
+	margin-top: 3pt;
+	overflow: hidden;
+	padding-left: 3pt;
+	text-align: left;
+	vertical-align: middle;
+}*/
+
+img.icons
+{
+	max-height: 8mm;
+	width: auto;
+	min-height: 5mm;
+}
+
+.mini-toc
+{
+	color: var(--Medium);
+	font-weight: bold;
+}
+
+MadCap|miniTocProxy
+{
+	border-top-color: var(--Medium);
+}
+
+ul.a_action
+{
+	list-style-type: none;
+	margin-bottom: 0;
+	margin-left: 20px;
+	margin-right: 0pt;
+	margin-top: 3pt;
+	text-align: left;
+	list-style-position: outside;
+}
+
+ul.a_tiret > li::marker
+{
+	content: '- ';
+}
+
+li p
+{
+	
+}
+
+.b_italique
+{
+	font-style: italic;
+}
+
+p.TOC4
+{
+	color: var(--Darkest);
+	font-size: 10pt;
+	font-weight: normal;
+	line-height: 140% pt;
+	margin-bottom: 3pt;
+	margin-top: 3pt;
+	mc-hidden: hidden;
+	mc-leader-align: right;
+	mc-leader-format: '.';
+	mc-leader-offset: 10pt;
+	mc-pagenum-display: all;
+	margin-left: 12mm;
+}
+
+div.a_div_attention > p
+{
+	color: var(--Attention);
+}
+
+div.a_div_Info > p
+{
+	color: var(--Information);
+}
+
+div.a_div_Precaution > p
+{
+	color: var(--Precaution);
+}
+
+ul.a_action > li::marker
+{
+	content: '► ';
+	color: var(--Medium);
+}
+
+ul.a_action > li > ul > li::marker
+{
+	
+}
+
+ol.a_action > li > ul > li::marker
+{
+	content: '✓';
+	color: var(--Medium);
+}
+
+ul.a_resultat_isole > li::marker
+{
+	color: var(--Medium);
+	content: '✓';
+}
+
+li::marker
+{
+	content: '- ';
+}
+
+li
+{
+	margin-left: 30px;
+}
+
+@media tablet
+{
+	/* Home page topic */
+
+	div.home-tiles > div:nth-child(1)
+	{
+		width: 49%;
+		margin-left: 0%;
+	}
+
+	div.home-tiles > div:nth-child(2)
+	{
+		width: 49%;
+		margin-left: 2%;
+	}
+
+	div.home-tiles-layout > div:nth-child(1)
+	{
+		width: 40%;
+		margin-left: 30%;
+	}
+
+	div.home-tiles-layout > div:nth-child(2)
+	{
+		width: 90%;
+		margin-left: 5%;
+	}
+
+	div.quick-links > div:nth-child(1)
+	{
+		width: 24%;
+		margin-left: 0%;
+	}
+
+	div.quick-links > div:nth-child(2)
+	{
+		width: 24%;
+		margin-left: 14%;
+	}
+
+	div.quick-links > div:nth-child(3)
+	{
+		width: 24%;
+		margin-left: 14%;
+	}
+
+	div.quick-links > div:nth-child(4)
+	{
+		width: 24%;
+		margin-left: 19%;
+	}
+
+	div.quick-links > div:nth-child(5)
+	{
+		width: 24%;
+		margin-left: 14%;
+	}
+
+	html.home-topic .body-container
+	{
+		margin-left: 0;
+	}
+}
+
+@media mobile
+{
+	/* Home page topic */
+
+	div.home-tiles > div:nth-child(1)
+	{
+		width: 100%;
+		margin-left: 0%;
+	}
+
+	div.home-tiles > div:nth-child(2)
+	{
+		width: 100%;
+		margin-left: 0%;
+		margin-top: 5%;
+	}
+
+	div.home-tiles-layout p
+	{
+		line-height: 1.2;
+	}
+
+	div.quick-links > div:nth-child(1)
+	{
+		width: 49%;
+		margin-left: 0;
+	}
+
+	div.quick-links > div:nth-child(2)
+	{
+		width: 49%;
+		margin-left: 2%;
+	}
+
+	div.quick-links > div:nth-child(3)
+	{
+		width: 49%;
+		margin-left: 0;
+	}
+
+	div.quick-links > div:nth-child(4)
+	{
+		width: 49%;
+		margin-left: 2%;
+	}
+
+	div.quick-links > div:nth-child(5)
+	{
+		width: 49%;
+		margin-left: 25.5%;
+	}
+
+	.home-footer-logo
+	{
+		padding: 20px;
+		background-origin: content-box;
+		background-size: contain;
+	}
+}
+
+@media print
+{
+	body
+	{
+		margin-top: 3px;
+		margin-bottom: 3px;
+		margin: 3px 8px;
+		font-size: 10pt;
+		line-height: 140%;
+	}
+
+	/* Content */
+
+	p
+	{
+		margin-bottom: 10px;
+		margin-top: 10px;
+	}
+
+	p.table-text
+	{
+		font-size: 11pt;
+	}
+
+	/* Headings */
+
+	h1
+	{
+		mc-auto-number-format: 'CH:{chapnum}. ';
+		font-size: 15.0pt;
+	}
+
+	h2
+	{
+		font-size: 14.0pt;
+		font-weight: bold;
+		margin-bottom: 6pt;
+		margin-top: 6pt;
+	}
+
+	h3
+	{
+		font-weight: bold;
+		font-size: 13.0pt;
+		margin: 3pt 0pt;
+		mc-auto-number-format: 'CH:{chapnum}.{n}.{n+}. ';
+	}
+
+	/* Links */
+
+	MadCap|xref
+	{
+		font-weight: normal;
+		mc-format: '{quote}{para}{quote} {pageref}';
+		text-decoration: none;
+	}
+
+	p#Copyrights
+	{
+		white-space: normal;
+		margin-bottom: 5;
+		margin-top: 5px;
+		color: var(--Dark);
+		line-height: 120%;
+		vertical-align: text-bottom;
+		font-size: 10pt;
+	}
+
+	td.A_NORMAL_Center
+	{
+		
+	}
+
+	p.version_interne
+	{
+		margin-top: 20px;
+		margin-bottom: 20px;
+		letter-spacing: 0.25px;
+		widows: 3;
+		orphans: 3;
+		line-height: 7pt;
+		font-style: italic;
+		text-align: right;
+		font-size: 8.0pt;
+		color: var(--Secondary);
+	}
+
+	h1.TOC
+	{
+		mc-heading-level: 0;
+		mc-auto-number-format: "";
+		text-align: center;
+	}
+
+	h1.TOC_Tech
+	{
+		mc-auto-number-position: none;
+		mc-heading-level: 0;
+		page-break-before: avoid;
+	}
+
+	h1.non_numerote
+	{
+		color: var(--Medium);
+		display: block;
+		font-size: 15.0pt;
+		font-weight: bold;
+		margin: 3pt 0px;
+		mc-auto-number-offset: 0;
+		mc-auto-number-position: none;
+		mc-disable-glossary-terms: true;
+		mc-dita-type: p;
+		mc-heading-level: 0;
+		page-break-before: auto;
+	}
+
+	p.ref_couv
+	{
+		margin-top: 20px;
+		margin-bottom: 20px;
+		line-height: 20pt;
+		letter-spacing: 0.25px;
+		widows: 3;
+		orphans: 3;
+		text-align: right;
+		font-size: 16pt;
+		font-weight: bold;
+		color: var(--Medium);
+	}
+
+	MadCap|helpControlMenuItem.version_interne
+	{
+		
+	}
+
+	p.headerTOP
+	{
+		color: var(--Medium);
+		font-weight: bold;
+		font-size: 14pt;
+		line-height: normal;
+	}
+
+	p.headerTOP2
+	{
+		color: var(--Medium);
+		line-height: normal;
+		font-size: 12pt;
+	}
+
+	td.footer_Ref
+	{
+		text-align: center;
+		color: var(--Secondary);
+	}
+
+	ul.a_action
+	{
+		margin-bottom: 0;
+		margin-right: 0pt;
+		margin-top: 3pt;
+		text-align: left;
+		list-style-position: outside;
+		margin-left: 20px;
+	}
+
+	p.a_normal_centered
+	{
+		text-align: center;
+	}
+
+	p.a_Figure
+	{
+		
+	}
+
+	div.a_Figure	/*pour image avec légende "Fig X - "*/
+	{
+		text-align: center;
+		page-break-inside: avoid;
+	}
+
+	.b_magenta_comment
+	{
+		
+	}
+
+	ul.a_tiret
+	{
+		letter-spacing: .25px;
+		margin-bottom: 0;
+		margin-right: 0pt;
+		margin-top: 3pt;
+		text-align: left;
+		vertical-align: middle;
+		list-style-type: disc;
+		list-style-position: outside;
+		overflow: hidden;
+		padding-left: 3pt;
+		margin-left: 15px;
+	}
+
+	div.a_NOpagebreak
+	{
+		page-break-inside: avoid;
+	}
+
+	MadCap|xref.Jump
+	{
+		mc-format: '{quote}{para}{quote}, {pageref}';
+	}
+
+	img.imageAT
+	{
+		border: none;
+	}
+
+	div.Copyrights
+	{
+		display: table-cell;
+		vertical-align: bottom;
+		word-break: keep-all;
+	}
+
+	p.Copyrights
+	{
+		vertical-align: text-bottom;
+		display: block;
+	}
+
+	ol.a_action_num
+	{
+		list-style-position: inside;
+		margin-bottom: 0;
+		margin-left: 10px;
+		margin-right: 0pt;
+		margin-top: 3pt;
+		text-align: left;
+		vertical-align: middle;
+		list-style-type: decimal;
+	}
+
+	MadCap|variable.General\00002ECopyright_DateEdition
+	{
+		
+	}
+
+	ul.a_resultat_isole
+	{
+		list-style-position: outside;
+		margin-bottom: 0;
+		margin-left: 22px;
+		margin-right: 0pt;
+		margin-top: 3pt;
+		text-align: left;
+		vertical-align: middle;
+	}
+
+	div.a_div_Info > p
+	{
+		color: var(--Information);
+	}
+
+	div.a_div_attention > p
+	{
+		color: var(--Attention);
+	}
+
+	div.a_div_Precaution > p
+	{
+		color: var(--Precaution);
+	}
+
+	/*<meta sourceDocument="C:\Users\alboufao\Downloads\Preparation de l'instrument sthemO.docx" />*/
+
+	MadCap|xref.PageNumberOnly
+	{
+		mc-format: '{page}';
+	}
+
+	div.a_Figure > p:nth-child(2)
+	{
+		text-align: center;
+	}
+
+	h4
+	{
+		margin: 3pt 0pt 0pt;
+		mc-auto-number-format: 'CH:{chapnum}.{n}.{n}.{n+}. ';
+		mc-heading-level: 4;
+	}
+
+	h5
+	{
+		mc-auto-number-format: 'CH:{chapnum}.{n}.{n}.{n}.{n+}. ';
+	}
+
+	h6
+	{
+		mc-auto-number-format: 'CH:{chapnum}.{n}.{n}.{n}.{n}.{n+}. ';
+	}
+
+	img
+	{
+		width: 50%;
+	}
+
+	img.icons
+	{
+		min-height: 5mm;
+	}
+
+	.mini-toc
+	{
+		
+	}
+
+	li
+	{
+		margin-bottom: 3pt;
+		margin-top: 3pt;
+	}
+
+	p.disclaimer_tech
+	{
+		margin-top: 0px;
+	}
+
+	.b_italique
+	{
+		
+	}
+
+	p.TOC3
+	{
+		
+	}
+
+	p.TOC4
+	{
+		margin-left: 12mm;
+	}
+
+	:root
+	{
+		--Information: #008da8;
+	}
+}
+
+MadCap|miniTocProxy:hover
+{
+	border-top-style: solid;
+	border-top-width: 1px;
+	margin-top: 10px;
+	mc-output-support: all;
+	mc-toc-depth: 3;
+	padding-left: 20px;
+	padding-top: 10px;
+	border-top-color: var(--Dark);
+}
+
+p.disclaimer_tech
+{
+	margin-top: 0;
+	text-align: center;
+	color: var(--Dark);
+	line-height: normal;
+	frame-break-before: auto;
+	font-size: 8pt;
+}
+
+td.disclaimer_tech
+{
+	font-size: 7pt;
+}
+
+p.disclaimer_tech
+{
+	color: var(--Dark);
+	frame-break-before: inherit;
+	line-height: normal;
+	font-size: 8pt;
+	text-align: center;
+	margin-top: 0px;
+}
+
+td.disclaimer_tech
+{
+	color: var(--Dark);
+	frame-break-before: inherit;
+	text-align: center;
+	line-height: 120%;
+	font-size: 7pt;
+	margin-top: 3pt;
+	margin-left: 2cm;
+	margin-right: 2cm;
+}
+
+MadCap|snippetBlock.disclaimer_tech1
+{
+	font-size: 7pt;
+}
+
+div.a_div_attention:nth-child
+{
+	color: var(--Attention);
+}
+
+div#mc-main-content
+{
+	min-height: 65vh;
+}
+
+MadCap|xref.Jump
+{
+	mc-format: "{para}";
+	font-weight: bold;
+}
+
+p.versionX_historique_MRef
+{
+	border-bottom: solid 1px #000000;
+	color: var(--Darkest);
+	font-weight: bold;
+}
+

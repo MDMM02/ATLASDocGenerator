@@ -61,7 +61,7 @@
     <Compile Include="Models\AitCleanupOptions.cs" />
     <Compile Include="Models\AitImportFinalizer\AitDocumentProfile.cs" />
     <Compile Include="Models\AitImportFinalizer\AitDocumentType.cs" />
-    <Compile Include="Models\AitImportFinalizer\AitImportFinalizaerOptions.cs" />
+    <Compile Include="Models\AitImportFinalizer\AitImportFinalizerOptions.cs" />
     <Compile Include="Models\AitImportFinalizer\AitImportFinalizerReport.cs" />
     <Compile Include="Models\CleanupReport.cs" />
     <Compile Include="Models\DocGeneratorRequest.cs" />
@@ -84,6 +84,8 @@
     <Compile Include="Services\AitCleanup\SimpleStyleCleanupTransformer.cs" />
     <Compile Include="Services\AitImportFinalizer\AitDocumentProfileFactory.cs" />
     <Compile Include="Services\AitImportFinalizer\AitImportFinalizerService.cs" />
+    <Compile Include="Services\AitImportFinalizer\ResourceCopyService.cs" />
+    <Compile Include="Services\AitImportFinalizer\TocCleanerService.cs" />
     <Compile Include="Services\AtlasDocGenerationService.cs" />
     <Compile Include="Services\Checklist\ChecklisstGeneratorService.cs" />
     <Compile Include="Services\FileNameSanitizer.cs" />
@@ -94,6 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AitCleanupScope.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Templates\AitResources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
