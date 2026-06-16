@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <p>
+            <MadCap:snippetText src="Italie_pays.flsnp" /> <MadCap:snippetText src="Italie_num1.flsnp" /> ou <MadCap:snippetText src="Italie_num2.flsnp" /></p>
+    </body>
+</html>

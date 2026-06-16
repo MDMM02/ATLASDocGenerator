@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <head>
+        <link href="" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div>
+            <p class="Copyrights">Le contenu de ce document, notamment les données, les images, les informations, sont protégés par copyrights.</p>
+            <p class="Copyrights"><MadCap:variable name="General.BrandCompany" />, le logo stylisé et les marques de produits et services mentionnés dans le présent document sont des marques déposées par et propriété de <MadCap:variable name="General.LegalCompanyName" />. Les autres produits, services ou logiciels tiers, sont des marques ou des marques déposées par et propriété de leurs titulaires respectifs.</p>
+            <p class="Copyrights">Par conséquent, toute représentation et/ou reproduction, partielle ou totale de ce document est interdite et constitue une infraction aux droits d'auteur et copyrights de <MadCap:variable name="General.LegalCompanyName" />  ou de tiers et autres droits de propriété intellectuelle.</p>
+            <p class="Copyrights">Les représentations visuelles (schémas, photos, icônes, pictogrammes, …) sont non contractuelles.</p>
+            <p class="Copyrights">Les données telles que les noms d'utilisateurs, de patients, de laboratoires, les adresses mail (liste non exhaustive) présentées dans le manuel, notamment dans les captures d'écran, sont fictives. Elles sont fournies uniquement à titre d'exemple.</p>
+            <p class="Copyrights"><MadCap:variable name="General.Copyright_DateLancement" />, <MadCap:variable name="General.LegalCompanyName" />, tous droits réservés - <MadCap:variable name="General.Copyright_DateEdition" /></p>
+        </div>
+    </body>
+</html>

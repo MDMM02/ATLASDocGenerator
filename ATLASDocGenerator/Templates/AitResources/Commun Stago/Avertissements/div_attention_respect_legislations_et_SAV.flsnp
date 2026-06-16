@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <div class="a_Attention">
+            <MadCap:snippetBlock src="Risque_contamination_bio.flsnp" />
+            <p>Afin d'éviter tout risque de contamination et dans le respect des législations et normes internationales en matière de santé et de sécurité au travail :</p>
+            <p>Avant toute intervention d'un technicien du Service après-Vente, effectuer la procédure de décontamination de l'instrument.</p>
+        </div>
+    </body>
+</html>

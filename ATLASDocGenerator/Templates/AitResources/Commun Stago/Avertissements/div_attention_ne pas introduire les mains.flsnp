@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <div class="a_Attention">
+            <p>
+                <MadCap:snippetText src="RISQUE DE BLESSURE.flsnp" />
+            </p>
+            <p>Ne pas introduire les mains lorsque les paniers sont retirés de la zone de chargement/déchargement de la section Échantillons.</p>
+        </div>
+    </body>
+</html>

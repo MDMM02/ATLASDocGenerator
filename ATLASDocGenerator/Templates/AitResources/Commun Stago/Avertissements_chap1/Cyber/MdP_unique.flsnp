@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <head />
+    <body>
+        <div class="a_NOpagebreak">
+            <p class="a_bleu_gras">Choisir des mots de passe uniques pour chaque système</p>
+            <p>Il est vivement déconseillé d’utiliser le même mot de passe pour des systèmes différents ou d'utiliser des mots de passe trop similaires.</p>
+        </div>
+    </body>
+</html>

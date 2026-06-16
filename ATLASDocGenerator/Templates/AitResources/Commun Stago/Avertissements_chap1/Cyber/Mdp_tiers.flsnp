@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <div class="a_NOpagebreak">
+            <p class="a_bleu_gras">Ne pas accepter de mot de passe attribué par un tiers</p>
+            <p>Ne jamais demander à un tiers de créer un mot de passe à votre place. Si la confidentialité du mot de passe est compromise, le modifier immédiatement.</p>
+            <p>Modifier rapidement les mots de passe attribués par défaut.</p>
+            <p>Veiller à bien modifier le mot de passe administrateur communiqué par le représentant <MadCap:variable name="General.LegalCompanyName" />. Néanmoins, toute modification de configuration doit être soumise à l'accord préalable du représentant <MadCap:variable name="General.LegalCompanyName" />.</p>
+        </div>
+    </body>
+</html>

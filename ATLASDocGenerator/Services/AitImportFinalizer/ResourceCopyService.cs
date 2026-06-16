@@ -19,6 +19,41 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 throw new DirectoryNotFoundException("Project root folder not found: " + projectRootPath);
             }
 
+            string resourceRoot = GetResourceRoot();
+
+            if (!Directory.Exists(resourceRoot))
+            {
+                throw new DirectoryNotFoundException("AIT resources folder not found: " + resourceRoot);
+            }
+
+            CopyResourceFolder(
+                Path.Combine(resourceRoot, "PageLayouts"),
+                Path.Combine(projectRootPath, "Content", "Resources", "PageLayouts")
+            );
+
+            CopyResourceFolder(
+                Path.Combine(resourceRoot, "Stylesheets"),
+                Path.Combine(projectRootPath, "Content", "Resources", "Stylesheets")
+            );
+
+            CopyResourceFolder(
+                Path.Combine(resourceRoot, "Snippets"),
+                Path.Combine(projectRootPath, "Content", "Resources", "Snippets")
+            );
+
+            CopyResourceFolder(
+                Path.Combine(resourceRoot, "Images"),
+                Path.Combine(projectRootPath, "Content", "Resources", "Images")
+            );
+
+            CopyResourceFolder(
+                Path.Combine(resourceRoot, "VariableSets"),
+                Path.Combine(projectRootPath, "Project", "VariableSets")
+            );
+        }
+
+        private string GetResourceRoot()
+        {
             string pluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             if (string.IsNullOrWhiteSpace(pluginFolder))
@@ -26,34 +61,32 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 throw new DirectoryNotFoundException("Unable to locate plugin folder.");
             }
 
-            string sourceRoot = Path.Combine(pluginFolder, "Templates", "AitResources");
-
-            if (!Directory.Exists(sourceRoot))
-            {
-                throw new DirectoryNotFoundException("AIT resources template folder not found: " + sourceRoot);
-            }
-
-            CopyDirectory(sourceRoot, projectRootPath);
+            return Path.Combine(pluginFolder, "Templates", "AitResources");
         }
 
-        private void CopyDirectory(string sourceDirectory, string destinationDirectory)
+        private void CopyResourceFolder(string sourceFolder, string destinationFolder)
         {
-            Directory.CreateDirectory(destinationDirectory);
+            if (!Directory.Exists(sourceFolder))
+            {
+                return;
+            }
 
-            foreach (string sourceFilePath in Directory.GetFiles(sourceDirectory))
+            Directory.CreateDirectory(destinationFolder);
+
+            foreach (string sourceFilePath in Directory.GetFiles(sourceFolder))
             {
                 string fileName = Path.GetFileName(sourceFilePath);
-                string destinationFilePath = Path.Combine(destinationDirectory, fileName);
+                string destinationFilePath = Path.Combine(destinationFolder, fileName);
 
                 File.Copy(sourceFilePath, destinationFilePath, true);
             }
 
-            foreach (string sourceSubDirectory in Directory.GetDirectories(sourceDirectory))
+            foreach (string sourceSubFolder in Directory.GetDirectories(sourceFolder))
             {
-                string directoryName = Path.GetFileName(sourceSubDirectory);
-                string destinationSubDirectory = Path.Combine(destinationDirectory, directoryName);
+                string folderName = Path.GetFileName(sourceSubFolder);
+                string destinationSubFolder = Path.Combine(destinationFolder, folderName);
 
-                CopyDirectory(sourceSubDirectory, destinationSubDirectory);
+                CopyResourceFolder(sourceSubFolder, destinationSubFolder);
             }
         }
     }

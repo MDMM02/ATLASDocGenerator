@@ -1,0 +1,27 @@
+/*<meta conditions="Stago_Gestion.En cours de rédaction" />*/
+
+@import url('Styles.css') ;
+
+p.MyStyle
+{
+	font-family: Arial;
+	font-size: 12pt;
+	margin: 0px;
+}
+
+img
+{
+	border: none;
+}
+
+a.Popup
+{
+	
+}
+
+p.Glo_term_heading
+{
+	font-weight: bold;
+	font-size: 14pt;
+}
+

@@ -8,11 +8,13 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
     {
         private readonly AitDocumentProfileFactory _profileFactory;
         private readonly TocCleanerService _tocCleanerService;
+        private readonly ResourceCopyService _resourceCopyService;
 
         public AitImportFinalizerService()
         {
             _profileFactory = new AitDocumentProfileFactory();
             _tocCleanerService = new TocCleanerService();
+            _resourceCopyService = new ResourceCopyService();
         }
 
         public AitImportFinalizerReport Run(AitImportFinalizerOptions options)
@@ -49,6 +51,18 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 catch (Exception ex)
                 {
                     report.Errors.Add("TOC cleanup failed: " + ex.Message);
+                }
+            }
+            if (options.CopyResources)
+            {
+                try
+                {
+                    _resourceCopyService.CopyResources(options.ProjectRootPath, profile);
+                    report.ResourcesCopied = true;
+                }
+                catch (Exception ex)
+                {
+                    report.Errors.Add("Resource copy failed: " + ex.Message);
                 }
             }
 

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <head />
+    <body>
+        <div class="a_NOpagebreak">
+            <p class="a_bleu_gras">Choisir un mot de passe complexe
+            </p>
+            <p>
+                <MadCap:variable name="General.LegalCompanyName" /> recommande l'utilisation du mot de passe fort :</p>
+            <ul>
+                <li>de 12 à 20 caractères.</li>
+                <li>Pas de répétition du même caractère plus de 2 fois.*</li>
+                <li>Pas plus de 2 caractères consécutifs.**</li>
+                <li>Majuscules, minuscules, nombre et caractères spéciaux obligatoires.</li>
+                <li>Interdiction d'utiliser pour mot de passe : un nom d'utilisateur, le numéro de série ou le nom de l'instrument.</li>
+                <li>Interdiction des mots de passe présents dans la liste des 100 000 mots de passe les plus courants.</li>
+            </ul>
+        </div>
+    </body>
+</html>

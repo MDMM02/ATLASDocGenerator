@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun,Stago_Gestion.Commun_Tech">
+    <head />
+    <body>
+        <p><span class="a_bleu_gras_car">Clé USB SAV</span>
+        </p>
+        <p><b>Note :</b> la clé USB SAV doit contenir le certificat SAV créé via le portail <MadCap:variable name="Variables_Produits et Instruments.sthemE Connect" />.</p>
+    </body>
+</html>

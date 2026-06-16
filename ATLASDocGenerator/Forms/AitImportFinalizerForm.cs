@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ATLASDocGenerator.Models.AitImportFinalizer;
+using ATLASDocGenerator.Services.AitImportFinalizer;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using ATLASDocGenerator.Models.AitImportFinalizer;
-using ATLASDocGenerator.Services.AitImportFinalizer;
 
 namespace ATLASDocGenerator.Forms
 {
@@ -219,6 +220,7 @@ namespace ATLASDocGenerator.Forms
                 }
             }
         }
+
         private void RunButton_Click(object sender, EventArgs e)
         {
             ComboItem selectedItem = documentTypeComboBox.SelectedItem as ComboItem;
@@ -229,13 +231,16 @@ namespace ATLASDocGenerator.Forms
                 return;
             }
 
+            string projectRootPath = GetProjectRootPathFromToc(tocPathTextBox.Text);
+
             AitImportFinalizerOptions options = new AitImportFinalizerOptions
             {
                 DocumentType = selectedItem.DocumentType,
+                ProjectRootPath = projectRootPath,
+                TocPath = tocPathTextBox.Text,
                 DocumentTitle = titleTextBox.Text,
                 DeviceName = deviceTextBox.Text,
                 DocumentReference = referenceTextBox.Text,
-                TocPath = tocPathTextBox.Text,
                 DocumentIndex = indexTextBox.Text,
                 Language = languageTextBox.Text,
                 MrefReference = mrefTextBox.Text,
@@ -251,6 +256,37 @@ namespace ATLASDocGenerator.Forms
 
             MessageBox.Show(BuildReportMessage(report), "AIT Import Finalizer");
         }
+        private string GetProjectRootPathFromToc(string tocPath)
+        {
+            if (string.IsNullOrWhiteSpace(tocPath))
+            {
+                return string.Empty;
+            }
+
+            if (!File.Exists(tocPath))
+            {
+                return string.Empty;
+            }
+
+            DirectoryInfo directory = new DirectoryInfo(Path.GetDirectoryName(tocPath));
+
+            while (directory != null)
+            {
+                if (directory.Name.Equals("Project", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (directory.Parent != null)
+                    {
+                        return directory.Parent.FullName;
+                    }
+
+                    return string.Empty;
+                }
+
+                directory = directory.Parent;
+            }
+
+            return string.Empty;
+        }
 
         private string BuildReportMessage(AitImportFinalizerReport report)
         {
@@ -259,6 +295,13 @@ namespace ATLASDocGenerator.Forms
             builder.AppendLine("AIT Import Finalizer");
             builder.AppendLine();
             builder.AppendLine("Profile: " + report.ProfileName);
+            builder.AppendLine();
+
+            builder.AppendLine("Resources copied: " + report.ResourcesCopied);
+            builder.AppendLine("TOC cleaned: " + report.TocCleaned);
+            builder.AppendLine("Variables updated: " + report.VariablesUpdated);
+            builder.AppendLine("Target configured: " + report.TargetConfigured);
+            builder.AppendLine("Cleanup launched: " + report.CleanupLaunched);
             builder.AppendLine();
 
             if (report.Warnings.Count > 0)

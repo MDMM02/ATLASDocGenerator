@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <p class="disclaimer_tech">Ce document complète le manuel de référence du <MadCap:variable name="General.dispositif" /> (réf. <MadCap:variable name="General.Ref_Mref_Addenda" />). Par conséquent il est soumis aux mêmes conditions que celles décrites dans le manuel de référence.</p>
+    </body>
+</html>

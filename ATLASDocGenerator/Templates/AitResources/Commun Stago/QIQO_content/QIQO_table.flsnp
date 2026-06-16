@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun,Stago_Gestion.40_DoNotTranslate">
+    <body>
+        <table style="width: 100%;">
+            <col />
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td>
+                        <p>
+                            <MadCap:snippetText src="case.flsnp" />
+                            <MadCap:snippetText src="OK.flsnp" />
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <MadCap:snippetText src="case.flsnp" />
+                            <MadCap:snippetText src="NOK.flsnp" />
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <MadCap:snippetText src="case.flsnp" />
+                            <MadCap:snippetText src="../Divers/Non_applicable.flsnp" />
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border-left-style: solid;border-left-width: 1pt;border-left-color: #939598;border-right-style: solid;border-right-width: 1pt;border-right-color: #939598;border-top-style: solid;border-top-width: 1pt;border-top-color: #939598;border-bottom-style: solid;border-bottom-width: 1pt;border-bottom-color: #939598;">
+                        <MadCap:snippetBlock src="Observations.flsnp" />
+                        <p colspan="3">&#160;</p>
+                        <p colspan="3">&#160;</p>
+                        <p colspan="3">&#160;</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

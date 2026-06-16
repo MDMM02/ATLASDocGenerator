@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <head>
+        <link href="" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="a_Attention">
+            <MadCap:snippetBlock src="Risque_contamination_bio.flsnp" />
+            <MadCap:snippetBlock src="Pour éviter tout risque de contamination.flsnp" />
+            <p>Respecter les précautions d'usage relatives à la manipulation de produits potentiellement contaminés biologiquement en accord avec la réglementation en vigueur localement : par exemple, port de gants à usage unique, d'un masque et/ou de lunettes de protection et d'un vêtement protecteur.</p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <head>
+        <link href="" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="a_Attention">
+            <p>
+                <MadCap:snippetText src="RISQUE DE BLESSURE.flsnp" />
+            </p>
+            <p>
+                <MadCap:snippetText src="Pour éviter tout risque de blessure.flsnp" />
+            </p>
+            <p>Veuillez lire attentivement les notices accompagnant chaque produit, ainsi que les fiches de données de sécurité, le cas échéant, et vous y conformer.</p>
+        </div>
+    </body>
+</html>

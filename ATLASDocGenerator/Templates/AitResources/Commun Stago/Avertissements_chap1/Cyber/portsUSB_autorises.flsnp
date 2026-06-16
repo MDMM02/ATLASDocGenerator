@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <div class="a_NOpagebreak">
+            <p class="a_bleu_gras">N’utiliser les ports USB que pour les périphériques autorisés</p>
+            <p>Les ports USB sont uniquement destinés à l’utilisation des périphériques livrés avec le système ou disponibles en option (écran, lecteur code-barres…).</p>
+            <p>Il est strictement interdit d’utiliser d’autres périphériques sur ces ports. Par exemple, la connexion de smartphones sur les systèmes <MadCap:variable name="General.BrandCompany" /> est interdite.</p>
+        </div>
+    </body>
+</html>

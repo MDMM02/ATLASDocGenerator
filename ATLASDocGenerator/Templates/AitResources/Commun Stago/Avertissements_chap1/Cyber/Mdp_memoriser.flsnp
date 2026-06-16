@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <p class="a_bleu_gras">Mémoriser les mots de passe</p>
+        <p>Ne stocker les mots de passe ni sur un document papier ni sur un fichier.</p>
+        <p>Ne jamais envoyer les mots de passe sur des comptes de messagerie.</p>
+        <p>Si elle existe, désactiver la fonction de mémorisation de mot de passe ou ne pas l'utiliser.</p>
+        <div class="a_Information">
+            <p>Exception faite pour les gestionnaires de mots de passe, qui permettent de générer des mots de passe aléatoires et de les stocker de manière sécurisée.</p>
+        </div>
+    </body>
+</html>

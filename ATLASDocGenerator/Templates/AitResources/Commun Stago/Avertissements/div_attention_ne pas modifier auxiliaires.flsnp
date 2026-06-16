@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <head>
+        <link href="" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="a_Attention">
+            <MadCap:snippetBlock src="RISQUE DE RÉSULTATS ERRONÉS.flsnp" />
+            <p>
+                <MadCap:snippetText src="pour éviter tout risque de résultats erronés.flsnp" />
+            </p>
+            <p>Ne pas modifier la composition des Auxiliaires (solutions de lavage et de décontamination, solutions <MadCap:variable name="Variables_Produits et Instruments.sthemO Solution CL A" /> et <MadCap:variable name="Variables_Produits et Instruments.sthemO Solution CL B" />).</p>
+        </div>
+    </body>
+</html>

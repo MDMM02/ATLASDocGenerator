@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <div class="a_Attention">
+            <MadCap:snippetBlock src="Risque_contamination_bio.flsnp" />
+            <p>La poubelle consommables contient du matériel biologique potentiellement infectieux.</p>
+            <p>
+                <MadCap:snippetText src="Pour éviter tout risque de contamination.flsnp" />
+            </p>
+            <p>
+                <MadCap:snippetText src="Respecter_précautions_usage_gants_masque_lunettes.flsnp" />
+            </p>
+        </div>
+    </body>
+</html>

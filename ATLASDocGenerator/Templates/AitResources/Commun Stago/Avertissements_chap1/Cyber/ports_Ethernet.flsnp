@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <div class="a_NOpagebreak">
+            <p class="a_bleu_gras">N’utiliser les ports Ethernet que pour les équipements autorisés</p>
+            <p>Les ports Ethernet sont uniquement destinés à l’utilisation des équipements nécessaires au bon fonctionnement du système.</p>
+        </div>
+    </body>
+</html>

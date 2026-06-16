@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <p class="a_bleu_gras">Limiter l'accès aux personnes autorisées</p>
+        <p>Créer un compte unique pour chaque utilisateur en prenant soin de gérer ses droits d'accès en fonction de son profil.</p>
+        <p>La saisie d'un identifiant et d'un mot de passe est obligatoire pour accéder au logiciel.</p>
+        <p>Voir <MadCap:xref href="../../../../8-Paramétrages/Créer un compte utilisateur.htm">"Créer un compte utilisateur"</MadCap:xref> pour plus d'informations sur la création des comptes utilisateurs.</p>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PageStyles MadCap:conditions="Stago_Gestion.Contenu commun,Stago_Gestion.40_DoNotTranslate" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <Page Name="Normal" Width="7in" Height="9in" Padding="20px" PageSize="A4" PageType="normal" PaddingLeft="1.5cm" PaddingRight="1.5cm" PaddingTop="1.5cm" PaddingBottom="1.5cm" Orientation="portrait" BleedLeft="0" BleedRight="0" BleedTop="0" BleedBottom="0">
+        <Frame Flow="body" ColumnCount="1" Anchors="Left,Right,Top,Bottom" PaddingLeft="0in" PaddingRight="0in" PaddingTop="0in" PaddingBottom="0in" X="-0.1875in" Y="0.40625in" Right="-0.1145833in" Bottom="57px" Width="709px" Height="913px">
+            <Content>
+                <xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml">
+                    <xhtml:body>
+                        <xhtml:p>&#160;</xhtml:p>
+                    </xhtml:body>
+                </xhtml:html>
+            </Content>
+        </Frame>
+        <Frame X="-19px" Y="-38px" Width="709px" Height="67px" Flow="header" Right="-10px" Bottom="980px" BorderBottomStyle="none" BorderBottomWidth="1px" Anchors="" BorderLeftStyle="none" BorderLeftWidth="1px" BorderRightStyle="none" BorderRightWidth="1px" BorderTopStyle="none" BorderTopWidth="1px">
+            <Content>
+                <xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml">
+                    <xhtml:body>
+                        <xhtml:p xhtml:class="headerTOP"><MadCap:variable xhtml:name="General.GuideType" />
+                        </xhtml:p>
+                        <xhtml:p xhtml:class="headerTOP2"><MadCap:variable xhtml:name="General.dispositif" />
+                        </xhtml:p>
+                    </xhtml:body>
+                </xhtml:html>
+            </Content>
+        </Frame>
+        <Frame X="-18px" Y="960px" Width="709px" Height="63px" Flow="footer" Right="-11px" Bottom="-14px" Anchors="Left,Right,Bottom" TextAlign="center" VerticalAlign="top" BorderTopStyle="none" BorderTopWidth="1px" PaddingTop="5px" BorderLeftStyle="none" BorderLeftWidth="1px" BorderRightStyle="none" BorderRightWidth="1px" BorderBottomStyle="none" BorderBottomWidth="1px">
+            <Content>
+                <xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml">
+                    <xhtml:head>
+                    </xhtml:head>
+                    <xhtml:body>
+                        <xhtml:table xhtml:style="width: 100%;border-top-style: solid;border-top-width: 1px;border-top-color: var(--Main);margin-left: auto;margin-right: auto;">
+                            <xhtml:col xhtml:style="width: 7.2cm;" />
+                            <xhtml:col xhtml:style="width: 935px;" />
+                            <xhtml:col xhtml:style="width: 204px;" />
+                            <xhtml:tbody>
+                                <xhtml:tr>
+                                    <xhtml:td xhtml:style="vertical-align: middle;text-align: left;">
+                                        <xhtml:p xhtml:class="Logo_PDP">&#160;</xhtml:p>
+                                    </xhtml:td>
+                                    <xhtml:td xhtml:class="footer_Ref"><MadCap:variable xhtml:name="General.DocumentReference" />_<MadCap:variable xhtml:name="General.Indice" />_<MadCap:variable xhtml:name="General.DocumentLanguage" /></xhtml:td>
+                                    <xhtml:td>
+                                        <MadCap:snippetBlock xhtml:src="page_num_ref_interne.flsnp" />
+                                    </xhtml:td>
+                                </xhtml:tr>
+                            </xhtml:tbody>
+                        </xhtml:table>
+                    </xhtml:body>
+                </xhtml:html>
+            </Content>
+        </Frame>
+    </Page>
+</PageStyles>

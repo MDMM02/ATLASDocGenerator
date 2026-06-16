@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <p>Déchets d'équipements électriques et électroniques (DEEE).</p>
+        <table class="TableStyle-Tableau_sans_bordure" cellspacing="0">
+            <col style="width: 78px;" class="TableStyle-Tableau_sans_bordure-Column-Column1" />
+            <col style="width: 90%;" class="TableStyle-Tableau_sans_bordure-Column-Column1" />
+            <tr class="TableStyle-Tableau_sans_bordure-Body-Body1">
+                <td class="TableStyle-Tableau_sans_bordure-BodyE-Column1-Body1">
+                    <p class="a_centre">
+                        <img src="../../Images/Picto_doc/multi_pic_PAT_poubelle.png" alt="" vspace="0px" hspace="0px" align="Bottom" border="0px" />
+                    </p>
+                </td>
+                <td class="TableStyle-Tableau_sans_bordure-BodyD-Column1-Body1">
+                    <p>L'utilisation du symbole ci-contre signifie que l'instrument ne doit pas être éliminé avec les déchets ménagers, qu'il doit faire l'objet d'une collecte sélective et qu'il a été mis sur le marché après le 13 août 2005.</p>
+                </td>
+            </tr>
+        </table>
+        <p>Pour plus d'informations concernant la mise au rebut appropriée de l'instrument (tri sélectif, collecte, traitement des déchets issus de l'instrument), contacter les autorités locales, le fabricant ou le revendeur auprès duquel l'instrument a été acheté. </p>
+    </body>
+</html>

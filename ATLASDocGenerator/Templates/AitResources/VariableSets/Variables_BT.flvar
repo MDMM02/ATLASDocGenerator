@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CatapultVariableSet
+  conditions="orga du contenu commun.pas commun,Stago_Gestion.En cours de rédaction">
+  <Variable
+    Comment=""
+    Name="Instrument 1"
+    EvaluatedDefinition="STA R Max">STA R Max</Variable>
+  <Variable
+    Comment=""
+    Name="Code de modification 1"
+    EvaluatedDefinition="R999">R999</Variable>
+  <Variable
+    Comment=""
+    Name="Instrument 2"
+    EvaluatedDefinition="STA R Max">STA R Max</Variable>
+  <Variable
+    Comment=""
+    Name="Code de modification 2"
+    EvaluatedDefinition="R999">R999</Variable>
+  <Variable
+    Name="Instrument 3"
+    Comment=""
+    EvaluatedDefinition="" />
+  <Variable
+    Name="Instrument 4"
+    Comment=""
+    EvaluatedDefinition="" />
+  <Variable
+    Name="Instrument 5"
+    Comment=""
+    EvaluatedDefinition="" />
+  <Variable
+    Name="Instrument 6"
+    Comment=""
+    EvaluatedDefinition="" />
+  <Variable
+    Name="Code de modification 3"
+    Comment=""
+    EvaluatedDefinition="" />
+  <Variable
+    Name="Code de modification 4"
+    Comment=""
+    EvaluatedDefinition="" />
+  <Variable
+    Name="Code de modification 5"
+    Comment=""
+    EvaluatedDefinition="" />
+  <Variable
+    Name="Code de modification 6"
+    Comment=""
+    EvaluatedDefinition="" />
+</CatapultVariableSet>

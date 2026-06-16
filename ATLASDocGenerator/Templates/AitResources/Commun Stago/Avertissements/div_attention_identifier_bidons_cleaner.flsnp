@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <div class="a_Attention">
+            <MadCap:snippetBlock src="RISQUE DE RÉSULTATS ERRONÉS.flsnp" />
+            <p>
+                <MadCap:snippetText src="pour éviter tout risque de résultats erronés.flsnp" />
+            </p>
+            <p>Identifier correctement le bidon liquide sale, ne jamais l'utiliser en tant que nouveau bidon de solution <MadCap:variable name="Variables_Produits et Instruments.sthemO Cleaner" />, ceci pouvant conduire à de mauvais résultats.</p>
+        </div>
+    </body>
+</html>

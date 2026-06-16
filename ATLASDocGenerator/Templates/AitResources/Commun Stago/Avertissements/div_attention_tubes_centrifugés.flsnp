@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <head />
+    <body>
+        <div class="a_Attention">
+            <MadCap:snippetBlock src="RISQUE DE RÉSULTATS ERRONÉS.flsnp" />
+            <p>N'utiliser que des tubes centrifugés. Vérifier que le plasma est en quantité suffisante.</p>
+            <p>Vérifier l’absence de mousse, de caillot ou de micro-caillot pouvant perturber les résultats.</p>
+        </div>
+    </body>
+</html>

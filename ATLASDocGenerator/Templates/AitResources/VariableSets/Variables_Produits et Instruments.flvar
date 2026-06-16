@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CatapultVariableSet
+  conditions="Stago_Gestion.40_DoNotTranslate,Stago_Gestion.Contenu commun">
+  <Variable
+    Name="APTTpath"
+    EvaluatedDefinition="APTTpath">APTTpath</Variable>
+  <Variable
+    Name="APTTpathC = Err"
+    EvaluatedDefinition="APTTpathC = Err">APTTpathC = Err</Variable>
+  <Variable
+    Name="CK Prest"
+    EvaluatedDefinition="CK Prest">CK Prest</Variable>
+  <Variable
+    Name="Click-N-Seal®"
+    EvaluatedDefinition="Click-N-Seal™">Click-N-Seal™</Variable>
+  <Variable
+    Name="Coag.One"
+    EvaluatedDefinition="Coag.One">Coag.One</Variable>
+  <Variable
+    Name="Combitips"
+    EvaluatedDefinition="Combitips">Combitips</Variable>
+  <Variable
+    Name="Combitips advanced"
+    EvaluatedDefinition="Combitips advanced">Combitips advanced</Variable>
+  <Variable
+    Name="Connect.One"
+    EvaluatedDefinition="Connect.One">Connect.One</Variable>
+  <Variable
+    Name="Connect.One Gateway"
+    EvaluatedDefinition="Connect.One Gateway">Connect.One Gateway</Variable>
+  <Variable
+    Name="Cuvettes"
+    EvaluatedDefinition="Cuvettes">Cuvettes</Variable>
+  <Variable
+    Name="DRVVpath"
+    EvaluatedDefinition="DRVVpath">DRVVpath</Variable>
+  <Variable
+    Name="Eppendorf"
+    EvaluatedDefinition="Eppendorf">Eppendorf</Variable>
+  <Variable
+    Name="F8CON"
+    EvaluatedDefinition="F8CON">F8CON</Variable>
+  <Variable
+    Name="F8INC"
+    EvaluatedDefinition="F8INC">F8INC</Variable>
+  <Variable
+    Name="Flacon de 1850 billes / 1850-Ball Vial"
+    EvaluatedDefinition="Flacon de 1850 billes / 1850-Ball Vial">Flacon de 1850 billes / 1850-Ball Vial</Variable>
+  <Variable
+    Name="Intralipid®"
+    EvaluatedDefinition="Intralipid®">Intralipid®</Variable>
+  <Variable
+    Name="LADIAG"
+    EvaluatedDefinition="LADIAG">LADIAG</Variable>
+  <Variable
+    Name="LUPUS APTT1"
+    EvaluatedDefinition="LUPUS APTT1">LUPUS APTT1</Variable>
+  <Variable
+    Name="LUPUS APTT2"
+    EvaluatedDefinition="LUPUS APTT2">LUPUS APTT2</Variable>
+  <Variable
+    Name="LUPUS APTT3"
+    EvaluatedDefinition="LUPUS APTT3">LUPUS APTT3</Variable>
+  <Variable
+    Name="LUPUS APTT4"
+    EvaluatedDefinition="LUPUS APTT4">LUPUS APTT4</Variable>
+  <Variable
+    Name="LUPUS DRVV1"
+    EvaluatedDefinition="LUPUS DRVV1">LUPUS DRVV1</Variable>
+  <Variable
+    Name="LUPUS DRVV2"
+    EvaluatedDefinition="LUPUS DRVV2">LUPUS DRVV2</Variable>
+  <Variable
+    Name="LUPUS DRVV3"
+    EvaluatedDefinition="LUPUS DRVV3">LUPUS DRVV3</Variable>
+  <Variable
+    Name="Microcups"
+    EvaluatedDefinition="Microcups">Microcups</Variable>
+  <Variable
+    Name="Multipette M4/Repeater M4"
+    EvaluatedDefinition="Multipette M4/Repeater M4">Multipette M4/Repeater M4</Variable>
+  <Variable
+    Name="MyExpertQC"
+    EvaluatedDefinition="MyExpertQC">MyExpertQC</Variable>
+  <Variable
+    Name="PLRFDRVVCs"
+    EvaluatedDefinition="PLRFDRVVCs">PLRFDRVVCs</Variable>
+  <Variable
+    Name="PLRFDRVVSs"
+    EvaluatedDefinition="PLRFDRVVSs">PLRFDRVVSs</Variable>
+  <Variable
+    Name="PLRFPTTLA"
+    EvaluatedDefinition="PLRFPTTLA">PLRFPTTLA</Variable>
+  <Variable
+    Name="POC Mobile"
+    EvaluatedDefinition="POC Mobile">POC Mobile</Variable>
+  <Variable
+    Name="PT%"
+    EvaluatedDefinition="PT%">PT%</Variable>
+  <Variable
+    Name="PTinr"
+    EvaluatedDefinition="PTinr">PTinr</Variable>
+  <Variable
+    Name="REC8"
+    EvaluatedDefinition="REC8">REC8</Variable>
+  <Variable
+    Name="règle VIII"
+    EvaluatedDefinition="règle VIII">règle VIII</Variable>
+  <Variable
+    Name="Sani-Cloth®"
+    EvaluatedDefinition="Sani-Cloth®">Sani-Cloth®</Variable>
+  <Variable
+    Name="Sani-Cloth® Plus"
+    EvaluatedDefinition="Sani-Cloth® Plus">Sani-Cloth® Plus</Variable>
+  <Variable
+    Name="SCE"
+    EvaluatedDefinition="SCE">SCE</Variable>
+  <Variable
+    Name="Solution IMS"
+    EvaluatedDefinition="Solution IMS">Solution IMS</Variable>
+  <Variable
+    Name="ST Genesia®"
+    EvaluatedDefinition="ST Genesia®">ST Genesia®</Variable>
+  <Variable
+    Name="STA - ImmunoDef VIII"
+    EvaluatedDefinition="STA - ImmunoDef VIII">STA - ImmunoDef VIII</Variable>
+  <Variable
+    Name="STA Coag ConneXion"
+    EvaluatedDefinition="STA Coag ConneXion">STA Coag ConneXion</Variable>
+  <Variable
+    Name="STA Coag Expert"
+    EvaluatedDefinition="STA Coag Expert">STA Coag Expert</Variable>
+  <Variable
+    Name="STA Compact CT Max®"
+    EvaluatedDefinition="STA Compact CT Max®">STA Compact CT Max®</Variable>
+  <Variable
+    Name="STA Compact Max®"
+    EvaluatedDefinition="STA Compact Max®">STA Compact Max®</Variable>
+  <Variable
+    Name="STA Compact®"
+    EvaluatedDefinition="STA Compact®">STA Compact®</Variable>
+  <Variable
+    Name="STA Compact® CT"
+    EvaluatedDefinition="STA Compact® CT">STA Compact® CT</Variable>
+  <Variable
+    Name="STA R Max®"
+    EvaluatedDefinition="STA R Max®">STA R Max®</Variable>
+  <Variable
+    Name="STA R®"
+    EvaluatedDefinition="STA R®">STA R®</Variable>
+  <Variable
+    Name="STA Satellite Cuvettes"
+    EvaluatedDefinition="STA Satellite Cuvettes">STA Satellite Cuvettes</Variable>
+  <Variable
+    Name="STA Satellite Max®"
+    EvaluatedDefinition="STA Satellite Max®">STA Satellite Max®</Variable>
+  <Variable
+    Name="STA Satellite®"
+    EvaluatedDefinition="STA Satellite®">STA Satellite®</Variable>
+  <Variable
+    Name="STA Workcell Max™"
+    EvaluatedDefinition="STA Workcell Max™">STA Workcell Max™</Variable>
+  <Variable
+    Name="STA®"
+    EvaluatedDefinition="STA®">STA®</Variable>
+  <Variable
+    Name="STA® - CaCl2"
+    EvaluatedDefinition="STA® - CaCl2">STA® - CaCl2</Variable>
+  <Variable
+    Name="STA® - Cleaner Solution"
+    EvaluatedDefinition="STA® - Cleaner Solution">STA® - Cleaner Solution</Variable>
+  <Variable
+    Name="STA® - Cuvettes"
+    EvaluatedDefinition="STA® - Cuvettes">STA® - Cuvettes</Variable>
+  <Variable
+    Name="STA® - Desorb U"
+    EvaluatedDefinition="STA® - Desorb U">STA® - Desorb U</Variable>
+  <Variable
+    Name="STA® - maxi Reducer"
+    EvaluatedDefinition="STA® - maxi Reducer">STA® - maxi Reducer</Variable>
+  <Variable
+    Name="STA® - micro Reducer"
+    EvaluatedDefinition="STA® - micro Reducer">STA® - micro Reducer</Variable>
+  <Variable
+    Name="STA® - Microcups"
+    EvaluatedDefinition="STA® - Microcups">STA® - Microcups</Variable>
+  <Variable
+    Name="STA® - Microtainer"
+    EvaluatedDefinition="STA® - Microtainer">STA® - Microtainer</Variable>
+  <Variable
+    Name="STA® - mini Reducer"
+    EvaluatedDefinition="STA® - mini Reducer">STA® - mini Reducer</Variable>
+  <Variable
+    Name="STA® - Owren-Koller"
+    EvaluatedDefinition="STA® - Owren-Koller">STA® - Owren-Koller</Variable>
+  <Variable
+    Name="STA® Cleaner"
+    EvaluatedDefinition="STA® Cleaner">STA® Cleaner</Variable>
+  <Variable
+    Name="STA-C.K. Prest"
+    EvaluatedDefinition="STA-C.K. Prest">STA-C.K. Prest</Variable>
+  <Variable
+    Name="STA-Cephascreen"
+    EvaluatedDefinition="STA-Cephascreen">STA-Cephascreen</Variable>
+  <Variable
+    Name="Staclot LA"
+    EvaluatedDefinition="Staclot LA">Staclot LA</Variable>
+  <Variable
+    Name="Stago Coag Algorithm Immunodef VIII"
+    EvaluatedDefinition="Stago Coag Algorithm Immunodef VIII">Stago Coag Algorithm Immunodef VIII</Variable>
+  <Variable
+    Name="Stago Coag Algorithm Lupus Anticoagulant"
+    EvaluatedDefinition="Stago Coag Algorithm Lupus Anticoagulant">Stago Coag Algorithm Lupus Anticoagulant</Variable>
+  <Variable
+    Name="Stago Coag Algorithm Prolonged APTT"
+    EvaluatedDefinition="Stago Coag Algorithm Prolonged APTT">Stago Coag Algorithm Prolonged APTT</Variable>
+  <Variable
+    Name="STA-PTT Automate"
+    EvaluatedDefinition="STA-PTT Automate">STA-PTT Automate</Variable>
+  <Variable
+    Name="STA-R Evolution®"
+    EvaluatedDefinition="STA-R Evolution®">STA-R Evolution®</Variable>
+  <Variable
+    Name="STA-R®"
+    EvaluatedDefinition="STA-R®">STA-R®</Variable>
+  <Variable
+    Name="STart"
+    EvaluatedDefinition="STart">STart</Variable>
+  <Variable
+    Name="STart Max"
+    EvaluatedDefinition="STart Max">STart Max</Variable>
+  <Variable
+    Name="STA-Staclot DRVV Confirm"
+    EvaluatedDefinition="STA-Staclot DRVV Confirm">STA-Staclot DRVV Confirm</Variable>
+  <Variable
+    Name="STA-Staclot DRVV Screen"
+    EvaluatedDefinition="STA-Staclot DRVV Screen">STA-Staclot DRVV Screen</Variable>
+  <Variable
+    Name="STG®"
+    EvaluatedDefinition="STG®">STG®</Variable>
+  <Variable
+    Name="STG® - Cuvettes"
+    EvaluatedDefinition="STG® - Cuvettes">STG® - Cuvettes</Variable>
+  <Variable
+    Name="STG® CuvetteWaste"
+    EvaluatedDefinition="STG® CuvetteWaste">STG® CuvetteWaste</Variable>
+  <Variable
+    Name="STG®-BleedScreen"
+    EvaluatedDefinition="STG®-BleedScreen">STG®-BleedScreen</Variable>
+  <Variable
+    Name="STG®-Cal&amp;Fluo"
+    EvaluatedDefinition="STG®-Cal&amp;Fluo">STG®-Cal&amp;Fluo</Variable>
+  <Variable
+    Name="STG®-DrugScreen"
+    EvaluatedDefinition="STG®-DrugScreen">STG®-DrugScreen</Variable>
+  <Variable
+    Name="STG®-FluoSet"
+    EvaluatedDefinition="STG®-FluoSet">STG®-FluoSet</Variable>
+  <Variable
+    Name="STG®-FluoStart"
+    EvaluatedDefinition="STG®-FluoStart">STG®-FluoStart</Variable>
+  <Variable
+    Name="STG®-RefPlasma"
+    EvaluatedDefinition="STG®-RefPlasma">STG®-RefPlasma</Variable>
+  <Variable
+    Name="STG®-ThrombiCal"
+    EvaluatedDefinition="STG®-ThrombiCal">STG®-ThrombiCal</Variable>
+  <Variable
+    Name="STG®-ThrombiClean"
+    EvaluatedDefinition="STG®-ThrombiClean">STG®-ThrombiClean</Variable>
+  <Variable
+    Name="STG®-ThromboScreen"
+    EvaluatedDefinition="STG®-ThromboScreen">STG®-ThromboScreen</Variable>
+  <Variable
+    Name="sthemE Alert"
+    EvaluatedDefinition="sthemE Alert">sthemE Alert</Variable>
+  <Variable
+    Name="sthemE Connect"
+    EvaluatedDefinition="sthemE Connect">sthemE Connect</Variable>
+  <Variable
+    Name="sthemE Connect Gateway"
+    EvaluatedDefinition="sthemE Connect Gateway">sthemE Connect Gateway</Variable>
+  <Variable
+    Name="sthemE ExpertQC"
+    EvaluatedDefinition="sthemE ExpertQC">sthemE ExpertQC</Variable>
+  <Variable
+    Name="sthemE Manager"
+    EvaluatedDefinition="sthemE Manager">sthemE Manager</Variable>
+  <Variable
+    Name="sthemE Qualiris"
+    EvaluatedDefinition="sthemE Qualiris">sthemE Qualiris</Variable>
+  <Variable
+    Name="sthemO"
+    EvaluatedDefinition="sthemO">sthemO</Variable>
+  <Variable
+    Name="sthemO 201"
+    EvaluatedDefinition="sthemO 201">sthemO 201</Variable>
+  <Variable
+    Name="sthemO 301"
+    EvaluatedDefinition="sthemO 301">sthemO 301</Variable>
+  <Variable
+    Name="sthemO 401"
+    EvaluatedDefinition="sthemO 401">sthemO 401</Variable>
+  <Variable
+    Name="sthemO Beads dispenser"
+    EvaluatedDefinition="sthemO Beads dispenser">sthemO Beads dispenser</Variable>
+  <Variable
+    Name="sthemO Beads dispenser pack"
+    EvaluatedDefinition="sthemO Beads dispenser pack">sthemO Beads dispenser pack</Variable>
+  <Variable
+    Name="sthemO Cleaner"
+    EvaluatedDefinition="sthemO Cleaner">sthemO Cleaner</Variable>
+  <Variable
+    Name="sthemO Cuvettes"
+    EvaluatedDefinition="sthemO Cuvettes">sthemO Cuvettes</Variable>
+  <Variable
+    Name="sthemO Cuvettes pack"
+    EvaluatedDefinition="sthemO Cuvettes pack">sthemO Cuvettes pack</Variable>
+  <Variable
+    Name="sthemO Desorb"
+    EvaluatedDefinition="sthemO Desorb">sthemO Desorb</Variable>
+  <Variable
+    Name="sthemO maxi Reducer"
+    EvaluatedDefinition="sthemO maxi Reducer">sthemO maxi Reducer</Variable>
+  <Variable
+    Name="sthemO Microcups"
+    EvaluatedDefinition="sthemO Microcups">sthemO Microcups</Variable>
+  <Variable
+    Name="sthemO mini Reducer"
+    EvaluatedDefinition="sthemO mini Reducer">sthemO mini Reducer</Variable>
+  <Variable
+    Name="sthemO Solution CL A"
+    EvaluatedDefinition="sthemO Solution CL A">sthemO Solution CL A</Variable>
+  <Variable
+    Name="sthemO Solution CL B"
+    EvaluatedDefinition="sthemO Solution CL B">sthemO Solution CL B</Variable>
+  <Variable
+    Name="sthemO Wash CL"
+    EvaluatedDefinition="sthemO Wash CL">sthemO Wash CL</Variable>
+  <Variable
+    Name="sthemO waste bags"
+    EvaluatedDefinition="sthemO waste bags">sthemO waste bags</Variable>
+  <Variable
+    Name="sthemO waste bags pack"
+    EvaluatedDefinition="sthemO waste bags pack">sthemO waste bags pack</Variable>
+  <Variable
+    Name="Thrombogram®"
+    EvaluatedDefinition="Thrombogram®">Thrombogram®</Variable>
+  <Variable
+    Name="Microcontainer"
+    EvaluatedDefinition="Microcontainer">Microcontainer</Variable>
+  <Variable
+    Name="Data Manager"
+    EvaluatedDefinition="Data Manager">Data Manager</Variable>
+  <Variable
+    Name="Pursept®"
+    Comment=""
+    EvaluatedDefinition="Pursept®">Pursept®</Variable>
+  <Variable
+    Name="sthemO Wash"
+    Comment=""
+    EvaluatedDefinition="sthemO Wash">sthemO Wash</Variable>
+  <Variable
+    Name="Stago Coag Algorithms"
+    Comment=""
+    EvaluatedDefinition="Stago Coag Algorithms">Stago Coag Algorithms</Variable>
+  <Variable
+    Name="Stago Coag Algorithm Prolonged CK Prest"
+    Comment=""
+    EvaluatedDefinition="Stago Coag Algorithm Prolonged CK Prest">Stago Coag Algorithm Prolonged CK Prest</Variable>
+  <Variable
+    Name="Stago Coag Algorithm Prolonged PTT A"
+    Comment=""
+    EvaluatedDefinition="Stago Coag Algorithm Prolonged PTT A">Stago Coag Algorithm Prolonged PTT A</Variable>
+  <Variable
+    Name="sthemO 301 DTS"
+    EvaluatedDefinition="sthemO 301 DTS">sthemO 301 DTS</Variable>
+  <Variable
+    Name="My Personal Space"
+    Comment="Plateforme d'accès aux app Stago et documentation"
+    EvaluatedDefinition="My Personal Space">My Personal Space</Variable>
+  <Variable
+    Name="sthemA 801"
+    Comment=""
+    EvaluatedDefinition="sthemA 801">sthemA 801</Variable>
+  <Variable
+    Name="sthemA 601"
+    Comment=""
+    EvaluatedDefinition="sthemA 601">sthemA 601</Variable>
+  <Variable
+    Name="sthemA"
+    Comment=""
+    EvaluatedDefinition="sthemA">sthemA</Variable>
+  <Variable
+    Name="sthemA HB-250"
+    Comment=""
+    EvaluatedDefinition="sthemA HB-250">sthemA HB-250</Variable>
+  <Variable
+    Name="sthemA WB-250"
+    Comment=""
+    EvaluatedDefinition="sthemA WB-250">sthemA WB-250</Variable>
+  <Variable
+    Name="sthemA FD-50"
+    Comment=""
+    EvaluatedDefinition="sthemA FD-50">sthemA FD-50</Variable>
+  <Variable
+    Name="sthemA CL-250"
+    Comment=""
+    EvaluatedDefinition="sthemA CL-250">sthemA CL-250</Variable>
+  <Variable
+    Name="sthemA DL-9000"
+    Comment=""
+    EvaluatedDefinition="sthemA DL-9000">sthemA DL-9000</Variable>
+  <Variable
+    Name="sthemA CTR-L1"
+    Comment=""
+    EvaluatedDefinition="sthemA CTR-L1">sthemA CTR-L1</Variable>
+  <Variable
+    Name="sthemA CTR-L2"
+    Comment=""
+    EvaluatedDefinition="sthemA CTR-L2">sthemA CTR-L2</Variable>
+  <Variable
+    Name="sthemA CTR-L3"
+    Comment=""
+    EvaluatedDefinition="sthemA CTR-L3">sthemA CTR-L3</Variable>
+  <Variable
+    Name="sthemA CAL"
+    Comment=""
+    EvaluatedDefinition="sthemA CAL">sthemA CAL</Variable>
+  <Variable
+    Name="STA Smart Loading"
+    Comment="Nom officiel du Loading Module (LMV3) de la Workcell"
+    EvaluatedDefinition="STA Smart Loading">STA Smart Loading</Variable>
+  <Variable
+    Name="sthemO PTT A"
+    Comment=""
+    EvaluatedDefinition="sthemO PTT A">sthemO PTT A</Variable>
+  <Variable
+    Name="STA - PTT A 5"
+    Comment=""
+    EvaluatedDefinition="STA - PTT Automate 5">STA - PTT Automate 5</Variable>
+  <Variable
+    Name="STA - C.K. PREST 5"
+    Comment=""
+    EvaluatedDefinition="STA - C.K. PREST 5">STA - C.K. PREST 5</Variable>
+  <Variable
+    Name="sthemO CK Prest"
+    Comment=""
+    EvaluatedDefinition="sthemO CK Prest">sthemO CK Prest</Variable>
+</CatapultVariableSet>

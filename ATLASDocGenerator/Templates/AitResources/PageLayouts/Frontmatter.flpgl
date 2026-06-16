@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PageStyles MadCap:conditions="Stago_Gestion.Contenu commun,Stago_Gestion.40_DoNotTranslate" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <Page Width="7in" Height="9in" Padding="1in" PageSize="A4" PaddingLeft="1cm" PaddingRight="1cm" PaddingTop="1cm" PaddingBottom="1cm" PageType="title" Name="Title" Orientation="portrait" BleedLeft="0.25in" BleedRight="0.25in" BleedTop="0.25in" BleedBottom="0.25in">
+        <Frame X="10px" Y="639px" Width="625px" Height="181px" Flow="body" Right="83px" Bottom="227px" />
+        <Frame X="651px" Y="124px" Width="48px" Height="32px" Flow="decoration0" Right="19px" Bottom="891px" BackgroundImage="../Images/Picto_doc/Picto CE.png" BackgroundRepeat="stretch" TextAlign="right" Anchors="" />
+        <Frame X="646px" Y="159px" Width="55px" Height="33px" Flow="decoration1" Right="17px" Bottom="855px" BackgroundImage="../Images/Picto_doc/Picto_IVD.png" BackgroundRepeat="stretch" TextAlign="right" Anchors="" />
+        <Frame X="634px" Y="197px" Width="66px" Height="27px" Flow="decoration2" Right="18px" Bottom="823px" BackgroundImage="../Images/Picto_doc/Rx_only.png" BackgroundRepeat="stretch" TextAlign="right" Anchors="" />
+        <Frame X="336px" Y="37px" Width="366px" Height="72px" Flow="header" Right="16px" Bottom="938px">
+            <Content>
+                <xhtml:html xmlns:xhtml="http://www.w3.org/1999/xhtml">
+                    <xhtml:body>
+                        <xhtml:p xhtml:class="ref_couv"><MadCap:variable xhtml:name="General.DocumentReference" />_<MadCap:variable xhtml:name="General.Indice" />_<MadCap:variable xhtml:name="General.DocumentLanguage" /></xhtml:p>
+                    </xhtml:body>
+                </xhtml:html>
+            </Content>
+        </Frame>
+        <Frame X="12px" Y="309px" Width="16.00729cm" Height="6.773334cm" Flow="decoration3" Right="101px" Bottom="482px" BackgroundImage="../Images/Logos/MonLogo.png" BackgroundRepeat="stretch" Anchors="" />
+        <Frame X="441px" Y="951px" Width="277px" Height="97px" Flow="decoration4" Right="0px" Bottom="-1px" BackgroundImage="../Images/Logos/STAGO-Logoblock-Address-CORPORATE.png" BackgroundRepeat="stretch" TextAlign="right" VerticalAlign="bottom" Anchors="" />
+    </Page>
+</PageStyles>

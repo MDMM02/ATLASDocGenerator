@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <body>
+        <div class="a_NOpagebreak">
+            <p class="a_bleu_gras">Opter pour le chiffrement des données
+            </p>
+            <p><MadCap:variable name="General.LegalCompanyName" /> met à la disposition de ses clients des solutions de chiffrement des données. Les données patients sont chiffrées, par défaut, et ne sont pas accessibles à <MadCap:variable name="General.LegalCompanyName" />.</p>
+        </div>
+    </body>
+</html>

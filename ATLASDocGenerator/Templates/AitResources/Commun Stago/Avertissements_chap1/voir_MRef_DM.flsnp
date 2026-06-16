@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
+    <head>
+    </head>
+    <body>
+        <p>Si l'instrument est équipé d'un <MadCap:variable name="Variables_Produits et Instruments.Data Manager" />, consulter son Manuel de référence (et, le cas échéant, ses addendas) pour plus d'informations.</p>
+    </body>
+</html>
