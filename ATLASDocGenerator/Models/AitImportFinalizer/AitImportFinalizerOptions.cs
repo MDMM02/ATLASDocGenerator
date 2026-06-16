@@ -31,5 +31,9 @@
         public bool ConfigureTarget { get; set; }
 
         public bool RunCleanup { get; set; }
+
+
+    
+    
     }
 }

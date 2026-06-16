@@ -19,6 +19,8 @@ namespace ATLASDocGenerator.Forms
         private TextBox mrefTextBox;
         private TextBox tocPathTextBox;
         private Button browseTocButton;
+        private TextBox targetPathTextBox;
+        private Button browseTargetButton;
 
         private CheckBox copyResourcesCheckBox;
         private CheckBox cleanTocCheckBox;
@@ -38,7 +40,8 @@ namespace ATLASDocGenerator.Forms
         {
             Text = "AIT Import Finalizer";
             Width = 620;
-            Height = 520;
+            Height = 560;
+            AutoScroll = true;
             StartPosition = FormStartPosition.CenterParent;
 
             Label titleLabel = new Label
@@ -107,7 +110,36 @@ namespace ATLASDocGenerator.Forms
             documentTypeComboBox.Items.Add(new ComboItem("Document technique multi-instrument", AitDocumentType.MultiInstrumentTechnicalDocument));
             documentTypeComboBox.SelectedIndex = 0;
 
-            
+            Label targetLabel = new Label
+            {
+                Text = "Target PDF MadCap :",
+                Left = 20,
+                Top = top + 4,
+                Width = 160
+            };
+
+            targetPathTextBox = new TextBox
+            {
+                Left = 190,
+                Top = top,
+                Width = 260
+            };
+
+            browseTargetButton = new Button
+            {
+                Text = "Parcourir",
+                Left = 460,
+                Top = top - 1,
+                Width = 80
+            };
+
+            browseTargetButton.Click += BrowseTargetButton_Click;
+
+            Controls.Add(targetLabel);
+            Controls.Add(targetPathTextBox);
+            Controls.Add(browseTargetButton);
+
+            top += 40;
 
             titleTextBox = AddTextField("Titre document :", top);
             top += 35;
@@ -167,7 +199,19 @@ namespace ATLASDocGenerator.Forms
             Controls.Add(runButton);
             Controls.Add(cancelButton);
         }
+        private void BrowseTargetButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Title = "Sélectionner la target PDF MadCap";
+                dialog.Filter = "MadCap Target (*.fltar)|*.fltar|All files (*.*)|*.*";
 
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    targetPathTextBox.Text = dialog.FileName;
+                }
+            }
+        }
         private TextBox AddTextField(string label, int top)
         {
             Label fieldLabel = new Label
@@ -238,6 +282,7 @@ namespace ATLASDocGenerator.Forms
                 DocumentType = selectedItem.DocumentType,
                 ProjectRootPath = projectRootPath,
                 TocPath = tocPathTextBox.Text,
+                TargetPath = targetPathTextBox.Text,
                 DocumentTitle = titleTextBox.Text,
                 DeviceName = deviceTextBox.Text,
                 DocumentReference = referenceTextBox.Text,

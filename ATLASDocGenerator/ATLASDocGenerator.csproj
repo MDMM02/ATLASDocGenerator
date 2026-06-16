@@ -85,7 +85,9 @@
     <Compile Include="Services\AitImportFinalizer\AitDocumentProfileFactory.cs" />
     <Compile Include="Services\AitImportFinalizer\AitImportFinalizerService.cs" />
     <Compile Include="Services\AitImportFinalizer\ResourceCopyService.cs" />
+    <Compile Include="Services\AitImportFinalizer\TargetConfiguratorService.cs" />
     <Compile Include="Services\AitImportFinalizer\TocCleanerService.cs" />
+    <Compile Include="Services\AitImportFinalizer\VariableUpdaterService.cs" />
     <Compile Include="Services\AtlasDocGenerationService.cs" />
     <Compile Include="Services\Checklist\ChecklisstGeneratorService.cs" />
     <Compile Include="Services\FileNameSanitizer.cs" />
@@ -99,6 +101,122 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Templates\AitResources\Images\Logos\E_Connect.png" />
+    <Content Include="Templates\AitResources\Images\Logos\E_Expert_QC.png" />
+    <Content Include="Templates\AitResources\Images\Logos\E_Manager.png" />
+    <Content Include="Templates\AitResources\Images\Logos\E_Qualiris.png" />
+    <Content Include="Templates\AitResources\Images\Logos\MonLogo.png" />
+    <Content Include="Templates\AitResources\Images\Logos\MonPdp.png" />
+    <Content Include="Templates\AitResources\Images\Logos\STAGO-Logoblock-Address-CORPORATE.png" />
+    <Content Include="Templates\AitResources\Images\Logos\Stago.png" />
+    <Content Include="Templates\AitResources\Images\Logos\sthemA4S1.png" />
+    <Content Include="Templates\AitResources\Images\Logos\sthemA601.png" />
+    <Content Include="Templates\AitResources\Images\Logos\sthemA801.png" />
+    <Content Include="Templates\AitResources\Images\Logos\sthemA_generique.png" />
+    <Content Include="Templates\AitResources\Images\Logos\sthemE_generique.png" />
+    <Content Include="Templates\AitResources\Images\Logos\sthemO201.png" />
+    <Content Include="Templates\AitResources\Images\Logos\sthemO301.png" />
+    <Content Include="Templates\AitResources\Images\Logos\sthemO_generique.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\action_sthem.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\AitResources\Images\Picto_doc\biohazardpetit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\AitResources\Images\Picto_doc\Bonhomme_inter_BT.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\AitResources\Images\Picto_doc\centre_of_gravity.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\customs.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\AitResources\Images\Picto_doc\LegalManufacturer.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multil_pic_pat_souris.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multil_pic_pat_touchscreen.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_ic_pat_emballage_complet.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\Multi_ic_PAT_fleche_logigrammePetite.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_picpat_sens_rotation_bobineau.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\MULTI_pic_PAT_Attention2020.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\Multi_pic_PAT_ATTENTION_doc.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_biorisks.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_ce.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_craint_humidite.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_craint_soleil.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_date_manufacture.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_direct_current.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_fabricant.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_fragile.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_ifu.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\MULTI_pic_PAT_Information2020.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_ivd.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_limites_humidite.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_limites_pression_atmospherique.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_limites_temperature.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_limite_gerbage.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_lot.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_ne_pas_empiler.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_orientation_verticale.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_performances_ivd.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_PAT_poubelle.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\MULTI_pic_PAT_precaution2020.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_recyclage_blanc.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_ref.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_sn.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_alternatif.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_altitude_max.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_arret.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_attention_blanc_droit.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_bois_naturel.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_carton_ondule.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_contenu_suffisant.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_csa.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_danger_electrique_blanc.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_gants_protection_oblig.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\Multi_symb_PAT_Information.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_liquide_refroidissement.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_magnet_blanc.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_magnet_jaune.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_main_interdite.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_marche.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_pict_cleaner.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_pict_sale.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_poubelle_barree_sans_barre.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_rohs_sjt11364.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_rx_only.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_sablier.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_surface_chaude_blanc.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_terre.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_traite_nimp15.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_underwriters_lab.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_syn_pat_ne_pas_regarder_faisceau.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\multi_syn_pat_rayonnement_laser.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\on_off_symbol.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\pat_usine_noire_adressestago.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\Picto CE.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\Picto Factory Black.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\Picto_IVD.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\poubellebarreepetite.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\PRECAUTIONpt_025.jpg" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\resultat_sthem.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\Rx_only.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_ecran_tactile.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_not_tropical.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_port_serie.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_rj45.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_usb.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_usb_clavier.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\Sablier_BT.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\symb_pat_emballage_endommage.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\S_ic_PAT_Risque ESD_Logo.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_ch-rep.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_gloves_513506.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_goggles_513506.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_pat_terre_sthemo.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_sharp.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_ukcablackfill.png" />
+    <Content Include="Templates\AitResources\Images\Picto_doc\usage_uniquepetit.png" />
     <None Include="Templates\AitResources\Commun Stago\Avertissements\disclaimer_TECH_representations_visuelles.flsnp" />
     <None Include="Templates\AitResources\Commun Stago\Avertissements\div_attention_bidon_sale_precau_d%27usage.flsnp" />
     <None Include="Templates\AitResources\Commun Stago\Avertissements\div_attention_billes_usage_unique.flsnp" />
@@ -170,8 +288,12 @@
     <None Include="Templates\AitResources\Commun Stago\Avertissements_chap1\voir_MRef_DM.flsnp" />
     <None Include="Templates\AitResources\Commun Stago\Bulletins\.folder.props" />
     <None Include="Templates\AitResources\Commun Stago\Bulletins\Temps_interv_legende.flsnp" />
-    <None Include="Templates\AitResources\Commun Stago\Copyrights\Copyrights.flsnp" />
-    <None Include="Templates\AitResources\Commun Stago\Copyrights\Disclaimer_tech.flsnp" />
+    <None Include="Templates\AitResources\Commun Stago\Copyrights\Copyrights.flsnp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Templates\AitResources\Commun Stago\Copyrights\Disclaimer_tech.flsnp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Templates\AitResources\Commun Stago\Copyrights\PdP_Addenda.flsnp" />
     <None Include="Templates\AitResources\Commun Stago\Divers\disclaimer_représentations_visuelles.flsnp" />
     <None Include="Templates\AitResources\Commun Stago\Divers\div_info_x_indice_en_vigueur.flsnp" />
@@ -469,7 +591,115 @@
     <None Include="Templates\AitResources\Images\Icon-Popular-Topics.png.props" />
     <None Include="Templates\AitResources\Images\Icon-Videos.png.props" />
     <None Include="Templates\AitResources\Images\Logo.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\.folder.props" />
+    <None Include="Templates\AitResources\Images\Logos\E_Connect.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\E_Expert_QC.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\E_Manager.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\E_Qualiris.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\MonLogo.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\MonPdp.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\STAGO-Logoblock-Address-CORPORATE.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\Stago.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\sthemA4S1.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\sthemA601.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\sthemA801.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\sthemA_generique.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\sthemE_generique.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\sthemO201.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\sthemO301.png.props" />
+    <None Include="Templates\AitResources\Images\Logos\sthemO_generique.png.props" />
     <None Include="Templates\AitResources\Images\Minus.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\.folder.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\action_sthem.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\biohazardpetit.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\Bonhomme_inter_BT.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\centre_of_gravity.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\customs.jpg.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\LegalManufacturer.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multil_pic_pat_souris.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multil_pic_pat_touchscreen.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_ic_pat_emballage_complet.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\Multi_ic_PAT_fleche_logigrammePetite.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_picpat_sens_rotation_bobineau.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\MULTI_pic_PAT_Attention2020.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\Multi_pic_PAT_ATTENTION_doc.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_biorisks.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_ce.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_craint_humidite.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_craint_soleil.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_date_manufacture.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_direct_current.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_fabricant.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_fragile.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_ifu.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\MULTI_pic_PAT_Information2020.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_ivd.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_limites_humidite.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_limites_pression_atmospherique.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_limites_temperature.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_limite_gerbage.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_lot.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_ne_pas_empiler.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_orientation_verticale.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_performances_ivd.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_PAT_poubelle.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\MULTI_pic_PAT_precaution2020.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_recyclage_blanc.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_ref.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_pic_pat_sn.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_alternatif.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_altitude_max.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_arret.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_attention_blanc_droit.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_bois_naturel.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_carton_ondule.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_contenu_suffisant.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_csa.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_danger_electrique_blanc.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_gants_protection_oblig.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\Multi_symb_PAT_Information.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_liquide_refroidissement.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_magnet_blanc.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_magnet_jaune.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_main_interdite.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_marche.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_pict_cleaner.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_pict_sale.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_poubelle_barree_sans_barre.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_rohs_sjt11364.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_rx_only.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_sablier.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_surface_chaude_blanc.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_terre.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_traite_nimp15.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_symb_pat_underwriters_lab.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_syn_pat_ne_pas_regarder_faisceau.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\multi_syn_pat_rayonnement_laser.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\on_off_symbol.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\pat_usine_noire_adressestago.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\Picto CE.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\Picto Factory Black.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\Picto_IVD.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\poubellebarreepetite.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\PRECAUTIONpt_025.jpg.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\resultat_sthem.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\Rx_only.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_ecran_tactile.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_not_tropical.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_port_serie.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_rj45.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_usb.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\r_pic_pat_usb_clavier.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\Sablier_BT.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\symb_pat_emballage_endommage.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\S_ic_PAT_Risque ESD_Logo.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_ch-rep.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_gloves_513506.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_goggles_513506.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_pat_terre_sthemo.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_sharp.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\s_symb_pat_ukcablackfill.png.props" />
+    <None Include="Templates\AitResources\Images\Picto_doc\usage_uniquepetit.png.props" />
     <None Include="Templates\AitResources\Images\Plus.png.props" />
     <None Include="Templates\AitResources\Images\TEMPLATE_BT_INST_xxxx_Y\.folder.props" />
     <None Include="Templates\AitResources\PageLayouts\.folder.props" />
@@ -518,9 +748,15 @@
     <Content Include="Templates\AitResources\Snippets\Select-Answers.flsnp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Templates\AitResources\VariableSets\General.flvar" />
-    <None Include="Templates\AitResources\VariableSets\Variables_BT.flvar" />
-    <None Include="Templates\AitResources\VariableSets\Variables_Produits et Instruments.flvar" />
+    <Content Include="Templates\AitResources\VariableSets\General.flvar">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\AitResources\VariableSets\Variables_BT.flvar">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\AitResources\VariableSets\Variables_Produits et Instruments.flvar">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Templates\AitResources\Commun Stago\Addenda\Historique_Addenda.htm" />

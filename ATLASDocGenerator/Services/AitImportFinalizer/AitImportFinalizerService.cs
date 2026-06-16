@@ -9,12 +9,15 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
         private readonly AitDocumentProfileFactory _profileFactory;
         private readonly TocCleanerService _tocCleanerService;
         private readonly ResourceCopyService _resourceCopyService;
-
+        private readonly TargetConfiguratorService _targetConfiguratorService;
+        private readonly VariableSetUpdaterService _variableSetUpdaterService;
         public AitImportFinalizerService()
         {
             _profileFactory = new AitDocumentProfileFactory();
             _tocCleanerService = new TocCleanerService();
             _resourceCopyService = new ResourceCopyService();
+            _targetConfiguratorService = new TargetConfiguratorService();
+            _variableSetUpdaterService = new VariableSetUpdaterService();
         }
 
         public AitImportFinalizerReport Run(AitImportFinalizerOptions options)
@@ -63,6 +66,30 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 catch (Exception ex)
                 {
                     report.Errors.Add("Resource copy failed: " + ex.Message);
+                }
+            }
+            if (options.UpdateVariables)
+            {
+                try
+                {
+                    _variableSetUpdaterService.UpdateGeneralVariables(options.ProjectRootPath, options, profile);
+                    report.VariablesUpdated = true;
+                }
+                catch (Exception ex)
+                {
+                    report.Errors.Add("Variable update failed: " + ex.Message);
+                }
+            }
+            if (options.ConfigureTarget)
+            {
+                try
+                {
+                    _targetConfiguratorService.ConfigureTarget(options.TargetPath, options.TocPath, profile);
+                    report.TargetConfigured = true;
+                }
+                catch (Exception ex)
+                {
+                    report.Errors.Add("Target configuration failed: " + ex.Message);
                 }
             }
 
