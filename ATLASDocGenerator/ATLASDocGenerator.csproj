@@ -89,7 +89,7 @@
     <Compile Include="Services\AitImportFinalizer\TocCleanerService.cs" />
     <Compile Include="Services\AitImportFinalizer\VariableUpdaterService.cs" />
     <Compile Include="Services\AtlasDocGenerationService.cs" />
-    <Compile Include="Services\Checklist\ChecklisstGeneratorService.cs" />
+    <Compile Include="Services\Checklist\ChecklistGeneratorService.cs" />
     <Compile Include="Services\FileNameSanitizer.cs" />
     <Compile Include="Services\TargetDuplicator.cs" />
     <Compile Include="Services\TocDuplicator.cs" />

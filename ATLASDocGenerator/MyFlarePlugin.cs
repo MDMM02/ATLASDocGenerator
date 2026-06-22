@@ -235,6 +235,15 @@ namespace ATLASDocGenerator
                 ChecklistGeneratorService service = new ChecklistGeneratorService();
                 int count = service.GenerateChecklistFromActiveDocument(activeDocument);
 
+                string generatedFilePath = service.LastGeneratedFilePath;
+
+                activeDocument.Close();
+
+                if (!string.IsNullOrEmpty(generatedFilePath))
+                {
+                    _editorContext.OpenDocument(generatedFilePath, EditorView.Xml);
+                }
+
                 MessageBox.Show(
                     "Checklist generated successfully.\n\nSections found: " + count,
                     "ATLAS Checklist Generator",
@@ -245,7 +254,7 @@ namespace ATLASDocGenerator
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Checklist generation failed:\n\n" + ex.Message,
+                    "Checklist generation failed:\n\n" + ex.ToString(),
                     "ATLAS Checklist Generator",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
