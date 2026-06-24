@@ -164,6 +164,7 @@ namespace ATLASDocGenerator.Services.Checklist
             XElement wrapper = new XElement(
                 "div",
                 new XAttribute("class", ChecklistClass),
+                new XAttribute("style", "page-break-before: always; break-before:page;"),
                 new XElement(
                     "p",
                     new XAttribute("class", "atlas-checklist-title"),
@@ -190,7 +191,7 @@ namespace ATLASDocGenerator.Services.Checklist
                     new XElement(
                         "p",
                         new XAttribute("style", "margin-bottom: 6px;"),
-                        "[ ] OK     [ ] NOK     [ ] N/A"
+                        "OK [ ]          NOK [ ]           N/A [ ] "
                     ),
                     new XElement(
                         "p",
