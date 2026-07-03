@@ -8,13 +8,18 @@ namespace ATLASDocGenerator.Models
         public CleanupReport()
         {
             StartedAt = DateTime.Now;
+
             Errors = new List<string>();
             Warnings = new List<string>();
+
             ActionResultDetectionDetails = new List<string>();
             BulletListTransformationDetails = new List<string>();
             CalloutTransformationDetails = new List<string>();
             FigureTransformationDetails = new List<string>();
             StyleCleanupDetails = new List<string>();
+
+            IhmClassOccurrences = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            IhmFilesByClass = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
         }
 
         public DateTime StartedAt { get; set; }
@@ -62,5 +67,28 @@ namespace ATLASDocGenerator.Models
         public List<string> FigureTransformationDetails { get; set; }
 
         public List<string> StyleCleanupDetails { get; set; }
+
+        public Dictionary<string, int> IhmClassOccurrences { get; set; }
+
+        public Dictionary<string, HashSet<string>> IhmFilesByClass { get; set; }
+
+        public void AddIhmClassOccurrence(string className, string filePath)
+        {
+            if (string.IsNullOrWhiteSpace(className))
+                return;
+
+            IhmItemsDetected++;
+
+            if (!IhmClassOccurrences.ContainsKey(className))
+                IhmClassOccurrences[className] = 0;
+
+            IhmClassOccurrences[className]++;
+
+            if (!IhmFilesByClass.ContainsKey(className))
+                IhmFilesByClass[className] = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            if (!string.IsNullOrWhiteSpace(filePath))
+                IhmFilesByClass[className].Add(filePath);
+        }
     }
 }

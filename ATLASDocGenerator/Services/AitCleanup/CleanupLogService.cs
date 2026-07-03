@@ -1,7 +1,8 @@
-﻿using System;
+﻿using ATLASDocGenerator.Models;
+using System;
 using System.IO;
+using System.Linq;
 using System.Text;
-using ATLASDocGenerator.Models;
 
 namespace ATLASDocGenerator.Services.AitCleanup
 {
@@ -141,6 +142,9 @@ namespace ATLASDocGenerator.Services.AitCleanup
                     log.AppendLine("- " + detail);
                 }
             }
+            WriteIhmDiagnostics(log, report);
+            log.AppendLine();
+
             log.AppendLine();
             log.AppendLine("WARNINGS");
             log.AppendLine("------------------------------");
@@ -184,7 +188,33 @@ namespace ATLASDocGenerator.Services.AitCleanup
 
             return logPath;
         }
+        private void WriteIhmDiagnostics(StringBuilder log, CleanupReport report)
+        {
+            log.AppendLine();
+            log.AppendLine("IHM / TRADIHM DIAGNOSTIC DETAILS");
+            log.AppendLine("------------------------------");
 
+            if (report.IhmClassOccurrences == null || report.IhmClassOccurrences.Count == 0)
+            {
+                log.AppendLine("No IHM / TradIHM class detected.");
+                return;
+            }
+
+            log.AppendLine("Classes detected:");
+
+            foreach (var item in report.IhmClassOccurrences.OrderByDescending(x => x.Value))
+            {
+                log.AppendLine("- " + item.Key + " : " + item.Value + " occurrence(s)");
+
+                if (report.IhmFilesByClass != null && report.IhmFilesByClass.ContainsKey(item.Key))
+                {
+                    foreach (string filePath in report.IhmFilesByClass[item.Key].OrderBy(x => x))
+                    {
+                        log.AppendLine("    > " + filePath);
+                    }
+                }
+            }
+        }
         private string YesNo(bool value)
         {
             return value ? "Yes" : "No";

@@ -14,6 +14,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
         private readonly CalloutTransformer _calloutTransformer;
         private readonly FigureTransformer _figureTransformer;
         private readonly SimpleStyleCleanupTransformer _simpleStyleCleanupTransformer;
+        private readonly IhmDiagnosticService _ihmDiagnosticService;
 
         public AitCleanupService()
         {
@@ -25,6 +26,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             _calloutTransformer = new CalloutTransformer();
             _figureTransformer = new FigureTransformer();
             _simpleStyleCleanupTransformer = new SimpleStyleCleanupTransformer();
+            _ihmDiagnosticService = new IhmDiagnosticService();
         }
 
 
@@ -60,6 +62,10 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 if (options.ProcessStyleCleanup)
                 {
                     _simpleStyleCleanupTransformer.Transform(files, report);
+                }
+                if (options.ProcessIhm)
+                {
+                    _ihmDiagnosticService.Analyze(files, report);
                 }
 
                 report.Warnings.Add("Selected cleanup transformations may have modified HTML files.");

@@ -34,12 +34,15 @@
     <Reference Include="B3.PluginAPIKit, Version=21.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files\MadCap Software\MadCap Flare 21\Flare.app\B3.PluginAPIKit.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
@@ -81,6 +84,9 @@
     <Compile Include="Services\AitCleanup\CleanupLogService.cs" />
     <Compile Include="Services\AitCleanup\FigureTransformer.cs" />
     <Compile Include="Services\AitCleanup\HtmlFileScanner.cs" />
+    <Compile Include="Services\AitCleanup\IhmDiagnosticService.cs" />
+    <Compile Include="Services\AitCleanup\IhmVariableJsonGenerator.cs" />
+    <Compile Include="Services\AitCleanup\IhmVariableMatcher.cs" />
     <Compile Include="Services\AitCleanup\SimpleStyleCleanupTransformer.cs" />
     <Compile Include="Services\AitImportFinalizer\AitDocumentProfileFactory.cs" />
     <Compile Include="Services\AitImportFinalizer\AitImportFinalizerService.cs" />
