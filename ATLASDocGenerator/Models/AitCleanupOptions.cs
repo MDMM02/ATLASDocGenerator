@@ -19,5 +19,7 @@
         public bool ProcessStyleCleanup { get; set; }
 
         public bool ProcessIhm { get; set; }
+
+        public string SourceXmlPath { get; set; }
     }
 }

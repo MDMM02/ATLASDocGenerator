@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
 using System.Xml.Linq;
 
@@ -47,9 +49,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
 
                 IEnumerable<XElement> spans = document
                     .Descendants()
-                    .Where(e =>
-                        string.Equals(e.Name.LocalName, "span", StringComparison.OrdinalIgnoreCase)
-                        && HasClass(e, SourceClassName))
+                    .Where(e => string.Equals(e.Name.LocalName, "span", StringComparison.OrdinalIgnoreCase))
                     .ToList();
 
                 foreach (XElement span in spans)
@@ -61,21 +61,19 @@ namespace ATLASDocGenerator.Services.AitCleanup
 
                     if (ihmValues.Contains(text))
                     {
-                        ReplaceClass(span, SourceClassName, IhmTargetClassName);
+                        SetClass(span, IhmTargetClassName);
                         ihmTransformed++;
-                    }
-                    else
-                    {
-                        ReplaceClass(span, SourceClassName, DefaultTargetClassName);
-                        defaultMapped++;
+
+                        report.IhmVariablesMatched++;
+
+                        report.IhmVariableMatchingDetails.Add(
+                            Path.GetFileName(filePath) + " | IHM: \"" + text + "\"");
                     }
                 }
 
                 if (ihmTransformed > 0 || defaultMapped > 0)
                 {
                     document.Save(filePath);
-
-                    report.IhmItemsDetected += ihmTransformed;
 
                     report.Warnings.Add(
                         Path.GetFileName(filePath)
@@ -90,7 +88,13 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 report.Warnings.Add("IHM variable matching skipped file: " + filePath + " - " + ex.Message);
             }
         }
+        private void SetClass(XElement element, string className)
+        {
+            if (element == null)
+                return;
 
+            element.SetAttributeValue("class", className);
+        }
         private HashSet<string> LoadIhmValues(string flareProjectRootPath, CleanupReport report)
         {
             if (string.IsNullOrWhiteSpace(flareProjectRootPath))
@@ -166,11 +170,18 @@ namespace ATLASDocGenerator.Services.AitCleanup
             if (string.IsNullOrWhiteSpace(value))
                 return string.Empty;
 
-            return value
+            string text = WebUtility.HtmlDecode(value);
+
+            text = text
+                .Replace("\u00A0", " ")
                 .Replace("\r", " ")
                 .Replace("\n", " ")
                 .Replace("\t", " ")
                 .Trim();
+
+            text = Regex.Replace(text, @"\s+", " ");
+
+            return text;
         }
     }
 }

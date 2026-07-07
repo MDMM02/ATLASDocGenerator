@@ -145,6 +145,9 @@ namespace ATLASDocGenerator.Services.AitCleanup
             WriteIhmDiagnostics(log, report);
             log.AppendLine();
 
+            WriteIhmVariableMatchingDetails(log, report);
+            log.AppendLine();
+
             log.AppendLine();
             log.AppendLine("WARNINGS");
             log.AppendLine("------------------------------");
@@ -213,6 +216,25 @@ namespace ATLASDocGenerator.Services.AitCleanup
                         log.AppendLine("    > " + filePath);
                     }
                 }
+            }
+        }
+        private void WriteIhmVariableMatchingDetails(StringBuilder log, CleanupReport report)
+        {
+            log.AppendLine();
+            log.AppendLine("IHM VARIABLE MATCHING DETAILS");
+            log.AppendLine("------------------------------");
+            log.AppendLine("IHM variables matched: " + report.IhmVariablesMatched);
+            log.AppendLine("a_noir_gras_char mapped to a_gras_car: " + report.IhmVariablesMappedToBold);
+
+            if (report.IhmVariableMatchingDetails == null || report.IhmVariableMatchingDetails.Count == 0)
+            {
+                log.AppendLine("No IHM variable matched in HTML.");
+                return;
+            }
+
+            foreach (string detail in report.IhmVariableMatchingDetails)
+            {
+                log.AppendLine("- " + detail);
             }
         }
         private string YesNo(bool value)

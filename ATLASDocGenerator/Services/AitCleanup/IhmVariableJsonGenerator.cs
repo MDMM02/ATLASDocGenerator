@@ -18,9 +18,6 @@ namespace ATLASDocGenerator.Services.AitCleanup
             if (!File.Exists(sourceXmlPath))
                 throw new FileNotFoundException("Source XML file not found.", sourceXmlPath);
 
-            if (string.IsNullOrWhiteSpace(flareProjectRootPath))
-                throw new ArgumentException("Flare project root path is empty.");
-
             XDocument document = XDocument.Load(sourceXmlPath);
 
             string ihmStyleId = FindIhmStyleId(document);
@@ -28,12 +25,10 @@ namespace ATLASDocGenerator.Services.AitCleanup
             if (string.IsNullOrWhiteSpace(ihmStyleId))
                 throw new Exception("Style A_ihm was not found in the Author-it XML.");
 
-            Dictionary<string, int> items = ExtractIhmTexts(document, ihmStyleId);
+            Dictionary<string, int> ihmTexts = ExtractIhmTexts(document, ihmStyleId);
 
             string atlasFolder = Path.Combine(flareProjectRootPath, "Project", "ATLAS");
-
-            if (!Directory.Exists(atlasFolder))
-                Directory.CreateDirectory(atlasFolder);
+            Directory.CreateDirectory(atlasFolder);
 
             string outputPath = Path.Combine(atlasFolder, "IhmVariables.json");
 
@@ -43,7 +38,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 StyleName = "A_ihm",
                 StyleId = ihmStyleId,
                 GeneratedAt = DateTime.Now.ToString("s"),
-                Items = items
+                Items = ihmTexts
                     .OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase)
                     .Select(x => new IhmVariableJsonItem
                     {
@@ -63,57 +58,37 @@ namespace ATLASDocGenerator.Services.AitCleanup
 
         private string FindIhmStyleId(XDocument document)
         {
-            XElement styleElement = document
+            XElement style = document
                 .Descendants()
                 .FirstOrDefault(e =>
-                    string.Equals((string)e.Attribute("name"), "A_ihm", StringComparison.OrdinalIgnoreCase)
-                    || string.Equals((string)e.Attribute("Name"), "A_ihm", StringComparison.OrdinalIgnoreCase));
+                    string.Equals(e.Name.LocalName, "Style", StringComparison.OrdinalIgnoreCase)
+                    && e.Descendants().Any(d =>
+                        (string.Equals(d.Name.LocalName, "Description", StringComparison.OrdinalIgnoreCase)
+                         || string.Equals(d.Name.LocalName, "StyleName", StringComparison.OrdinalIgnoreCase)
+                         || string.Equals(d.Name.LocalName, "PrintStyleName", StringComparison.OrdinalIgnoreCase))
+                        && string.Equals((d.Value ?? "").Trim(), "A_ihm", StringComparison.OrdinalIgnoreCase)));
 
-            if (styleElement == null)
-            {
-                styleElement = document
-                    .Descendants()
-                    .FirstOrDefault(e =>
-                        string.Equals(e.Value.Trim(), "A_ihm", StringComparison.OrdinalIgnoreCase));
-            }
-
-            if (styleElement == null)
+            if (style == null)
                 return null;
 
-            XAttribute idAttribute =
-                styleElement.Attribute("id") ??
-                styleElement.Attribute("ID") ??
-                styleElement.Attribute("Id");
+            XElement idElement = style
+                .Descendants()
+                .FirstOrDefault(e => string.Equals(e.Name.LocalName, "ID", StringComparison.OrdinalIgnoreCase));
 
-            if (idAttribute != null)
-                return idAttribute.Value;
-
-            XElement parentWithId = styleElement
-                .AncestorsAndSelf()
-                .FirstOrDefault(e =>
-                    e.Attribute("id") != null ||
-                    e.Attribute("ID") != null ||
-                    e.Attribute("Id") != null);
-
-            if (parentWithId == null)
-                return null;
-
-            return ((string)parentWithId.Attribute("id"))
-                ?? ((string)parentWithId.Attribute("ID"))
-                ?? ((string)parentWithId.Attribute("Id"));
+            return idElement == null ? null : idElement.Value.Trim();
         }
 
         private Dictionary<string, int> ExtractIhmTexts(XDocument document, string ihmStyleId)
         {
             Dictionary<string, int> results = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
-            IEnumerable<XElement> characterStyleElements = document
+            IEnumerable<XElement> ihmElements = document
                 .Descendants()
                 .Where(e =>
                     string.Equals(e.Name.LocalName, "cs", StringComparison.OrdinalIgnoreCase)
                     && string.Equals((string)e.Attribute("id"), ihmStyleId, StringComparison.OrdinalIgnoreCase));
 
-            foreach (XElement element in characterStyleElements)
+            foreach (XElement element in ihmElements)
             {
                 string text = NormalizeText(element.Value);
 
@@ -147,69 +122,38 @@ namespace ATLASDocGenerator.Services.AitCleanup
             int indent = 0;
             bool quoted = false;
 
-            for (int i = 0; i < json.Length; i++)
+            foreach (char ch in json)
             {
-                char ch = json[i];
-
-                switch (ch)
+                if (ch == '"')
                 {
-                    case '"':
-                        pretty.Append(ch);
-                        bool escaped = false;
-                        int index = i;
-                        while (index > 0 && json[--index] == '\\')
-                            escaped = !escaped;
-
-                        if (!escaped)
-                            quoted = !quoted;
-
-                        break;
-
-                    case '{':
-                    case '[':
-                        pretty.Append(ch);
-
-                        if (!quoted)
-                        {
-                            pretty.AppendLine();
-                            pretty.Append(new string(' ', ++indent * 2));
-                        }
-
-                        break;
-
-                    case '}':
-                    case ']':
-                        if (!quoted)
-                        {
-                            pretty.AppendLine();
-                            pretty.Append(new string(' ', --indent * 2));
-                        }
-
-                        pretty.Append(ch);
-                        break;
-
-                    case ',':
-                        pretty.Append(ch);
-
-                        if (!quoted)
-                        {
-                            pretty.AppendLine();
-                            pretty.Append(new string(' ', indent * 2));
-                        }
-
-                        break;
-
-                    case ':':
-                        pretty.Append(ch);
-
-                        if (!quoted)
-                            pretty.Append(" ");
-
-                        break;
-
-                    default:
-                        pretty.Append(ch);
-                        break;
+                    pretty.Append(ch);
+                    quoted = !quoted;
+                }
+                else if (!quoted && (ch == '{' || ch == '['))
+                {
+                    pretty.Append(ch);
+                    pretty.AppendLine();
+                    pretty.Append(new string(' ', ++indent * 2));
+                }
+                else if (!quoted && (ch == '}' || ch == ']'))
+                {
+                    pretty.AppendLine();
+                    pretty.Append(new string(' ', --indent * 2));
+                    pretty.Append(ch);
+                }
+                else if (!quoted && ch == ',')
+                {
+                    pretty.Append(ch);
+                    pretty.AppendLine();
+                    pretty.Append(new string(' ', indent * 2));
+                }
+                else if (!quoted && ch == ':')
+                {
+                    pretty.Append(": ");
+                }
+                else
+                {
+                    pretty.Append(ch);
                 }
             }
 

@@ -15,6 +15,8 @@ namespace ATLASDocGenerator.Services.AitCleanup
         private readonly FigureTransformer _figureTransformer;
         private readonly SimpleStyleCleanupTransformer _simpleStyleCleanupTransformer;
         private readonly IhmDiagnosticService _ihmDiagnosticService;
+        private readonly IhmVariableJsonGenerator _ihmVariableJsonGenerator;
+        private readonly IhmVariableMatcher _ihmVariableMatcher;
 
         public AitCleanupService()
         {
@@ -27,6 +29,8 @@ namespace ATLASDocGenerator.Services.AitCleanup
             _figureTransformer = new FigureTransformer();
             _simpleStyleCleanupTransformer = new SimpleStyleCleanupTransformer();
             _ihmDiagnosticService = new IhmDiagnosticService();
+            _ihmVariableJsonGenerator = new IhmVariableJsonGenerator();
+            _ihmVariableMatcher = new IhmVariableMatcher();
         }
 
 
@@ -66,6 +70,21 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 if (options.ProcessIhm)
                 {
                     _ihmDiagnosticService.Analyze(files, report);
+
+                    if (!string.IsNullOrWhiteSpace(options.SourceXmlPath))
+                    {
+                        string jsonPath = _ihmVariableJsonGenerator.Generate(
+                            options.SourceXmlPath,
+                            options.TargetPath);
+
+                        report.Warnings.Add("IHM variable JSON generated: " + jsonPath);
+                    }
+                    else
+                    {
+                        report.Warnings.Add("IHM variable JSON generation skipped: no Author-it XML source selected.");
+                    }
+
+                    _ihmVariableMatcher.Transform(files, report, options.TargetPath);
                 }
 
                 report.Warnings.Add("Selected cleanup transformations may have modified HTML files.");

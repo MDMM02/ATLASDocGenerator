@@ -17,6 +17,7 @@ namespace ATLASDocGenerator.Models
             CalloutTransformationDetails = new List<string>();
             FigureTransformationDetails = new List<string>();
             StyleCleanupDetails = new List<string>();
+            IhmVariableMatchingDetails = new List<string>();
 
             IhmClassOccurrences = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
             IhmFilesByClass = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
@@ -71,6 +72,9 @@ namespace ATLASDocGenerator.Models
         public Dictionary<string, int> IhmClassOccurrences { get; set; }
 
         public Dictionary<string, HashSet<string>> IhmFilesByClass { get; set; }
+        public int IhmVariablesMatched { get; set; }
+        public int IhmVariablesMappedToBold { get; set; }
+        public List<string> IhmVariableMatchingDetails { get; set; }
 
         public void AddIhmClassOccurrence(string className, string filePath)
         {

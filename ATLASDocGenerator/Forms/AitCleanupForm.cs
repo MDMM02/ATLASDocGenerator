@@ -18,12 +18,17 @@ namespace ATLASDocGenerator.Forms
         private TextBox txtSelectedFolder;
         private Button btnBrowseFolder;
 
+        private TextBox txtSourceXmlPath;
+        private Button btnBrowseSourceXml;
+
         private CheckBox cbActionResults;
         private CheckBox cbBulletLists;
         private CheckBox cbCallouts;
         private CheckBox cbFigures;
         private CheckBox cbStyleCleanup;
         private CheckBox cbIhm;
+
+
 
         private Button btnRun;
         private Button btnCancel;
@@ -38,7 +43,7 @@ namespace ATLASDocGenerator.Forms
         {
             Text = "AIT Cleanup";
             Width = 620;
-            Height = 520;
+            Height = 600;
             StartPosition = FormStartPosition.CenterParent;
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -111,9 +116,33 @@ namespace ATLASDocGenerator.Forms
             btnBrowseFolder.Click += OnBrowseFolderClicked;
             scopeGroup.Controls.Add(btnBrowseFolder);
 
+            GroupBox xmlGroup = new GroupBox();
+            xmlGroup.Text = "Source XML Author-it";
+            xmlGroup.Location = new Point(20, 310);
+            xmlGroup.Size = new Size(560, 75);
+            Controls.Add(xmlGroup);
+
+            Label xmlLabel = new Label();
+            xmlLabel.Text = "XML source utilisé pour retrouver les variables IHM :";
+            xmlLabel.Location = new Point(15, 22);
+            xmlLabel.AutoSize = true;
+            xmlGroup.Controls.Add(xmlLabel);
+
+            txtSourceXmlPath = new TextBox();
+            txtSourceXmlPath.Location = new Point(15, 45);
+            txtSourceXmlPath.Width = 410;
+            xmlGroup.Controls.Add(txtSourceXmlPath);
+
+            btnBrowseSourceXml = new Button();
+            btnBrowseSourceXml.Text = "Parcourir...";
+            btnBrowseSourceXml.Location = new Point(435, 43);
+            btnBrowseSourceXml.Width = 100;
+            btnBrowseSourceXml.Click += OnBrowseSourceXmlClicked;
+            xmlGroup.Controls.Add(btnBrowseSourceXml);
+
             GroupBox cleanupGroup = new GroupBox();
             cleanupGroup.Text = "Traitements à appliquer";
-            cleanupGroup.Location = new Point(20, 310);
+            cleanupGroup.Location = new Point(20, 400);
             cleanupGroup.Size = new Size(560, 115);
             Controls.Add(cleanupGroup);
 
@@ -161,14 +190,14 @@ namespace ATLASDocGenerator.Forms
 
             btnRun = new Button();
             btnRun.Text = "Lancer";
-            btnRun.Location = new Point(385, 440);
+            btnRun.Location = new Point(385, 530);
             btnRun.Width = 90;
             btnRun.Click += OnRunClicked;
             Controls.Add(btnRun);
 
             btnCancel = new Button();
             btnCancel.Text = "Annuler";
-            btnCancel.Location = new Point(490, 440);
+            btnCancel.Location = new Point(490, 530);
             btnCancel.Width = 90;
             btnCancel.Click += OnCancelClicked;
             Controls.Add(btnCancel);
@@ -211,7 +240,19 @@ namespace ATLASDocGenerator.Forms
                 }
             }
         }
+        private void OnBrowseSourceXmlClicked(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Title = "Sélectionner le XML Author-it source";
+                dialog.Filter = "Fichiers XML (*.xml)|*.xml|Tous les fichiers (*.*)|*.*";
 
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    txtSourceXmlPath.Text = dialog.FileName;
+                }
+            }
+        }
         private void OnRunClicked(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtSelectedFolder.Text))
@@ -227,9 +268,10 @@ namespace ATLASDocGenerator.Forms
 
             AitCleanupOptions options = new AitCleanupOptions
             {
-                DocumentationType = rbUserDoc.Checked ? "Doc user / STR" : "Doc tech",
+                DocumentationType = rbUserDoc.Checked ? "Doc user " : "Doc tech",
                 Scope = rbWholeProject.Checked ? AitCleanupScope.WholeProject : AitCleanupScope.SelectedFolder,
                 TargetPath = txtSelectedFolder.Text,
+                SourceXmlPath = txtSourceXmlPath.Text,
                 ProcessActionResults = cbActionResults.Checked,
                 ProcessBulletLists = cbBulletLists.Checked,
                 ProcessCallouts = cbCallouts.Checked,
@@ -260,11 +302,24 @@ namespace ATLASDocGenerator.Forms
             summary.AppendLine("Log généré :");
             summary.AppendLine(report.LogFilePath);
 
+
             if (report.Errors.Count > 0)
             {
                 summary.AppendLine();
                 summary.AppendLine("Erreurs : " + report.Errors.Count);
                 summary.AppendLine("Consulte le log pour plus de détails.");
+            }
+            if (cbIhm.Checked && string.IsNullOrWhiteSpace(txtSourceXmlPath.Text))
+            {
+                DialogResult result = MessageBox.Show(
+                    "Aucun XML Author-it source n'a été sélectionné. Le cleanup IHM pourra seulement faire le diagnostic HTML, sans reconstruction des variables IHM.\n\nContinuer quand même ?",
+                    "AIT Cleanup - IHM",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result != DialogResult.Yes)
+                    return;
             }
 
             MessageBox.Show(
