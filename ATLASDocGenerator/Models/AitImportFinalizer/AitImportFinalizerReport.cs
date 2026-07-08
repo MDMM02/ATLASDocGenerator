@@ -2,6 +2,18 @@
 
 namespace ATLASDocGenerator.Models.AitImportFinalizer
 {
+    /// <summary>
+    ///  Rapport d'exécution de l'AIT Import Finalizer.
+    ///   Indique quelles étapes ont été exécutées avec succès et conserve les informations utiles pour afficher un bilan d'exécution:
+    ///     - profil utilisé ;
+    ///     - ressources copiées ;
+    ///     - TOC nettoyé ;
+    ///     - variables mises à jour ;
+    ///     - target configuré ;
+    ///     - cleanup lancé ;
+    ///     - avertissements et erreurs.
+    ///     
+    /// </summary>
     public class AitImportFinalizerReport
     {
         public string ProfileName { get; set; }

@@ -1,5 +1,10 @@
 ﻿namespace ATLASDocGenerator.Models.AitImportFinalizer
 {
+
+    /// <summary>
+    /// Regroupe les options de configuration pour l'importation AIT
+    /// Transmis aux services de finalisation pour savoir quel projet flare traiter, quelle toc et target modifier, variable à renseigner et étapes à exécuter.
+    /// </summary>
     public class AitImportFinalizerOptions
     {
         public AitDocumentType DocumentType { get; set; }

@@ -3,6 +3,20 @@ using System.Collections.Generic;
 
 namespace ATLASDocGenerator.Models
 {
+
+    /// <summary>
+    ///  Rapport d'exécution généré pendant le nettoyage AIT
+    ///  
+    /// Il centralise:
+    ///     - Compteurs de fichiers et transformations,
+    ///     - les erreurs et avertissements rencontrés,
+    ///     - les détails de détection Action/Résulat,
+    ///     - les détails de transformation des bullets, figures et styles,
+    ///     - Informations liées aux classes IHM et aux v   ri  bles.
+    ///     
+    /// Modèle utilisé progressivement par les serivces de nettoyage, puis pour afficher ou érire un bilan d'exécution.
+    /// 
+    /// </summary>
     public class CleanupReport
     {
         public CleanupReport()

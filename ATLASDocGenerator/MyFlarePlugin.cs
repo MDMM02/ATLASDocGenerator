@@ -7,6 +7,20 @@ using ATLASDocGenerator.Services.Checklist;
 
 namespace ATLASDocGenerator
 {
+    /// <summary>
+    /// 
+    /// Entrée principale du plugin MyFlarePlugin.
+    /// Classe chargée par MadCap Flare grâce à son API de plug-in.
+    /// 
+    /// Responsabilités :
+    /// - mémoriser l'instance hôte de Flare ; 
+    /// - récupérer les contextes d'édition ou de navigation de Flare ; 
+    /// - créer l'onglet du ruban et les boutons ATLAS ; 
+    /// - ouvrir les formulaires appropriés ou lancer des commandes de haut niveau.
+    /// 
+    /// Toute la logique métier est déléguée à des services spécialisés (Forms, Commands, Services).
+    /// 
+    /// </summary>
     public class MyFlarePlugin : IPlugin
     {
         private IHost _host;
@@ -14,6 +28,7 @@ namespace ATLASDocGenerator
         private INavContext _navContext;
         private bool _activated;
 
+        // Indique si le plugin est activé ou non. Permet de ne pas exécuter certaines actions si le plugin est désactivé.
         public bool IsActivated
         {
             get { return _activated; }
@@ -39,11 +54,15 @@ namespace ATLASDocGenerator
             return "Adds an ATLAS tab and opens ATLAS documentation tools.";
         }
 
+        // Appelé par Flare pour initialiser le plugin. On y récupère l'instance hôte de Flare et on crée l'onglet du ruban.
+        // La récuperation du contexte s'effectue dans Execute().
         public void Initialize(IHost host)
         {
             _host = host;
         }
 
+        // Appelé par Flare qd l'utilisateur active le pluin.
+        // Récupère le contexte Flare et crée l'onglet du ruban et les boutons ATLAS.
         public void Execute()
         {
             try
@@ -80,7 +99,9 @@ namespace ATLASDocGenerator
                 _activated = false;
             }
         }
-
+        // Crée l'onglet du ruban ATLAS et les points d'entrée du plugin.
+        // Associe les boutons de l'interface utilisateur aux commandes correspondantes.
+        // La logique reste dans les formulaires et les services.
         private void CreateAtlasRibbon()
         {
             IRibbon ribbon = _navContext.GetRibbon();
