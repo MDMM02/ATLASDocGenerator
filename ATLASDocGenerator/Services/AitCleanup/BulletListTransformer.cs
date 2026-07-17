@@ -7,10 +7,33 @@ using ATLASDocGenerator.Models;
 
 namespace ATLASDocGenerator.Services.AitCleanup
 {
+    /// <summary>
+    /// Cette classe transforme les listes à puces importées.
+    /// Ds les fichiers importés les puces arrivent ss forme de paragraphes successifs avec des classes comme a_tiret, a_tiret_retrait_2 ou a_tiret_retrait_3.
+    /// 
+    /// Cette classe les convertit en vraies listes htm:
+    /// - ul pour la liste principale
+    /// -li pour chaque element de liste
+    /// - ul imbriquées pour les sous niveaux
+    /// 
+    /// Elle peut aussi regrouper un paragraphe d'introduction + courte liste ds un div.a_NOpagebreak pour éviter les coupures de page au build PDF.
+    /// </summary>
     public class BulletListTransformer
     {
         private const int NoPageBreakThreshold = 8;
-
+        /// <summary>
+        /// Lance la transformation des listes à puces sur tous les fichier .htm
+        /// Traitement:
+        /// 1. Charge chaque .htm comme XML
+        /// 2. Récupère les conteneurs qu ont directement des paragraphes de type puce
+        /// 3. Transforme les paragraphes a_tiret en vraies listes htm
+        /// 4. Crée éventuellement un bloc a_NOpagebreak si la liste est courte
+        /// 5. Sauvegarde le fichier si modif de faite
+        /// 6. Alimente le raport avec les compteurs et détails de transformation
+        /// </summary>
+        /// <param name="htmlFiles"></param> liste de fichier .htm à traiter
+        /// <param name="report"></param> Rapport de nettoyage à compléter
+        /// <exception cref="ArgumentNullException"></exception>
         public void Transform(IEnumerable<string> htmlFiles, CleanupReport report)
         {
             if (htmlFiles == null)
@@ -27,6 +50,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             {
                 try
                 {
+                    // Charge le fichier en conservant les espaces existants.
                     XDocument document = XDocument.Load(filePath, LoadOptions.PreserveWhitespace);
 
                     int bulletParagraphsInFile = 0;
@@ -35,6 +59,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
 
                     bool changed = false;
 
+                    // On cible uniquement les conteneurs qui ont directement des paragraphes de puce.
                     List<XElement> containers = document
                         .Descendants()
                         .Where(HasDirectBulletChild)
@@ -63,6 +88,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
                         report.BulletListsTransformed += bulletListsCreatedInFile;
                         report.NoPageBreakBlocksCreated += noPageBreakCreatedInFile;
 
+                        // Ligne de détail ajoutée au rapport final
                         string detail =
                             Path.GetFileName(filePath)
                             + " | bullet paragraphs: " + bulletParagraphsInFile
@@ -79,6 +105,19 @@ namespace ATLASDocGenerator.Services.AitCleanup
             }
         }
 
+        /// <summary>
+        ///  Transforme un conteneur htm qui contient directement des paragraphes de type puce.
+        ///  Cette méthode reconstruit les enfants du conteneur:
+        ///  - les paragraphes normaux sont conservés tels quels
+        ///  - les suites de paragraphes a_tiret sont regroupés dans une lsite ul
+        ///  - les paragraphes vides entre deux puces sont ignorés
+        ///  - une liste courte peut être regroupée avec son paragraphe d'introduction ds un div.a_NOpagebreak
+        /// </summary>
+        /// <param name="container"></param> Elément parent contenant les paragraphes à transformer
+        /// <param name="bulletParagraphsDetected"></param> Compteur de parag à puces détéctés
+        /// <param name="bulletListsCreated"></param> Compteur de listes créées
+        /// <param name="noPageBreakBlocksCreated"></param> Compteur des blocs a_NOpagebreak créés
+        /// <returns></returns> True si le conteneur a été modifié, sinon false
         private bool TransformContainer(
             XElement container,
             ref int bulletParagraphsDetected,
@@ -100,7 +139,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             while (index < children.Count)
             {
                 XElement current = children[index];
-
+                // Ignore les paragraphes vides placés juste avant une liste à puces
                 if (IsIgnorableEmptyParagraph(current) && HasNextBulletParagraph(children, index))
                 {
                     index++;
@@ -112,11 +151,11 @@ namespace ATLASDocGenerator.Services.AitCleanup
                     XNamespace ns = current.Name.Namespace;
 
                     List<XElement> bulletParagraphs = new List<XElement>();
-
+                    // Récupère toute la séquence de paragraphes de type puce
                     while (index < children.Count)
                     {
                         XElement nextElement = children[index];
-
+                        // Paragraphes vides au milieu d'une liste sont ignorés
                         if (IsIgnorableEmptyParagraph(nextElement))
                         {
                             index++;
@@ -131,14 +170,14 @@ namespace ATLASDocGenerator.Services.AitCleanup
                         bulletParagraphs.Add(nextElement);
                         index++;
                     }
-
+                    // Construit une vrai liste htm à partir des paragraphes AIT
                     XElement bulletList = BuildBulletList(ns, bulletParagraphs);
 
                     bulletParagraphsDetected += bulletParagraphs.Count;
                     bulletListsCreated++;
 
                     XElement introParagraph = null;
-
+                    // Si la liste est courte et précédée par un paragraphe d'introduction, on regroupe les deux ds un div.a_NOpagebreak
                     bool shouldWrapWithNoPageBreak =
                         bulletParagraphs.Count <= NoPageBreakThreshold
                         && TryPopIntroParagraph(newNodes, out introParagraph);
@@ -162,23 +201,35 @@ namespace ATLASDocGenerator.Services.AitCleanup
                     changed = true;
                     continue;
                 }
-
+                // Si l'élément n'est pas une puce, on le conserve tel quel
                 newNodes.Add(new XElement(current));
                 index++;
             }
 
             if (changed)
             {
+                // Remplace le contenu du conteneur par la nouvelle structure transformée
                 container.ReplaceNodes(newNodes);
             }
 
             return changed;
         }
 
+        /// <summary>
+        /// Construit une liste htm à partir des paragraphes de puces détectés.
+        /// Les niveaux sont determinés grâce aux classes AIT:
+        /// - niv 1: a_tiret
+        /// - niv 2: a_tiret_retrait_2
+        /// - niv 3: a_tiret_retrait_3
+        /// </summary>
+        /// <param name="ns"></param> namespace xml à conserver pour les nouveaux éléments
+        /// <param name="bulletParagraphs"></param> paragraphes de puce à transformer
+        /// <returns></returns> Liste ul structurée
         private XElement BuildBulletList(XNamespace ns, List<XElement> bulletParagraphs)
         {
             XElement rootList = new XElement(ns + "ul");
 
+            // Garde en mémoire le dernier li rencontré pour chaque niveau, permet d'ajouter les sous-listes au bon parent.
             Dictionary<int, XElement> lastListItemByLevel = new Dictionary<int, XElement>();
 
             foreach (XElement bulletParagraph in bulletParagraphs)
@@ -193,6 +244,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 XElement listItem = new XElement(ns + "li");
                 listItem.Add(CloneParagraphWithoutClass(bulletParagraph));
 
+                // Niveau 1: ajout d'une sous liste du dernier élément parent
                 if (level == 1 || !lastListItemByLevel.ContainsKey(level - 1))
                 {
                     rootList.Add(listItem);
@@ -211,7 +263,13 @@ namespace ATLASDocGenerator.Services.AitCleanup
 
             return rootList;
         }
-
+        /// <summary>
+        /// Récupère la sous liste ul existante d'un li, ou la crée si elle n'existe pas.
+        /// Utilisé pour construire les niveaux imbriqués des listes à puces.
+        /// </summary>
+        /// <param name="listItem"></param> Element li parent
+        /// <param name="ns"></param>
+        /// <returns></returns> sous liste ul existante ou nouvellement créée
         private XElement GetOrCreateNestedList(XElement listItem, XNamespace ns)
         {
             XElement nestedList = listItem
@@ -227,6 +285,12 @@ namespace ATLASDocGenerator.Services.AitCleanup
             return nestedList;
         }
 
+        /// <summary>
+        /// Supprime de la mémoire les niveaux plus profonds que le niveau courant.
+        /// Ex: si on revient d'un niv 3 vers un niv 1, les anciens parents de niveau 2 et 3 ne doivent plus être utilisés
+        /// </summary>
+        /// <param name="lastListItemByLevel"></param> Dictionnaire des derniers li par niveau
+        /// <param name="currentLevel"></param> niveau courant de la liste
         private void RemoveDeeperLevels(Dictionary<int, XElement> lastListItemByLevel, int currentLevel)
         {
             List<int> deeperLevels = lastListItemByLevel
@@ -240,6 +304,13 @@ namespace ATLASDocGenerator.Services.AitCleanup
             }
         }
 
+        /// <summary>
+        /// Récupère le paragraphe d'introduction situé juste avant une liste, puis le retire temporairement de la liste des nvx noeuds.
+        /// Ca permet de créer le bloc div.a_NOpagebreak contenant le paragraphe d'introduction + la liste
+        /// </summary>
+        /// <param name="newNodes"></param> Liste des noeuds deja reconstruits
+        /// <param name="introParagraph"></param> paragraphe d'introduction trouvé
+        /// <returns></returns> True si un paragraphe d'introduction valide a été trouvé, sinon false
         private bool TryPopIntroParagraph(List<XNode> newNodes, out XElement introParagraph)
         {
             introParagraph = null;
@@ -266,7 +337,12 @@ namespace ATLASDocGenerator.Services.AitCleanup
 
             return true;
         }
-
+        /// <summary>
+        /// Vérifie si un paragraphe peut être considéré comme une introduction de liste.
+        /// Un paragraphe d'introduction doit etre un paragraphe normal (ps une puce, A/R, figure...)
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns> True si le paragraphe peut servir d'introduction à une liste
         private bool IsIntroParagraph(XElement element)
         {
             if (!IsParagraph(element))
@@ -300,13 +376,18 @@ namespace ATLASDocGenerator.Services.AitCleanup
             return true;
         }
 
+        /// <summary>
+        /// Vérifie si un élément contient directement au moins un parag de type puce
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         private bool HasDirectBulletChild(XElement element)
         {
             return element
                 .Elements()
                 .Any(IsBulletParagraph);
         }
-
+        // Vérifie s'il existe un paragraphe de puce après l'index courant, parag vides ignorés pdnt cette recherche
         private bool HasNextBulletParagraph(List<XElement> children, int currentIndex)
         {
             for (int i = currentIndex + 1; i < children.Count; i++)
@@ -322,6 +403,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             return false;
         }
 
+        // Vérifie si un parag correspond à une puce AIT, les classes de puces commencent par a_tiret
         private bool IsBulletParagraph(XElement element)
         {
             if (!IsParagraph(element))
@@ -342,6 +424,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             return classes.Any(c => c.StartsWith("a_tiret", StringComparison.OrdinalIgnoreCase));
         }
 
+        // Détermine le niveau de retrait d'une puce (règles énoncées plus haut)
         private int GetBulletLevel(XElement element)
         {
             if (HasClass(element, "a_tiret_retrait_3"))
@@ -357,6 +440,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             return 1;
         }
 
+        // Vérifie si un parag peut être ignoré entre 2 puces pr éviter de casser la liste
         private bool IsIgnorableEmptyParagraph(XElement element)
         {
             if (!IsParagraph(element))
@@ -385,11 +469,13 @@ namespace ATLASDocGenerator.Services.AitCleanup
             return true;
         }
 
+        // Vérifie si l'élément XML est un paragraphe <p>
         private bool IsParagraph(XElement element)
         {
             return element.Name.LocalName.Equals("p", StringComparison.OrdinalIgnoreCase);
         }
 
+        // Clone un paragraphe et supprime son attribut class
         private XElement CloneParagraphWithoutClass(XElement paragraph)
         {
             XElement clone = new XElement(paragraph);
@@ -397,6 +483,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             return clone;
         }
 
+        // Vérifie si un élément XML possède une classe CSS donnée
         private bool HasClass(XElement element, string className)
         {
             XAttribute classAttribute = element.Attribute("class");

@@ -7,8 +7,33 @@ using ATLASDocGenerator.Models;
 
 namespace ATLASDocGenerator.Services.AitCleanup
 {
+
+    /// <summary>
+    /// 
+    /// Cette classe transforme les callouts importés
+    /// Les encadrés Information / Précaution / Attention (IPA) arrivent ss forme de tableaux avec une cellule contenant une icone et une cellule contenant le texte de l'encadré
+    /// 
+    /// Cette classe remplace ces tableaux par des div plus propres:
+    /// - div.a_Information
+    /// - div.a_Precaution
+    /// - div.a_Attention
+    /// Elle supprime les parag d'espacement inutiles placés avant les callouts
+    /// </summary>
     public class CalloutTransformer
     {
+        /// <summary>
+        /// Lance la transformation des callouts sur tous les fichiers htm fournis
+        /// Traitement:
+        /// 1. Charge chaque fichier htm comme doc xml
+        /// 2. Repère les conteneurs qui ont directement un tableau ou un parag d'espacement de callout
+        /// 3. Transforme les tableaux de callout en div avec la bonne classe
+        /// 4. Supprime les paragrpahes d'espacement inutiles avant les callouts
+        /// 5. Sauvegarde le fichier seulement si une mdoif a été faite
+        /// 6. Alimente le compteur
+        /// </summary>
+        /// <param name="htmlFiles"></param>
+        /// <param name="report"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public void Transform(IEnumerable<string> htmlFiles, CleanupReport report)
         {
             if (htmlFiles == null)
@@ -25,11 +50,12 @@ namespace ATLASDocGenerator.Services.AitCleanup
             {
                 try
                 {
+                    // Charge le fichier en conservant les espaces existants, évite de reformatter tout le fichier inutilement
                     XDocument document = XDocument.Load(filePath, LoadOptions.PreserveWhitespace);
 
                     int calloutsInFile = 0;
                     bool changed = false;
-
+                    // On cible uniquement les conteneurs qui ont directement un tableau ou un parag d'espacement lié aux callouts
                     List<XElement> containers = document
                         .Descendants()
                         .Where(HasDirectCalloutCandidate)
@@ -63,6 +89,19 @@ namespace ATLASDocGenerator.Services.AitCleanup
             }
         }
 
+        /// <summary>
+        /// Transforme un conteneur HTML qui contient directement des candidats callout.
+        /// 
+        /// Cette méthode reconstruit les enfants du conteneur :
+        /// - les paragraphes d'espacement avant callout sont supprimés
+        /// - les tableaux de callout sont remplacés par des div propres
+        /// - les autres éléments sont conservés tels quels
+        /// </summary>
+        /// <param name="container">Élément parent contenant les éléments à transformer.</param>
+        /// <param name="filePath">Chemin du fichier en cours, utilisé pour le rapport.</param>
+        /// <param name="report">Rapport de nettoyage à compléter.</param>
+        /// <param name="calloutsInFile">Compteur des callouts transformés dans le fichier.</param>
+        /// <returns>True si le conteneur a été modifié, sinon false.</returns>
         private bool TransformContainer(XElement container, string filePath, CleanupReport report, ref int calloutsInFile)
         {
             List<XElement> children = container.Elements().ToList();
@@ -80,7 +119,8 @@ namespace ATLASDocGenerator.Services.AitCleanup
             while (index < children.Count)
             {
                 XElement current = children[index];
-
+                
+                // Supprime les paragraphes d'espacement placés juste avant un tableau de callout
                 if (IsCalloutSpacingParagraph(current) && HasNextCalloutTable(children, index))
                 {
                     index++;
@@ -89,7 +129,8 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 }
 
                 XElement calloutDiv;
-
+                
+                // Si l'élément courant est un tableau de callout reconnu -> transforme en div IPA
                 if (TryBuildCalloutDiv(current, filePath, report, out calloutDiv))
                 {
                     newNodes.Add(calloutDiv);
@@ -98,7 +139,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
                     index++;
                     continue;
                 }
-
+                // Si élément pas concerné, alors on le laisse tel quel
                 newNodes.Add(new XElement(current));
                 index++;
             }
@@ -111,6 +152,15 @@ namespace ATLASDocGenerator.Services.AitCleanup
             return changed;
         }
 
+        /// <summary>
+        /// Tente de transformer un tableau htm en div.
+        /// On attend un tableau, au moins deux cellules, icone et texte
+        /// </summary>
+        /// <param name="table"></param> Elément potentiellement transformable en callout
+        /// <param name="filePath"></param>
+        /// <param name="report"></param>
+        /// <param name="calloutDiv"></param>Div de callout généréé si la transformation réussit.
+        /// <returns></returns>
         private bool TryBuildCalloutDiv(XElement table, string filePath, CleanupReport report, out XElement calloutDiv)
         {
             calloutDiv = null;
@@ -119,7 +169,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             {
                 return false;
             }
-
+            // Récupère la 1ere lignedu tableau
             XElement firstRow = table
                 .Descendants()
                 .FirstOrDefault(element => element.Name.LocalName.Equals("tr", StringComparison.OrdinalIgnoreCase));
@@ -128,7 +178,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             {
                 return false;
             }
-
+            // Repère les cellules de la 1ere ligne
             List<XElement> cells = firstRow
                 .Elements()
                 .Where(element =>
@@ -141,9 +191,10 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 return false;
             }
 
-            XElement iconCell = cells[0];
-            XElement contentCell = cells[1];
+            XElement iconCell = cells[0]; // Cellule qui contient l'icone
+            XElement contentCell = cells[1]; // Contient le texte
 
+            // Le tableau est considéré comme un callout seulement si la 1ere cellule contient une image (logique à changer?)
             XElement iconImage = iconCell
                 .Descendants()
                 .FirstOrDefault(element => element.Name.LocalName.Equals("img", StringComparison.OrdinalIgnoreCase));
@@ -155,6 +206,8 @@ namespace ATLASDocGenerator.Services.AitCleanup
 
             string iconSource = GetAttributeValue(iconImage, "src");
             bool usedFallback;
+
+            // Déterminela classe du callout à partir de l'icône ou du style du tableau
             string calloutClass = ResolveCalloutClass(iconSource, table, out usedFallback);
 
             XNamespace ns = table.Name.Namespace;
@@ -164,6 +217,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
 
             int contentCount = 0;
 
+            // Copie le contenu de la 2eme cellule ds la nouvelle div.
             foreach (XElement contentElement in contentCell.Elements())
             {
                 if (IsIgnorableEmptyParagraph(contentElement))
@@ -183,11 +237,11 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 report.Warnings.Add("Callout table ignored because no content was found: " + filePath);
                 return false;
             }
-
+            // Siicône pas reconnue,on garde une trace ds le rapport.
             if (usedFallback)
             {
                 report.Warnings.Add(
-                    "Callout icon not recognized, defaulted to a_Attention: "
+                    "Callout icon not recognized, defaulted to a_Information: "
                     + Path.GetFileName(filePath)
                     + " | icon src: "
                     + iconSource
@@ -197,7 +251,17 @@ namespace ATLASDocGenerator.Services.AitCleanup
             calloutDiv = div;
             return true;
         }
-
+        /// <summary>
+        /// Détermine la classe CSS à appliquer au callout
+        /// Détection qui se base sur:
+        /// - nom ou chemin de l'icône
+        /// - code couleurs ds le style du tableau
+        /// Si rien n'est reconnu, une classe par défaut est utilisée
+        /// </summary>
+        /// <param name="iconSource"></param>
+        /// <param name="table"></param>
+        /// <param name="usedFallback"></param>
+        /// <returns></returns> Class CSS du callout
         private string ResolveCalloutClass(string iconSource, XElement table, out bool usedFallback)
         {
             usedFallback = false;
@@ -205,7 +269,6 @@ namespace ATLASDocGenerator.Services.AitCleanup
             string tableStyle = GetAttributeValue(table, "style");
 
             // INFORMATION = bleu
-            // Exemple observé : Image5150.jpg avec pictogramme bleu.
             if (ContainsIgnoreCase(iconSource, "information")
                 || ContainsIgnoreCase(iconSource, "info")
                 || ContainsIgnoreCase(iconSource, "Image5150")
@@ -238,11 +301,11 @@ namespace ATLASDocGenerator.Services.AitCleanup
             {
                 return "a_Attention";
             }
-
+            // Classe information qui sert de filet de sauvetage
             usedFallback = true;
             return "a_Information";
         }
-
+        // Nettoie le contenu copié depuis la cellule de texte du callout
         private void CleanCalloutContentElement(XElement element)
         {
             if (IsParagraph(element) && !ShouldPreserveParagraphClass(element))
@@ -296,7 +359,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 }
             }
         }
-
+        // Indique i la classe d'un paragraphe doit être conservée ds le callout (tirets, A/R, images...)
         private bool ShouldPreserveParagraphClass(XElement element)
         {
             return IsBulletParagraph(element)
@@ -316,6 +379,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 .Any(child => IsCalloutSpacingParagraph(child) || IsTable(child));
         }
 
+        // Vérifie s'il existe un tableau de callout après l'index courant
         private bool HasNextCalloutTable(List<XElement> children, int currentIndex)
         {
             for (int i = currentIndex + 1; i < children.Count; i++)
@@ -331,6 +395,7 @@ namespace ATLASDocGenerator.Services.AitCleanup
             return false;
         }
 
+        // Vérifie si un élément est un tableau pouvant correspondre à un callout (contenir une image), logique à revoir
         private bool IsPotentialCalloutTable(XElement element)
         {
             if (!IsTable(element))
