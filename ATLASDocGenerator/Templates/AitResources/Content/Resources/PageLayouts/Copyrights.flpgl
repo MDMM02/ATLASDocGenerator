@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<PageStyles MadCap:conditions="Stago_Gestion.Contenu commun,Stago_Gestion.40_DoNotTranslate" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
-    <Page Name="Copyrights" Width="800" Height="800" Padding="20px" PageSize="A4" PageType="normal" PaddingLeft="15mm" PaddingRight="15mm" PaddingTop="15mm" PaddingBottom="15mm" BleedBottom="0" BleedLeft="0" BleedTop="0" BleedRight="0">
-        <Frame X="0px" Y="639px" Width="680px" Height="370px" Flow="body" Right="0px" Bottom="0px" />
-        <Frame X="3px" Y="5px" Width="7.011458cm" Height="2.010833cm" Right="412px" Bottom="928px" BackgroundImage="../Images/Picto_doc/LegalManufacturer.png" BackgroundRepeat="stretch" TextAlign="left" VerticalAlign="top" Anchors="Left,Top" />
-    </Page>
-</PageStyles>

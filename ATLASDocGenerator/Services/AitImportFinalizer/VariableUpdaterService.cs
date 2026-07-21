@@ -7,11 +7,10 @@ using ATLASDocGenerator.Models.AitImportFinalizer;
 namespace ATLASDocGenerator.Services.AitImportFinalizer
 {
     /// <summary>
-    /// Cette classe met à jour les variables générales du projet MadCap Flare
-    /// après l'import d'un document Author-it.
+    /// Cette classe met à jour les variables générales du projet Flare.
     ///
-    /// Elle modifie le fichier Project/VariableSets/General.flvar avec les informations
-    /// renseignées dans la fenêtre AIT Import Finalizer :
+    /// Elle modifie le fichier Project/VariableSets/General.flvar
+    /// avec les informations renseignées dans la fenêtre AIT Import Finalizer :
     /// - type de document
     /// - nom du dispositif
     /// - référence et indice du document
@@ -36,18 +35,16 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
         /// </summary>
         /// <param name="projectRootPath">Chemin racine du projet MadCap Flare.</param>
         /// <param name="options">Options renseignées dans la fenêtre AIT Import Finalizer.</param>
-        /// <param name="profile">
-        /// Profil du type de document sélectionné.
-        /// Ce paramètre n'est actuellement pas utilisé dans cette méthode.
-        /// </param>
         public void UpdateGeneralVariables(
             string projectRootPath,
-            AitImportFinalizerOptions options,
-            AitDocumentProfile profile)
+            AitImportFinalizerOptions options)
         {
             if (string.IsNullOrWhiteSpace(projectRootPath))
             {
-                throw new ArgumentException("Le chemin racine du projet est vide.", "projectRootPath");
+                throw new ArgumentException(
+                    "Le chemin racine du projet est vide.",
+                    "projectRootPath"
+                );
             }
 
             if (options == null)
@@ -58,7 +55,8 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             if (!Directory.Exists(projectRootPath))
             {
                 throw new DirectoryNotFoundException(
-                    "Dossier racine du projet introuvable : " + projectRootPath
+                    "Dossier racine du projet introuvable : "
+                    + projectRootPath
                 );
             }
 
@@ -81,6 +79,8 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             // Crée une sauvegarde du fichier avant sa première modification.
             CreateBackup(variableSetPath);
 
+            // Charge le fichier comme document XML
+            // en conservant les espaces et retours à la ligne existants.
             XDocument document = XDocument.Load(
                 variableSetPath,
                 LoadOptions.PreserveWhitespace
@@ -103,27 +103,76 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 : options.Language.Trim();
 
             // Variables générales principales.
-            SetVariable(document, "GuideType", guideType);
-            SetVariable(document, "dispositif", Safe(options.DeviceName));
-            SetVariable(document, "DocumentReference", documentReference);
-            SetVariable(document, "Indice", documentIndex);
-            SetVariable(document, "DocumentLanguage", documentLanguage);
+            SetVariable(
+                document,
+                "GuideType",
+                guideType
+            );
+
+            SetVariable(
+                document,
+                "dispositif",
+                Safe(options.DeviceName)
+            );
+
+            SetVariable(
+                document,
+                "DocumentReference",
+                documentReference
+            );
+
+            SetVariable(
+                document,
+                "Indice",
+                documentIndex
+            );
+
+            SetVariable(
+                document,
+                "DocumentLanguage",
+                documentLanguage
+            );
 
             // Cette valeur est actuellement remise à 0 à chaque exécution.
             // À conserver uniquement si cette règle est bien souhaitée.
-            SetVariable(document, "Version Interne", "0");
+            SetVariable(
+                document,
+                "Version Interne",
+                "0"
+            );
 
             // Variables utilisées par certains layouts ou snippets.
-            SetVariable(document, "DocumentTitle", Safe(options.DocumentTitle));
-            SetVariable(document, "TitreDocument", Safe(options.DocumentTitle));
+            SetVariable(
+                document,
+                "DocumentTitle",
+                Safe(options.DocumentTitle)
+            );
 
-            // Mref et MRef ne doivent pas être appelées séparément,
-            // car la recherche des variables ne tient pas compte de la casse.
-            SetVariable(document, "Mref", Safe(options.MrefReference));
-            SetVariable(document, "ReferenceMref", Safe(options.MrefReference));
+            SetVariable(
+                document,
+                "TitreDocument",
+                Safe(options.DocumentTitle)
+            );
+
+            // Mref et MRef ne sont pas appelées séparément,
+            // car la recherche ne tient pas compte des majuscules.
+            SetVariable(
+                document,
+                "Mref",
+                Safe(options.MrefReference)
+            );
+
+            SetVariable(
+                document,
+                "ReferenceMref",
+                Safe(options.MrefReference)
+            );
 
             // Sauvegarde sans reformater inutilement tout le document XML.
-            document.Save(variableSetPath, SaveOptions.DisableFormatting);
+            document.Save(
+                variableSetPath,
+                SaveOptions.DisableFormatting
+            );
         }
 
         /// <summary>
@@ -139,7 +188,10 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
 
             if (!File.Exists(backupPath))
             {
-                File.Copy(filePath, backupPath);
+                File.Copy(
+                    filePath,
+                    backupPath
+                );
             }
         }
 
@@ -177,6 +229,15 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
         /// <summary>
         /// Met à jour une variable existante ou la crée si elle n'existe pas.
         ///
+        /// La méthode prend en charge deux structures possibles :
+        ///
+        /// Structure MadCap avec VariableDefinition :
+        /// Variable
+        ///     VariableDefinition
+        ///
+        /// Ou structure simple avec une valeur directement
+        /// contenue dans l'élément Variable.
+        ///
         /// La recherche du nom de variable ne tient pas compte des majuscules.
         /// Par exemple, Mref et MRef sont considérées comme la même variable.
         /// </summary>
@@ -190,6 +251,16 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
         {
             XElement root = document.Root;
 
+            if (root == null)
+            {
+                throw new InvalidOperationException(
+                    "Le fichier General.flvar ne possède pas de racine XML."
+                );
+            }
+
+            string safeValue = value ?? string.Empty;
+
+            // Recherche une variable existante avec le même nom.
             XElement existingVariable = root
                 .Descendants()
                 .FirstOrDefault(element =>
@@ -211,17 +282,89 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
 
             if (existingVariable != null)
             {
-                existingVariable.Value = value ?? string.Empty;
+                // Recherche une structure MadCap de ce type :
+                //
+                // <Variable Name="DocumentTitle">
+                //     <VariableDefinition>Ancien titre</VariableDefinition>
+                // </Variable>
+                XElement variableDefinition = existingVariable
+                    .Elements()
+                    .FirstOrDefault(element =>
+                        element.Name.LocalName.Equals(
+                            "VariableDefinition",
+                            StringComparison.OrdinalIgnoreCase
+                        )
+                    );
+
+                if (variableDefinition != null)
+                {
+                    // Met uniquement à jour la valeur
+                    // sans supprimer l'élément VariableDefinition.
+                    variableDefinition.Value = safeValue;
+                }
+                else
+                {
+                    // Fallback pour une structure simple :
+                    //
+                    // <Variable Name="DocumentTitle">Ancien titre</Variable>
+                    existingVariable.Value = safeValue;
+                }
+
                 return;
             }
 
-            // Utilise le même namespace que la racine du fichier.
-            // Sans cela, la nouvelle variable pourrait être créée hors du namespace attendu.
-            XNamespace ns = root.Name.Namespace;
+            // La variable n'existe pas encore.
+            // On récupère le namespace utilisé par les variables existantes.
+            XElement existingVariableExample = root
+                .Descendants()
+                .FirstOrDefault(element =>
+                    element.Name.LocalName.Equals(
+                        "Variable",
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                );
 
-            XElement newVariable = new XElement(ns + "Variable");
-            newVariable.SetAttributeValue("Name", variableName);
-            newVariable.Value = value ?? string.Empty;
+            XNamespace variableNamespace = existingVariableExample != null
+                ? existingVariableExample.Name.Namespace
+                : root.Name.Namespace;
+
+            XElement newVariable = new XElement(
+                variableNamespace + "Variable"
+            );
+
+            newVariable.SetAttributeValue(
+                "Name",
+                variableName
+            );
+
+            // Vérifie si le fichier utilise déjà des éléments VariableDefinition.
+            XElement existingDefinitionExample = root
+                .Descendants()
+                .FirstOrDefault(element =>
+                    element.Name.LocalName.Equals(
+                        "VariableDefinition",
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                );
+
+            if (existingDefinitionExample != null)
+            {
+                // Reproduit la structure déjà utilisée dans General.flvar.
+                XNamespace definitionNamespace =
+                    existingDefinitionExample.Name.Namespace;
+
+                XElement newDefinition = new XElement(
+                    definitionNamespace + "VariableDefinition",
+                    safeValue
+                );
+
+                newVariable.Add(newDefinition);
+            }
+            else
+            {
+                // Fallback si le fichier utilise une structure simple.
+                newVariable.Value = safeValue;
+            }
 
             root.Add(newVariable);
         }
@@ -234,7 +377,9 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
         /// <returns>Valeur nettoyée ou chaîne vide.</returns>
         private string Safe(string value)
         {
-            return value == null ? string.Empty : value.Trim();
+            return value == null
+                ? string.Empty
+                : value.Trim();
         }
     }
 }

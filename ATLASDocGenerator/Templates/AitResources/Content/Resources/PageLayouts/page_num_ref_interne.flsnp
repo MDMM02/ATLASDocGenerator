@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun,Stago_Gestion.40_DoNotTranslate">
-    <body>
-        <p class="frame-footer-page-number"><MadCap:variable name="System.PageNumber"></MadCap:variable>/<MadCap:variable name="System.PageCount"></MadCap:variable></p>
-        <p class="version_interne"><MadCap:variable name="General.DocumentReference" />_<MadCap:variable name="General.Indice" />.<MadCap:variable name="General.Version Interne" />_<MadCap:variable name="General.DocumentLanguage" /></p>
-    </body>
-</html>

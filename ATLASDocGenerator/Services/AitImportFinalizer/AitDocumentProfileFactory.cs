@@ -3,8 +3,29 @@ using ATLASDocGenerator.Models.AitImportFinalizer;
 
 namespace ATLASDocGenerator.Services.AitImportFinalizer
 {
+    /// <summary>
+    /// Cette classe crée les profils de configuration utilisés par l'AIT Import Finalizer
+    /// Chaque profilcorrespond à un typede document:
+    /// - bulletin technique
+    /// - notice utilisateur
+    /// - addenda
+    /// - manuel de référence
+    /// ( - doc tech multi instrument)
+    /// 
+    /// Un profil définit:
+    /// - la feuille de style principale
+    /// - les layouts de pages à utiliser
+    /// - les nettoyages AIT à exécuter
+    /// - les entrées de la TOC à supprimer (header, footer)
+    /// PS: fonctionnalité IHM désactivée car logique à revoir.
+    /// </summary>
     public class AitDocumentProfileFactory
     {
+        /// <summary>
+        /// Retourne la liste de tous les profils de documents disponibles.
+        /// Liste qui alimente le choix du type de document dans l'interface.
+        /// </summary>
+        /// <returns></returns>
         public List<AitDocumentProfile> GetProfiles()
         {
             return new List<AitDocumentProfile>
@@ -17,7 +38,12 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 CreateMultiInstrumentTechnicalDocumentProfile()
             };
         }
-
+        /// <summary>
+        /// Retourne le profil correspondant au type de document demandé
+        /// Si aucun profil ne correspond, base => profil document technique par défaut
+        /// </summary>
+        /// <param name="documentType"></param> Type de document
+        /// <returns></returns>
         public AitDocumentProfile GetProfile(AitDocumentType documentType)
         {
             foreach (AitDocumentProfile profile in GetProfiles())
@@ -37,16 +63,19 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             {
                 DocumentType = AitDocumentType.TechnicalBulletin,
                 DisplayName = "Bulletin Technique",
+                
                 PrimaryStylesheet = "Resources/Stylesheets/Styles_BT_Test.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Tech.flpgl",
                 TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
                 FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
+                
                 RunActionResultCleanup = true,
                 RunBulletListCleanup = true,
                 RunCalloutCleanup = true,
                 RunFigureCleanup = true,
                 RunSimpleStyleCleanup = true,
                 RunIhmCleanup = false,
+                
                 TocEntriesToRemove = new List<string>
                 {
                     "A_HEADER",
@@ -65,16 +94,19 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             {
                 DocumentType = AitDocumentType.UserNotice,
                 DisplayName = "Notice utilisateur",
+                
                 PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Notice_user.flpgl",
                 TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
                 FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
+             
                 RunActionResultCleanup = true,
                 RunBulletListCleanup = true,
                 RunCalloutCleanup = true,
                 RunFigureCleanup = true,
                 RunSimpleStyleCleanup = true,
                 RunIhmCleanup = false,
+                
                 TocEntriesToRemove = new List<string>
                 {
                     "A_HEADER",
@@ -91,16 +123,19 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             {
                 DocumentType = AitDocumentType.Addenda,
                 DisplayName = "Addenda",
+                
                 PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Addenda.flpgl",
                 TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
                 FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
+                
                 RunActionResultCleanup = true,
                 RunBulletListCleanup = true,
                 RunCalloutCleanup = true,
                 RunFigureCleanup = true,
                 RunSimpleStyleCleanup = true,
                 RunIhmCleanup = false,
+                
                 TocEntriesToRemove = new List<string>
                 {
                     "A_HEADER",
@@ -117,16 +152,19 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             {
                 DocumentType = AitDocumentType.ReferenceManual,
                 DisplayName = "Manuel de référence / MRef",
+              
                 PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Chapters.flpgl",
                 TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
                 FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
+               
                 RunActionResultCleanup = true,
                 RunBulletListCleanup = true,
                 RunCalloutCleanup = true,
                 RunFigureCleanup = true,
                 RunSimpleStyleCleanup = true,
                 RunIhmCleanup = false,
+              
                 TocEntriesToRemove = new List<string>
                 {
                     "A_HEADER",
@@ -143,16 +181,19 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             {
                 DocumentType = AitDocumentType.TechnicalDocument,
                 DisplayName = "Document technique",
+               
                 PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Tech.flpgl",
                 TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
                 FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
+               
                 RunActionResultCleanup = true,
                 RunBulletListCleanup = true,
                 RunCalloutCleanup = true,
                 RunFigureCleanup = true,
                 RunSimpleStyleCleanup = true,
                 RunIhmCleanup = false,
+               
                 TocEntriesToRemove = new List<string>
                 {
                     "A_HEADER",
@@ -169,16 +210,19 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             {
                 DocumentType = AitDocumentType.MultiInstrumentTechnicalDocument,
                 DisplayName = "Document technique multi-instrument",
+               
                 PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Tech_multi.flpgl",
                 TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
                 FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
+               
                 RunActionResultCleanup = true,
                 RunBulletListCleanup = true,
                 RunCalloutCleanup = true,
                 RunFigureCleanup = true,
                 RunSimpleStyleCleanup = true,
                 RunIhmCleanup = false,
+               
                 TocEntriesToRemove = new List<string>
                 {
                     "A_HEADER",
