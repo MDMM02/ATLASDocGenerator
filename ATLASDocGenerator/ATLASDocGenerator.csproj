@@ -1058,4 +1058,16 @@
     <Content Include="Templates\Stylesheets\Styles_STA.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  
+  <Target Name="CopyTemplatesToOutput" AfterTargets="Build">
+  <ItemGroup>
+    <AtlasTemplateFiles Include="$(ProjectDir)Templates\**\*.*" />
+  </ItemGroup>
+
+  <Copy
+    SourceFiles="@(AtlasTemplateFiles)"
+    DestinationFiles="@(AtlasTemplateFiles->'$(TargetDir)Templates\%(RecursiveDir)%(Filename)%(Extension)')"
+    SkipUnchangedFiles="true" />
+</Target>
+
 </Project>
