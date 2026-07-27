@@ -64,7 +64,7 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 DocumentType = AitDocumentType.TechnicalBulletin,
                 DisplayName = "Bulletin Technique",
                 
-                PrimaryStylesheet = "Resources/Stylesheets/Styles_BT_Test.css",
+                PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Tech.flpgl",
                 TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
                 FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",

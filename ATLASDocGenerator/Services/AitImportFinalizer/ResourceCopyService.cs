@@ -78,10 +78,10 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             );
             // Copie le dossier Commun Stago en conservant son arborescence.
             // Source : Templates/Commun Stago
-            // Destination : Content/Commun Stago
+            // Destination : Content/Resources/Commun Stago
             CopyResourceFolder(
                 Path.Combine(resourceRoot, "Commun Stago"),
-                Path.Combine(projectRootPath, "Content", "Commun Stago")
+                Path.Combine(projectRootPath, "Content", "Resources","Commun Stago")
             );
 
             // Vérifie que les ressources principales définies dans le profil existent bien dans le projet après la copie.
@@ -99,7 +99,7 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 throw new DirectoryNotFoundException("Unable to locate plugin folder.");
             }
 
-            return Path.Combine(pluginFolder, "Templates", "AitResources");
+            return Path.Combine(pluginFolder, "Templates");
         }
         // Copie récursivemet un dossier et tous ses sous-dossiers
         private void CopyResourceFolder(string sourceFolder, string destinationFolder)

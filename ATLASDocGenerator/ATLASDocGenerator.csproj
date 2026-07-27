@@ -1052,17 +1052,10 @@
     <Content Include="Templates\Stylesheets\BCK\Copy of Styles.css" />
     <Content Include="Templates\Stylesheets\BCK\Copy of Styles12025-05-19.css" />
     <Content Include="Templates\Stylesheets\BCK\Styles_20250902.css" />
-    <Content Include="Templates\Stylesheets\pourtest_QIQO.htm" />
     <Content Include="Templates\Stylesheets\Styles.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Templates\Stylesheets\Styles_BT_Test.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Templates\Stylesheets\Styles_STA.css" />
-    <Content Include="Templates\Stylesheets\TEMPLATE_BT_INST_xxxx_Y.css" />
-    <Content Include="Templates\Stylesheets\test_css.htm" />
-    <Content Include="Templates\Stylesheets\TEST_pour_glossaires.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
