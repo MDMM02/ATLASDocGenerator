@@ -1,125 +1,303 @@
 ﻿using System;
 using System.Collections.Generic;
 using ATLASDocGenerator.Models;
+using ATLASDocGenerator.Services.AitCleanup.IhmVariables;
 
 namespace ATLASDocGenerator.Services.AitCleanup
 {
     /// <summary>
-    /// Cette classe orchestre les différentes transformations de nettoyage AIT sur les fichiers HTML. 
-    /// Elle utilise services et transformateurs pour effectuer des opérations  telles que la transformation des figures, des listes d'actions, des listes à puces, des callouts, et le nettoyage de styles simples.
-    /// Elle gère aussi l'analyse des diagnostics IHM et la génération de fichiers JSON pour les variables IHM ( à revoir)
+    /// Orchestre les différentes transformations de nettoyage
+    /// appliquées après l'import Author-it dans MadCap Flare.
     /// </summary>
     public class AitCleanupService
     {
-        private readonly HtmlFileScanner _scanner; // Récupérer la liste des fichiers .htm et .html à traiter
-        private readonly CleanupLogService _logService; // Chargé d'écrire le rapport d'exécution sur disque
-        private readonly ActionResultListDetector _actionResultDetector; // Détecte les listes d'actions dans les fichiers HTML
-        private readonly ActionResultListTransformer _actionResultTransformer; // Transforme les listes d'actions détectées en un format standardisé
-        private readonly BulletListTransformer _bulletListTransformer; // Transforme les listes à puces dans les fichiers HTML
-        private readonly CalloutTransformer _calloutTransformer; // Transforme les callouts dans les fichiers .htm
-        private readonly FigureTransformer _figureTransformer; // Transforme les figures dans les fichiers .htm
-        private readonly SimpleStyleCleanupTransformer _simpleStyleCleanupTransformer; // Nettoie les styles simples dans les fichiers .htm
-        private readonly IhmDiagnosticService _ihmDiagnosticService; // Analyse les diagnostics IHM et génère des fichiers JSON pour les variables IHM (à revoir)
-        private readonly IhmVariableJsonGenerator _ihmVariableJsonGenerator; // Génère des fichiers JSON pour les variables IHM (à revoir)
-        private readonly IhmVariableMatcher _ihmVariableMatcher; // Associe les variables IHM détectées aux fichiers JSON correspondants (à revoir)
+        private readonly HtmlFileScanner _scanner;
+        private readonly CleanupLogService _logService;
+
+        private readonly ActionResultListTransformer _actionResultTransformer;
+        private readonly BulletListTransformer _bulletListTransformer;
+        private readonly CalloutTransformer _calloutTransformer;
+        private readonly FigureTransformer _figureTransformer;
+        private readonly SimpleStyleCleanupTransformer _simpleStyleCleanupTransformer;
+       
+
+        /// <summary>
+        /// Génère les fichiers .flvar à partir des templates
+        /// IHM sélectionnés dans le formulaire.
+        /// </summary>
+        private readonly FrenchIhmVariableSetGenerator
+            _frenchIhmVariableSetGenerator;
+        private readonly IhmVariableReferenceTransformer _ihmVariableReferenceTransformer;
 
         public AitCleanupService()
         {
-            _scanner = new HtmlFileScanner(); // Récupérer la liste des fichiers .htm et .html à traiter
-            _logService = new CleanupLogService(); // Chargé d'écrire le rapport d'exécution sur disque
+            _scanner = new HtmlFileScanner();
+            _logService = new CleanupLogService();
 
-            _actionResultDetector = new ActionResultListDetector(); // Détecte les listes d'actions dans les fichiers .htm
-            _actionResultTransformer = new ActionResultListTransformer(); // Transforme les listes d'actions détectées en un format standardisé
-            _bulletListTransformer = new BulletListTransformer(); // Transforme les listes à puces dans les fichiers .htm
-            _calloutTransformer = new CalloutTransformer(); // Transforme les callouts dans les fichiers .htm
-            _figureTransformer = new FigureTransformer(); // Transforme les figures dans les fichiers .htm
-            _simpleStyleCleanupTransformer = new SimpleStyleCleanupTransformer(); // Nettoie les styles simples dans les fichiers .htm
-            _ihmDiagnosticService = new IhmDiagnosticService(); // Analyse les diagnostics IHM et génère des fichiers JSON pour les variables IHM (à revoir)
-            _ihmVariableJsonGenerator = new IhmVariableJsonGenerator(); // Génère des fichiers JSON pour les variables IHM (à revoir)
-            _ihmVariableMatcher = new IhmVariableMatcher(); // Associe les variables IHM détectées aux fichiers JSON correspondants (à revoir)
+            _actionResultTransformer =
+                new ActionResultListTransformer();
+
+            _bulletListTransformer =
+                new BulletListTransformer();
+
+            _calloutTransformer =
+                new CalloutTransformer();
+
+            _figureTransformer =
+                new FigureTransformer();
+
+            _simpleStyleCleanupTransformer =
+                new SimpleStyleCleanupTransformer();
+
+            _frenchIhmVariableSetGenerator =
+                new FrenchIhmVariableSetGenerator();
+
+            _ihmVariableReferenceTransformer = new IhmVariableReferenceTransformer();
         }
 
         /// <summary>
-        ///  Lance le nettoyage AIT selon les options choisies par l'utilisateur.
-        ///  Traitement:
-        ///  1. Scanne les fichiers .htm à traiter
-        ///  2. Applique les transformations cochées dans l'interface
-        ///  3. Alimente progressivement le rapport d'exécution
-        ///  4. Ecrit le log final, même si une erreur survient pendant le traitement
-        ///   </summary>
-
+        /// Lance le nettoyage AIT selon les options sélectionnées.
+        /// </summary>
         public CleanupReport Run(AitCleanupOptions options)
         {
             CleanupReport report = new CleanupReport();
 
             try
             {
-                // Étape 1: Scanner les fichiers .htm à traiter selon projet complet ou dossier sélectionné
-                string scanRoot; 
-                List<string> files = _scanner.GetHtmlFiles(options, out scanRoot);
+                if (options == null)
+                {
+                    throw new ArgumentNullException(
+                        "options",
+                        "Les options AIT Cleanup sont absentes.");
+                }
+
+                /*
+                 * ÉTAPE 1
+                 * Recherche les fichiers HTML à traiter.
+                 */
+
+                string scanRoot;
+
+                List<string> files =
+                    _scanner.GetHtmlFiles(
+                        options,
+                        out scanRoot);
 
                 report.ScanRoot = scanRoot;
                 report.FilesScanned = files.Count;
 
-                // Étape 2: Transforme d'abord les encadrés et les figures.
+                /*
+                 * ÉTAPE 2
+                 * Encadrés et figures.
+                 */
+
                 if (options.ProcessCallouts)
                 {
-                    _calloutTransformer.Transform(files, report);
+                    _calloutTransformer.Transform(
+                        files,
+                        report);
                 }
+
                 if (options.ProcessFigures)
                 {
-                    _figureTransformer.Transform(files, report);
+                    _figureTransformer.Transform(
+                        files,
+                        report);
                 }
-                // Étape 3: Transforme les listes d'actions et les listes à puces.
+
+                /*
+                 * ÉTAPE 3
+                 * Actions, résultats et listes à tirets.
+                 */
+
                 if (options.ProcessActionResults)
                 {
-                    _actionResultTransformer.Transform(files, report);
+                    _actionResultTransformer.Transform(
+                        files,
+                        report);
                 }
+
                 if (options.ProcessBulletLists)
                 {
-                    _bulletListTransformer.Transform(files, report);
+                    _bulletListTransformer.Transform(
+                        files,
+                        report);
                 }
-                // Étape 4: Nettoie les styles simples.
+
+                /*
+                 * ÉTAPE 4
+                 * Nettoyage des styles simples.
+                 */
+
                 if (options.ProcessStyleCleanup)
                 {
-                    _simpleStyleCleanupTransformer.Transform(files, report);
+                    _simpleStyleCleanupTransformer.Transform(
+                        files,
+                        report);
                 }
-                // Étape 5: Analyse les diagnostics IHM et génère des fichiers JSON pour les variables IHM (logique à revoir)
+
+                /*
+                 * ÉTAPE 5
+                 * Génération des fichiers de variables IHM.
+                 */
+
                 if (options.ProcessIhm)
                 {
-                    _ihmDiagnosticService.Analyze(files, report);
-
-                    if (!string.IsNullOrWhiteSpace(options.SourceXmlPath))
-                    {
-                        string jsonPath = _ihmVariableJsonGenerator.Generate(
-                            options.SourceXmlPath,
-                            options.TargetPath);
-
-                        report.Warnings.Add("IHM variable JSON generated: " + jsonPath);
-                    }
-                    else
-                    {
-                        report.Warnings.Add("IHM variable JSON generation skipped: no Author-it XML source selected.");
-                    }
-
-                    _ihmVariableMatcher.Transform(files, report, options.TargetPath);
+                    GenerateFrenchIhmVariableSets(
+                        options,
+                        report);
                 }
 
-                report.Warnings.Add("Selected cleanup transformations may have modified HTML files.");
+                report.Warnings.Add(
+                    "Les transformations sélectionnées ont été exécutées.");
             }
             catch (Exception ex)
             {
-                // On stocke l'erreur dans le rapport au lieu de relanccer, pour que l'utilisateur puisse voir un bilan clair ds le log.
-                report.Errors.Add(ex.Message); 
+                /*
+                 * L'erreur est ajoutée au rapport afin que le log
+                 * soit quand même généré.
+                 */
+
+                report.Errors.Add(
+                    ex.Message);
             }
             finally
-            { 
-                // Le log doit être écrit même en cas d'erreur.
-                report.FinishedAt = DateTime.Now;
-                _logService.WriteLog(options, report);
+            {
+                report.FinishedAt =
+                    DateTime.Now;
+
+                _logService.WriteLog(
+                    options,
+                    report);
             }
 
             return report;
+        }
+
+        /// <summary>
+        /// Génère un fichier .flvar pour chaque template IHM
+        /// sélectionné dans la fenêtre AIT Cleanup.
+        /// </summary>
+        /// <summary>
+        /// Génère un fichier .flvar pour chaque template IHM sélectionné,
+        /// puis remplace les références de snippets correspondantes
+        /// par des références de variables MadCap.
+        /// </summary>
+        private void GenerateFrenchIhmVariableSets(
+     AitCleanupOptions options,
+     CleanupReport report)
+        {
+            if (string.IsNullOrWhiteSpace(
+                options.SourceXmlPath))
+            {
+                throw new InvalidOperationException(
+                    "Le fichier XML Author-it source "
+                    + "n'a pas été sélectionné.");
+            }
+
+            if (options.SelectedIhmTemplateIds == null
+                || options.SelectedIhmTemplateIds.Count == 0)
+            {
+                throw new InvalidOperationException(
+                    "Aucun template IHM français "
+                    + "n'a été sélectionné.");
+            }
+
+            List<FrenchIhmVariableSetGenerationResult> variableResults =
+                new List<FrenchIhmVariableSetGenerationResult>();
+
+            /*
+             * Génération des fichiers .flvar.
+             */
+
+            foreach (string templateId
+                in options.SelectedIhmTemplateIds)
+            {
+                if (string.IsNullOrWhiteSpace(templateId))
+                {
+                    report.Warnings.Add(
+                        "Un ID de template IHM vide a été ignoré.");
+
+                    continue;
+                }
+
+                FrenchIhmVariableSetGenerationResult variableResult =
+                    _frenchIhmVariableSetGenerator.Generate(
+                        options.SourceXmlPath,
+                        options.TargetPath,
+                        templateId);
+
+                variableResults.Add(
+                    variableResult);
+
+                report.IhmVariableSetsGenerated++;
+
+                report.IhmVariablesGenerated +=
+                    variableResult.VariablesGenerated;
+
+                report.IhmVariableSetGenerationDetails.Add(
+                    variableResult.VariableSetName
+                    + ".flvar"
+                    + " | Template ID "
+                    + variableResult.TemplateId
+                    + " | "
+                    + variableResult.VariablesGenerated
+                    + " variable(s)"
+                    + " | "
+                    + variableResult.OutputPath);
+
+                foreach (string warning
+                    in variableResult.Warnings)
+                {
+                    report.Warnings.Add(
+                        "IHM / "
+                        + variableResult.TemplateDescription
+                        + " : "
+                        + warning);
+                }
+            }
+
+            if (variableResults.Count == 0)
+            {
+                throw new InvalidOperationException(
+                    "Aucun fichier de variables IHM n'a été généré.");
+            }
+
+            /*
+             * Remplacement des références de snippets.
+             */
+
+            IhmVariableReferenceTransformResult transformResult =
+                _ihmVariableReferenceTransformer.Transform(
+                    options.TargetPath,
+                    variableResults);
+
+            report.IhmReferenceFilesScanned =
+                transformResult.FilesScanned;
+
+            report.IhmReferenceFilesModified =
+                transformResult.FilesModified;
+
+            report.IhmReferencesReplaced =
+                transformResult.ReferencesReplaced;
+
+            report.IhmUnmatchedTopicIds =
+                transformResult.UnmatchedTopicIds.Count;
+
+            foreach (string detail
+                in transformResult.Details)
+            {
+                report.IhmReferenceReplacementDetails.Add(
+                    detail);
+            }
+
+            foreach (string error
+                in transformResult.Errors)
+            {
+                report.Errors.Add(
+                    "IHM : "
+                    + error);
+            }
         }
     }
 }

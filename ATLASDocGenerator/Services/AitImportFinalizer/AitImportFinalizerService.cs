@@ -108,7 +108,7 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             {
                 try
                 {
-                    _variableSetUpdaterService.UpdateGeneralVariables(options.ProjectRootPath, options,);
+                    _variableSetUpdaterService.UpdateGeneralVariables(options.ProjectRootPath, options);
                     report.VariablesUpdated = true;
                 }
                 catch (Exception ex)

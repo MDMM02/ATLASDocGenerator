@@ -87,6 +87,9 @@
     <Compile Include="Services\AitCleanup\IhmDiagnosticService.cs" />
     <Compile Include="Services\AitCleanup\IhmVariableJsonGenerator.cs" />
     <Compile Include="Services\AitCleanup\IhmVariableMatcher.cs" />
+    <Compile Include="Services\AitCleanup\IhmVariables\FrenchIhmTemplateDetector.cs" />
+    <Compile Include="Services\AitCleanup\IhmVariables\FrenchIhmVariableSetGenerator.cs" />
+    <Compile Include="Services\AitCleanup\IhmVariables\IhmVariableReferenceTransformer.cs" />
     <Compile Include="Services\AitCleanup\SimpleStyleCleanupTransformer.cs" />
     <Compile Include="Services\AitImportFinalizer\AitDocumentProfileFactory.cs" />
     <Compile Include="Services\AitImportFinalizer\AitImportFinalizerService.cs" />
