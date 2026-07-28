@@ -130,14 +130,22 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 return string.Empty;
             }
 
-            string normalizedPath = resourcePath.Replace("\\", "/").TrimStart('/');
+            string normalizedPath = resourcePath
+                .Replace("\\", "/")
+                .Trim()
+                .TrimStart('/');
 
-            if (normalizedPath.StartsWith("Content/", StringComparison.OrdinalIgnoreCase))
+            // Évite d'obtenir /Content/Content/... si le profil
+            // contient déjà le dossier Content.
+            if (normalizedPath.StartsWith(
+                "Content/",
+                StringComparison.OrdinalIgnoreCase))
             {
-                normalizedPath = normalizedPath.Substring("Content/".Length);
+                normalizedPath = normalizedPath.Substring(
+                    "Content/".Length);
             }
 
-            return normalizedPath;
+            return "/Content/" + normalizedPath;
         }
 
         // Recherche un attribut dans la target et met à jour sa valeur.

@@ -41,8 +41,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
@@ -84,9 +82,6 @@
     <Compile Include="Services\AitCleanup\CleanupLogService.cs" />
     <Compile Include="Services\AitCleanup\FigureTransformer.cs" />
     <Compile Include="Services\AitCleanup\HtmlFileScanner.cs" />
-    <Compile Include="Services\AitCleanup\IhmDiagnosticService.cs" />
-    <Compile Include="Services\AitCleanup\IhmVariableJsonGenerator.cs" />
-    <Compile Include="Services\AitCleanup\IhmVariableMatcher.cs" />
     <Compile Include="Services\AitCleanup\IhmVariables\FrenchIhmTemplateDetector.cs" />
     <Compile Include="Services\AitCleanup\IhmVariables\FrenchIhmVariableSetGenerator.cs" />
     <Compile Include="Services\AitCleanup\IhmVariables\IhmVariableReferenceTransformer.cs" />

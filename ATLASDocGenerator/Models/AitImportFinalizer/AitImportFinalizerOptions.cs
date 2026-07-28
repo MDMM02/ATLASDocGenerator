@@ -34,11 +34,5 @@
         public bool UpdateVariables { get; set; }
 
         public bool ConfigureTarget { get; set; }
-
-        public bool RunCleanup { get; set; }
-
-
-    
-    
     }
 }

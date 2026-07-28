@@ -30,20 +30,7 @@ namespace ATLASDocGenerator.Models
             IhmVariableSetGenerationDetails = new List<string>();
             IhmReferenceReplacementDetails = new List<string>();
 
-            /*
-             * Anciennes collections IHM conservées temporairement
-             * pour éviter de casser les anciennes classes.
-             */
-            IhmVariableMatchingDetails = new List<string>();
-
-            IhmClassOccurrences =
-                new Dictionary<string, int>(
-                    StringComparer.OrdinalIgnoreCase);
-
-            IhmFilesByClass =
-                new Dictionary<string, HashSet<string>>(
-                    StringComparer.OrdinalIgnoreCase);
-        }
+            
 
         public DateTime StartedAt { get; set; }
 
@@ -114,7 +101,7 @@ namespace ATLASDocGenerator.Models
         public List<string> StyleCleanupDetails { get; set; }
 
         /*
-         * NOUVEAU TRAITEMENT IHM
+         * TRAITEMENT IHM
          */
 
         /// <summary>
@@ -161,53 +148,6 @@ namespace ATLASDocGenerator.Models
         /// </summary>
         public List<string> IhmReferenceReplacementDetails { get; set; }
 
-        /*
-         * ANCIEN TRAITEMENT IHM
-         *
-         * Ces propriétés sont conservées temporairement pour que
-         * les anciennes classes compilent encore.
-         * Elles ne sont plus affichées dans le nouveau log.
-         */
-
-        public int IhmItemsDetected { get; set; }
-
-        public Dictionary<string, int> IhmClassOccurrences { get; set; }
-
-        public Dictionary<string, HashSet<string>> IhmFilesByClass { get; set; }
-
-        public int IhmVariablesMatched { get; set; }
-
-        public int IhmVariablesMappedToBold { get; set; }
-
-        public List<string> IhmVariableMatchingDetails { get; set; }
-
-        public void AddIhmClassOccurrence(
-            string className,
-            string filePath)
-        {
-            if (string.IsNullOrWhiteSpace(className))
-                return;
-
-            IhmItemsDetected++;
-
-            if (!IhmClassOccurrences.ContainsKey(className))
-            {
-                IhmClassOccurrences[className] = 0;
-            }
-
-            IhmClassOccurrences[className]++;
-
-            if (!IhmFilesByClass.ContainsKey(className))
-            {
-                IhmFilesByClass[className] =
-                    new HashSet<string>(
-                        StringComparer.OrdinalIgnoreCase);
-            }
-
-            if (!string.IsNullOrWhiteSpace(filePath))
-            {
-                IhmFilesByClass[className].Add(filePath);
-            }
-        }
+       
     }
 }

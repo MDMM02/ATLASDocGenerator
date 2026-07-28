@@ -10,7 +10,6 @@ namespace ATLASDocGenerator.Models.AitImportFinalizer
     ///     - TOC nettoyé ;
     ///     - variables mises à jour ;
     ///     - target configuré ;
-    ///     - cleanup lancé ;
     ///     - avertissements et erreurs.
     ///     
     /// </summary>
@@ -25,8 +24,6 @@ namespace ATLASDocGenerator.Models.AitImportFinalizer
         public bool VariablesUpdated { get; set; }
 
         public bool TargetConfigured { get; set; }
-
-        public bool CleanupLaunched { get; set; }
 
         public List<string> TocEntriesRemoved { get; set; }
 
