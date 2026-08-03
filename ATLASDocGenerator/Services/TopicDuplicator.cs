@@ -119,11 +119,12 @@ namespace ATLASDocGenerator.Services
 
                 if (!File.Exists(sourcePath))
                 {
-                    throw new Exception(
+                    throw new FileNotFoundException(
                         "Topic modèle introuvable :\n"
                         + sourcePath
                         + "\n\nVérifie que les templates existent bien "
-                        + "dans le projet MadCap sélectionné."
+                        + "dans le projet MadCap sélectionné.",
+                        sourcePath
                     );
                 }
 
@@ -167,7 +168,7 @@ namespace ATLASDocGenerator.Services
         /// </summary>
         /// <param name="documentType">Type de document sélectionné.</param>
         /// <returns>Liste des règles de copie à appliquer.</returns>
-        private List<TopicCopyRule> GetRules(string documentType)
+        internal List<TopicCopyRule> GetRules(string documentType)
         {
             if (string.IsNullOrWhiteSpace(documentType))
             {

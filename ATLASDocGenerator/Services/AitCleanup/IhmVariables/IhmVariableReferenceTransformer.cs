@@ -232,6 +232,7 @@ namespace ATLASDocGenerator.Services.AitCleanup.IhmVariables
             }
 
             int replacementsInFile = 0;
+            List<string> replacementDetails = new List<string>();
 
             foreach (XElement snippetReference in snippetReferences)
             {
@@ -282,9 +283,8 @@ namespace ATLASDocGenerator.Services.AitCleanup.IhmVariables
                     variableReference);
 
                 replacementsInFile++;
-                result.ReferencesReplaced++;
 
-                result.Details.Add(
+                replacementDetails.Add(
                     GetRelativePath(
                         result.ContentRootPath,
                         filePath)
@@ -308,6 +308,8 @@ namespace ATLASDocGenerator.Services.AitCleanup.IhmVariables
                     SaveOptions.DisableFormatting);
 
                 result.FilesModified++;
+                result.ReferencesReplaced += replacementsInFile;
+                result.Details.AddRange(replacementDetails);
             }
             catch (Exception ex)
             {

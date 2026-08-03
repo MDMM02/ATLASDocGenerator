@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Fichiers locaux générés pendant les recettes MadCap Flare et MSTest.
+Kit_Test_Flare/
+Microsoft/TestingPlatform/

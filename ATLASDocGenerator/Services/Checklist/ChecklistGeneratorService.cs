@@ -23,6 +23,19 @@ namespace ATLASDocGenerator.Services.Checklist
             string sourceUrl = document.GetSourceUrl();
             string filePath = ResolveFilePath(sourceUrl);
 
+            return GenerateChecklistFromFile(filePath);
+        }
+
+        /// <summary>
+        /// Génère la checklist directement depuis un topic sur disque.
+        /// Ce point d'entrée permet de tester le même traitement que celui appelé
+        /// depuis Flare sans simuler l'éditeur MadCap.
+        /// </summary>
+        internal int GenerateChecklistFromFile(string filePath)
+        {
+            if (string.IsNullOrWhiteSpace(filePath))
+                throw new ArgumentException("The topic file path is empty.", "filePath");
+
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("The active topic file could not be found.", filePath);
 

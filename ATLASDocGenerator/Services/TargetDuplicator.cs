@@ -50,27 +50,12 @@ namespace ATLASDocGenerator.Services
             string device,
             string fullTitle)
         {
-            string sourceTargetPath = Path.Combine(
-                projectRoot,
-                "Project",
-                "Targets",
-                "Doc_SAV.fltar"
-            );
-
             string targetTargetPath = Path.Combine(
                 projectRoot,
                 "Project",
                 "Targets",
                 folderName + ".fltar"
             );
-
-            if (!File.Exists(sourceTargetPath))
-            {
-                throw new Exception(
-                    "Target modèle introuvable :\n"
-                    + sourceTargetPath
-                );
-            }
 
             if (File.Exists(targetTargetPath))
             {
@@ -80,31 +65,11 @@ namespace ATLASDocGenerator.Services
                 );
             }
 
-            // Copie la target modèle sans écraser une target existante.
-            File.Copy(
-                sourceTargetPath,
-                targetTargetPath
+            string sourceDescription;
+            XDocument document = LoadSourceTarget(
+                projectRoot,
+                out sourceDescription
             );
-
-            XDocument document;
-
-            try
-            {
-                // Charge la target copiée comme document XML en conservant les espaces existants.
-                document = XDocument.Load(
-                    targetTargetPath,
-                    LoadOptions.PreserveWhitespace
-                );
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(
-                    "Impossible de lire la target copiée comme XML :\n"
-                    + targetTargetPath
-                    + "\n\nDétail : "
-                    + ex.Message
-                );
-            }
 
             // Applique les paramètres du nouveau document.
             UpdateTarget(
@@ -123,6 +88,59 @@ namespace ATLASDocGenerator.Services
             );
 
             return targetTargetPath;
+        }
+
+        internal XDocument LoadSourceTarget(
+            string projectRoot,
+            out string sourceDescription)
+        {
+            string path = Path.Combine(
+                projectRoot,
+                "Project",
+                "Targets",
+                "Doc_SAV.fltar"
+            );
+
+            if (File.Exists(path))
+            {
+                sourceDescription = path;
+
+                try
+                {
+                    return XDocument.Load(
+                        path,
+                        LoadOptions.PreserveWhitespace
+                    );
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidDataException(
+                        "Impossible de lire la target modèle comme XML :\n"
+                        + path
+                        + "\n\nDétail : "
+                        + ex.Message,
+                        ex
+                    );
+                }
+            }
+
+            sourceDescription =
+                "Target Doc_SAV embarquée dans ATLASDocGenerator.dll";
+
+            try
+            {
+                return XDocument.Parse(
+                    EmbeddedDocGeneratorTemplates.GetDocSavTargetXml(),
+                    LoadOptions.PreserveWhitespace
+                );
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidDataException(
+                    "Impossible de lire la target Doc_SAV embarquée dans la DLL.",
+                    ex
+                );
+            }
         }
 
         /// <summary>
@@ -546,7 +564,7 @@ namespace ATLASDocGenerator.Services
         /// </summary>
         /// <param name="range">Gamme sélectionnée.</param>
         /// <returns>Chemin de la feuille de style.</returns>
-        private string GetStylesheetPath(string range)
+        internal string GetStylesheetPath(string range)
         {
             if (string.Equals(
                 range,

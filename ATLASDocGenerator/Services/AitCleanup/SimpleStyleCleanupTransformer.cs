@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using ATLASDocGenerator.Models;
+using ATLASDocGenerator.Services;
 
 namespace ATLASDocGenerator.Services.AitCleanup
 {
@@ -76,7 +77,13 @@ namespace ATLASDocGenerator.Services.AitCleanup
 
                     if (cleanedInFile > 0)
                     {
-                        document.Save(filePath);
+                        FileBackupService.CreateInitialBackup(
+                            filePath,
+                            ".before-ait-cleanup.bak");
+
+                        document.Save(
+                            filePath,
+                            SaveOptions.DisableFormatting);
 
                         report.StylesCleaned += cleanedInFile;
 

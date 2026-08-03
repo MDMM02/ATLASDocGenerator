@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using ATLASDocGenerator.Models.AitImportFinalizer;
+using ATLASDocGenerator.Services;
 
 namespace ATLASDocGenerator.Services.AitImportFinalizer
 {
@@ -59,9 +61,6 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 throw new ArgumentNullException("profile");
             }
 
-            // Crée une sauvegarde avant la première modification de la target.
-            CreateBackup(targetPath);
-
             // Charge la target comme document XML en conservant les espaces existants.
             XDocument document = XDocument.Load(targetPath, LoadOptions.PreserveWhitespace);
 
@@ -87,7 +86,15 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
            
            SetAttributeValue(document,new[] { "MasterPageLayout", "PrimaryPageLayout", "PageLayout" }, "MasterPageLayout",pageLayoutValue);
 
-            document.Save(targetPath);
+            // Crée la sauvegarde seulement après validation complète du XML,
+            // juste avant la première écriture sur disque.
+            FileBackupService.CreateInitialBackup(
+                targetPath,
+                ".bak");
+
+            document.Save(
+                targetPath,
+                SaveOptions.DisableFormatting);
         }
 
         /// <summary>
@@ -95,15 +102,6 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
         /// Le fichier .bak est créé uniquement s'il n'existe pas déjà.
         /// </summary>
         /// <param name="filePath"></param>
-        private void CreateBackup(string filePath)
-        {
-            string backupPath = filePath + ".bak";
-
-            if (!File.Exists(backupPath))
-            {
-                File.Copy(filePath, backupPath);
-            }
-        }
         // Convertit le chemin complet d'une TOC en chemin relatif utilisable ds une target MadCap Flare
         private string ConvertTocPathToFlarePath(string tocPath)
         {
@@ -166,18 +164,50 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
 
             value = value ?? string.Empty;
 
-            // Recherche dans la racine et dans tous ses descendants.
-            XAttribute existingAttribute = new[] { root }
-                .Concat(root.Descendants())
-                .SelectMany(element => element.Attributes())
-                .FirstOrDefault(attribute =>
+            // La racine est prioritaire. Si le réglage n'est présent que dans
+            // les descendants, un emplacement unique est exigé afin de ne pas
+            // modifier arbitrairement une section secondaire de la target.
+            List<XAttribute> rootAttributes = root
+                .Attributes()
+                .Where(attribute =>
                     possibleAttributeNames.Any(name =>
                         attribute.Name.LocalName.Equals(
                             name,
-                            StringComparison.OrdinalIgnoreCase
-                        )
-                    )
-                );
+                            StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+
+            if (rootAttributes.Count > 1)
+            {
+                throw CreateAmbiguousAttributeException(
+                    defaultAttributeName,
+                    rootAttributes);
+            }
+
+            XAttribute existingAttribute = rootAttributes
+                .FirstOrDefault();
+
+            if (existingAttribute == null)
+            {
+                List<XAttribute> descendantAttributes = root
+                    .Descendants()
+                    .SelectMany(element => element.Attributes())
+                    .Where(attribute =>
+                        possibleAttributeNames.Any(name =>
+                            attribute.Name.LocalName.Equals(
+                                name,
+                                StringComparison.OrdinalIgnoreCase)))
+                    .ToList();
+
+                if (descendantAttributes.Count > 1)
+                {
+                    throw CreateAmbiguousAttributeException(
+                        defaultAttributeName,
+                        descendantAttributes);
+                }
+
+                existingAttribute = descendantAttributes
+                    .FirstOrDefault();
+            }
 
             if (existingAttribute != null)
             {
@@ -197,6 +227,25 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 defaultAttributeName,
                 value
             );
+        }
+
+        private InvalidOperationException CreateAmbiguousAttributeException(
+            string settingName,
+            IEnumerable<XAttribute> attributes)
+        {
+            string locations = string.Join(
+                ", ",
+                attributes.Select(attribute =>
+                    attribute.Parent.Name.LocalName
+                    + "@"
+                    + attribute.Name.LocalName));
+
+            return new InvalidOperationException(
+                "La target contient plusieurs emplacements possibles pour "
+                + settingName
+                + " : "
+                + locations
+                + ". Aucun emplacement n'a été modifié.");
         }
 
         // Adapte le nv chemin auformat de l'ancienne valeur.

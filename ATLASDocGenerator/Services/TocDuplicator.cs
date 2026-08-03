@@ -9,7 +9,8 @@ namespace ATLASDocGenerator.Services
     /// <summary>
     /// Cette classe duplique et configure une TOC MadCap Flare lors de la génération d'un nouveau document.
     ///
-    /// Elle utilise la TOC modèle suivante : Project/TOCs/Doc_SAV.fltoc
+    /// Elle utilise en priorité la TOC modèle Project/TOCs/PS_DR_tech.fltoc.
+    /// L'ancien nom Project/TOCs/Doc_SAV.fltoc reste accepté pour compatibilité.
     ///
     /// La TOC copiée est ensuite adaptée :
     /// - certaines conditions MadCap sont retirées
@@ -45,27 +46,12 @@ namespace ATLASDocGenerator.Services
             string folderName,
             string safeReference)
         {
-            string sourceTocPath = Path.Combine(
-                projectRoot,
-                "Project",
-                "TOCs",
-                "Doc_SAV.fltoc"
-            );
-
             string targetTocPath = Path.Combine(
                 projectRoot,
                 "Project",
                 "TOCs",
                 folderName + ".fltoc"
             );
-
-            if (!File.Exists(sourceTocPath))
-            {
-                throw new Exception(
-                    "TOC modèle introuvable :\n"
-                    + sourceTocPath
-                );
-            }
 
             if (File.Exists(targetTocPath))
             {
@@ -75,31 +61,11 @@ namespace ATLASDocGenerator.Services
                 );
             }
 
-            // Copie la TOC modèle sans écraser une TOC existante.
-            File.Copy(
-                sourceTocPath,
-                targetTocPath
+            string sourceDescription;
+            XDocument document = LoadSourceToc(
+                projectRoot,
+                out sourceDescription
             );
-
-            XDocument document;
-
-            try
-            {
-                // Charge la TOC copiée comme document XML en conservant les espaces existants.
-                document = XDocument.Load(
-                    targetTocPath,
-                    LoadOptions.PreserveWhitespace
-                );
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(
-                    "Impossible de lire la TOC copiée comme XML :\n"
-                    + targetTocPath
-                    + "\n\nDétail : "
-                    + ex.Message
-                );
-            }
 
             if (document.Root == null)
             {
@@ -125,6 +91,71 @@ namespace ATLASDocGenerator.Services
             );
 
             return targetTocPath;
+        }
+
+        /// <summary>
+        /// Charge la TOC du projet lorsqu'elle existe, sinon le modèle embarqué
+        /// dans la DLL. Le modèle du projet reste prioritaire afin de permettre
+        /// une mise à jour locale contrôlée.
+        /// </summary>
+        internal XDocument LoadSourceToc(
+            string projectRoot,
+            out string sourceDescription)
+        {
+            string tocFolder = Path.Combine(
+                projectRoot,
+                "Project",
+                "TOCs"
+            );
+
+            string[] candidates =
+            {
+                Path.Combine(tocFolder, "PS_DR_tech.fltoc"),
+                Path.Combine(tocFolder, "Doc_SAV.fltoc")
+            };
+
+            foreach (string candidate in candidates)
+            {
+                if (File.Exists(candidate))
+                {
+                    sourceDescription = candidate;
+
+                    try
+                    {
+                        return XDocument.Load(
+                            candidate,
+                            LoadOptions.PreserveWhitespace
+                        );
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new InvalidDataException(
+                            "Impossible de lire la TOC modèle comme XML :\n"
+                            + candidate
+                            + "\n\nDétail : "
+                            + ex.Message,
+                            ex
+                        );
+                    }
+                }
+            }
+
+            sourceDescription = "TOC PS embarquée dans ATLASDocGenerator.dll";
+
+            try
+            {
+                return XDocument.Parse(
+                    EmbeddedDocGeneratorTemplates.GetPsTocXml(),
+                    LoadOptions.PreserveWhitespace
+                );
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidDataException(
+                    "Impossible de lire la TOC PS embarquée dans la DLL.",
+                    ex
+                );
+            }
         }
 
         /// <summary>
@@ -274,7 +305,7 @@ namespace ATLASDocGenerator.Services
         /// <summary>
         /// Crée la table de correspondance entre les topics modèles et les topics du nouveau document.
         ///
-        /// La clé correspond au lien présent dans Doc_SAV.fltoc.
+        /// La clé correspond au lien présent dans la TOC technique modèle.
         /// La valeur correspond au lien du topic généré.
         /// </summary>
         /// <param name="folderName">Nom du nouveau dossier documentaire.</param>
