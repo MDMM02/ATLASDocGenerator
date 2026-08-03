@@ -49,7 +49,6 @@ namespace ATLASDocGenerator.Forms
             cmbDocumentType.Width = fieldWidth;
             cmbDocumentType.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbDocumentType.Items.Add("PS");
-            cmbDocumentType.Items.Add("Notice");
             cmbDocumentType.SelectedIndex = 0;
             Controls.Add(cmbDocumentType);
 

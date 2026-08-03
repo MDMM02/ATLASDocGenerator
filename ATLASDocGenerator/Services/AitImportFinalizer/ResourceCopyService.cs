@@ -141,10 +141,6 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             ValidateContentResource(projectRootPath, profile.PrimaryStylesheet, "Feuille de style principale");
 
             ValidateContentResource(projectRootPath, profile.PrimaryPageLayout, "Layout principal");
-
-            ValidateContentResource(projectRootPath, profile.TocPageLayout, "Layout de la table des matières");
-
-            ValidateContentResource(projectRootPath, profile.FrontmatterPageLayout, "Layout du frontmatter");
         }
 
         /// <summary>

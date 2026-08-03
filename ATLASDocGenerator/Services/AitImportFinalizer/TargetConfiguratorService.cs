@@ -84,8 +84,7 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             // Configure la feuille de style principale de la target
             SetAttributeValue(document,new[] { "MasterStylesheet", "PrimaryStylesheet", "Stylesheet" }, "MasterStylesheet", stylesheetValue);
             //Configure le layout de page principal de la target.
-           // Attention :
-           // TocPageLayout et FrontmatterPageLayout ne sont pas encore configurés par cette classe. Leur utilisation reste à vérifier.
+           
            SetAttributeValue(document,new[] { "MasterPageLayout", "PrimaryPageLayout", "PageLayout" }, "MasterPageLayout",pageLayoutValue);
 
             document.Save(targetPath);

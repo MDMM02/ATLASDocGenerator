@@ -66,15 +66,8 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 
                 PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Tech.flpgl",
-                TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
-                FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
-                
-                RunActionResultCleanup = true,
-                RunBulletListCleanup = true,
-                RunCalloutCleanup = true,
-                RunFigureCleanup = true,
-                RunSimpleStyleCleanup = true,
-                RunIhmCleanup = false,
+               
+
                 
                 TocEntriesToRemove = new List<string>
                 {
@@ -97,15 +90,6 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 
                 PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Notice_user.flpgl",
-                TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
-                FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
-             
-                RunActionResultCleanup = true,
-                RunBulletListCleanup = true,
-                RunCalloutCleanup = true,
-                RunFigureCleanup = true,
-                RunSimpleStyleCleanup = true,
-                RunIhmCleanup = false,
                 
                 TocEntriesToRemove = new List<string>
                 {
@@ -126,15 +110,7 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 
                 PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Addenda.flpgl",
-                TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
-                FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
                 
-                RunActionResultCleanup = true,
-                RunBulletListCleanup = true,
-                RunCalloutCleanup = true,
-                RunFigureCleanup = true,
-                RunSimpleStyleCleanup = true,
-                RunIhmCleanup = false,
                 
                 TocEntriesToRemove = new List<string>
                 {
@@ -154,16 +130,8 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 DisplayName = "Manuel de référence / MRef",
               
                 PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
-                PrimaryPageLayout = "Resources/PageLayouts/Chapters.flpgl",
-                TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
-                FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
+                PrimaryPageLayout = "Resources/PageLayouts/Chapters.flpgl",               
                
-                RunActionResultCleanup = true,
-                RunBulletListCleanup = true,
-                RunCalloutCleanup = true,
-                RunFigureCleanup = true,
-                RunSimpleStyleCleanup = true,
-                RunIhmCleanup = false,
               
                 TocEntriesToRemove = new List<string>
                 {
@@ -184,15 +152,7 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                
                 PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Tech.flpgl",
-                TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
-                FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
                
-                RunActionResultCleanup = true,
-                RunBulletListCleanup = true,
-                RunCalloutCleanup = true,
-                RunFigureCleanup = true,
-                RunSimpleStyleCleanup = true,
-                RunIhmCleanup = false,
                
                 TocEntriesToRemove = new List<string>
                 {
@@ -213,15 +173,7 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                
                 PrimaryStylesheet = "Resources/Stylesheets/Styles.css",
                 PrimaryPageLayout = "Resources/PageLayouts/Tech_multi.flpgl",
-                TocPageLayout = "Resources/PageLayouts/TOC_Print.flpgl",
-                FrontmatterPageLayout = "Resources/PageLayouts/Frontmatter.flpgl",
-               
-                RunActionResultCleanup = true,
-                RunBulletListCleanup = true,
-                RunCalloutCleanup = true,
-                RunFigureCleanup = true,
-                RunSimpleStyleCleanup = true,
-                RunIhmCleanup = false,
+              
                
                 TocEntriesToRemove = new List<string>
                 {

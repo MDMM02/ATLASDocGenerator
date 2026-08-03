@@ -29,7 +29,7 @@ namespace ATLASDocGenerator.Models
 
             IhmVariableSetGenerationDetails = new List<string>();
             IhmReferenceReplacementDetails = new List<string>();
-
+        }
             
 
         public DateTime StartedAt { get; set; }

@@ -18,23 +18,8 @@ namespace ATLASDocGenerator.Models.AitImportFinalizer
 
         public string PrimaryPageLayout { get; set; }
 
-        public string TocPageLayout { get; set; }
-
-        public string FrontmatterPageLayout { get; set; }
 
         public List<string> TocEntriesToRemove { get; set; }
-
-        public bool RunActionResultCleanup { get; set; }
-
-        public bool RunBulletListCleanup { get; set; }
-
-        public bool RunCalloutCleanup { get; set; }
-
-        public bool RunFigureCleanup { get; set; }
-
-        public bool RunSimpleStyleCleanup { get; set; }
-
-        public bool RunIhmCleanup { get; set; }
 
         public AitDocumentProfile()
         {

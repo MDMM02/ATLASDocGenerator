@@ -551,9 +551,6 @@
     <None Include="Templates\Commun Stago\Symboles\Texte.flsnp" />
     <None Include="Templates\Commun Stago\Symboles\Texte_entre_crochets.flsnp" />
     <None Include="Templates\Commun Stago\Topics_Tech\.folder.props" />
-    <None Include="Templates\Images\Austin-Map.png.props" />
-    <None Include="Templates\Images\Backmatter-Heading-Background.png.props" />
-    <None Include="Templates\Images\Downtown.png.props" />
     <None Include="Templates\Images\Glossaire_termes\.folder.props" />
     <None Include="Templates\Images\Glossaire_termes\346720.png.props" />
     <None Include="Templates\Images\Glossaire_termes\multi_ph_pat_dav.jpg.props" />
@@ -588,13 +585,6 @@
     <None Include="Templates\Images\Glossaire_termes\s_ic_pat_distributeur_billes.png.props" />
     <None Include="Templates\Images\Glossaire_termes\s_ph_cuvette.png.props" />
     <None Include="Templates\Images\Glossaire_termes\s_sch_pat_oscillation_bille.png.props" />
-    <None Include="Templates\Images\Hero-Image.png.props" />
-    <None Include="Templates\Images\Icon-Download.png.props" />
-    <None Include="Templates\Images\Icon-Forum.png.props" />
-    <None Include="Templates\Images\Icon-PDFs.png.props" />
-    <None Include="Templates\Images\Icon-Popular-Topics.png.props" />
-    <None Include="Templates\Images\Icon-Videos.png.props" />
-    <None Include="Templates\Images\Logo.png.props" />
     <None Include="Templates\Images\Logos\.folder.props" />
     <None Include="Templates\Images\Logos\E_Connect.png.props" />
     <None Include="Templates\Images\Logos\E_Expert_QC.png.props" />
@@ -612,7 +602,6 @@
     <None Include="Templates\Images\Logos\sthemO201.png.props" />
     <None Include="Templates\Images\Logos\sthemO301.png.props" />
     <None Include="Templates\Images\Logos\sthemO_generique.png.props" />
-    <None Include="Templates\Images\Minus.png.props" />
     <None Include="Templates\Images\Picto_doc\.folder.props" />
     <None Include="Templates\Images\Picto_doc\action_sthem.png.props" />
     <None Include="Templates\Images\Picto_doc\biohazardpetit.png.props" />
@@ -704,7 +693,6 @@
     <None Include="Templates\Images\Picto_doc\s_symb_pat_sharp.png.props" />
     <None Include="Templates\Images\Picto_doc\s_symb_pat_ukcablackfill.png.props" />
     <None Include="Templates\Images\Picto_doc\usage_uniquepetit.png.props" />
-    <None Include="Templates\Images\Plus.png.props" />
     <None Include="Templates\Images\TEMPLATE_BT_INST_xxxx_Y\.folder.props" />
     <None Include="Templates\PageLayouts\.folder.props" />
     <Content Include="Templates\PageLayouts\Addenda.flpgl">
@@ -984,11 +972,6 @@
     <Content Include="Templates\Commun Stago\Topics_Tech\Prérequis.htm" />
     <Content Include="Templates\Commun Stago\Topics_Tech\Sommaire.htm" />
     <Content Include="Templates\Commun Stago\Topics_Tech\Title_doc.htm" />
-    <Content Include="Templates\Images\Austin-Logo-Online.png" />
-    <Content Include="Templates\Images\Austin-Map.png" />
-    <Content Include="Templates\Images\Backmatter-Heading-Background.png" />
-    <Content Include="Templates\Images\Capitol.jpg" />
-    <Content Include="Templates\Images\Downtown.png" />
     <Content Include="Templates\Images\Glossaire_termes\346720.png" />
     <Content Include="Templates\Images\Glossaire_termes\multi_ph_pat_dav.jpg" />
     <Content Include="Templates\Images\Glossaire_termes\multi_symb_pat_information.png" />
@@ -1022,16 +1005,6 @@
     <Content Include="Templates\Images\Glossaire_termes\s_ic_pat_distributeur_billes.png" />
     <Content Include="Templates\Images\Glossaire_termes\s_ph_cuvette.png" />
     <Content Include="Templates\Images\Glossaire_termes\s_sch_pat_oscillation_bille.png" />
-    <Content Include="Templates\Images\Hero-Image.png" />
-    <Content Include="Templates\Images\Icon-Download.png" />
-    <Content Include="Templates\Images\Icon-Forum.png" />
-    <Content Include="Templates\Images\Icon-PDFs.png" />
-    <Content Include="Templates\Images\Icon-Popular-Topics.png" />
-    <Content Include="Templates\Images\Icon-Videos.png" />
-    <Content Include="Templates\Images\Lady-Bird-Lake.jpg" />
-    <Content Include="Templates\Images\Logo.png" />
-    <Content Include="Templates\Images\Minus.png" />
-    <Content Include="Templates\Images\Plus.png" />
     <Content Include="Templates\Images\TEMPLATE_BT_INST_xxxx_Y\TEMPLATE_BT_INST_xxxx_Y.jpg" />
     <Content Include="Templates\Images\TEMPLATE_BT_INST_xxxx_Y\TEMPLATE_BT_INST_xxxx_Y.png" />
     <Content Include="Templates\Images\TEMPLATE_BT_INST_xxxx_Y\TEMPLATE_BT_INST_xxxx_Y_1.jpg" />
@@ -1043,26 +1016,16 @@
     <Content Include="Templates\Images\TEMPLATE_BT_INST_xxxx_Y\TEMPLATE_BT_INST_xxxx_Y_4.jpg" />
     <Content Include="Templates\Images\TEMPLATE_BT_INST_xxxx_Y\TEMPLATE_BT_INST_xxxx_Y_5.jpg" />
     <Content Include="Templates\Images\TEMPLATE_BT_INST_xxxx_Y\TEMPLATE_BT_INST_xxxx_Y_6.jpg" />
-    <Content Include="Templates\Images\Zilker-Park.jpg" />
-    <Content Include="Templates\Stylesheets\BCK\Copy of Styles.css" />
-    <Content Include="Templates\Stylesheets\BCK\Copy of Styles12025-05-19.css" />
-    <Content Include="Templates\Stylesheets\BCK\Styles_20250902.css" />
     <Content Include="Templates\Stylesheets\Styles.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Stylesheets\Styles_STA.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  
   <Target Name="CopyTemplatesToOutput" AfterTargets="Build">
-  <ItemGroup>
-    <AtlasTemplateFiles Include="$(ProjectDir)Templates\**\*.*" />
-  </ItemGroup>
-
-  <Copy
-    SourceFiles="@(AtlasTemplateFiles)"
-    DestinationFiles="@(AtlasTemplateFiles->'$(TargetDir)Templates\%(RecursiveDir)%(Filename)%(Extension)')"
-    SkipUnchangedFiles="true" />
-</Target>
-
+    <ItemGroup>
+      <AtlasTemplateFiles Include="$(ProjectDir)Templates\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AtlasTemplateFiles)" DestinationFiles="@(AtlasTemplateFiles->'$(TargetDir)Templates\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
 </Project>
