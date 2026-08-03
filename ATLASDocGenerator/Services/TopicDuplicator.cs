@@ -211,98 +211,110 @@ namespace ATLASDocGenerator.Services
         /// <returns>Liste des règles utilisées pour les documents PS.</returns>
         private List<TopicCopyRule> GetPsRules()
         {
+            const string topicsFolder =
+                @"Content\Resources\Commun Stago\Topics_Tech";
+
             return new List<TopicCopyRule>
-            {
-                new TopicCopyRule
-                {
-                    // Page de titre du document.
-                    SourceRelativePath =
-                        @"Content\Template_tech\Title_doc.htm",
+    {
+        new TopicCopyRule
+        {
+            SourceRelativePath =
+                Path.Combine(
+                    topicsFolder,
+                    "Title_doc.htm"),
 
-                    TargetFileNamePattern =
-                        "Title_{ref}.htm"
-                },
+            TargetFileNamePattern =
+                "Title_{ref}.htm"
+        },
 
-                new TopicCopyRule
-                {
-                    // Historique des modifications.
-                    SourceRelativePath =
-                        @"Content\Resources\Commun Stago\topics_Tech\Historique_tech.htm",
+        new TopicCopyRule
+        {
+            SourceRelativePath =
+                Path.Combine(
+                    topicsFolder,
+                    "Historique_tech.htm"),
 
-                    TargetFileNamePattern =
-                        "Historique_{ref}.htm"
-                },
+            TargetFileNamePattern =
+                "Historique_{ref}.htm"
+        },
 
-                new TopicCopyRule
-                {
-                    // Objectif du document.
-                    SourceRelativePath =
-                        @"Content\Template_tech\Objectif.htm",
+        new TopicCopyRule
+        {
+            SourceRelativePath =
+                Path.Combine(
+                    topicsFolder,
+                    "Objectif.htm"),
 
-                    TargetFileNamePattern =
-                        "Objectif_{ref}.htm"
-                },
+            TargetFileNamePattern =
+                "Objectif_{ref}.htm"
+        },
 
-                new TopicCopyRule
-                {
-                    // Mesures de sécurité.
-                    SourceRelativePath =
-                        @"Content\Template_tech\Mesures de sécurité.htm",
+        new TopicCopyRule
+        {
+            SourceRelativePath =
+                Path.Combine(
+                    topicsFolder,
+                    "Mesures de sécurité.htm"),
 
-                    TargetFileNamePattern =
-                        "Mesures_securite_{ref}.htm"
-                },
+            TargetFileNamePattern =
+                "Mesures_securite_{ref}.htm"
+        },
 
-                new TopicCopyRule
-                {
-                    // Matériel nécessaire.
-                    SourceRelativePath =
-                        @"Content\Template_tech\Matériel nécessaire.htm",
+        new TopicCopyRule
+        {
+            SourceRelativePath =
+                Path.Combine(
+                    topicsFolder,
+                    "Matériel nécessaire.htm"),
 
-                    TargetFileNamePattern =
-                        "Materiel_{ref}.htm"
-                },
+            TargetFileNamePattern =
+                "Materiel_{ref}.htm"
+        },
 
-                new TopicCopyRule
-                {
-                    // Documents nécessaires.
-                    SourceRelativePath =
-                        @"Content\Template_tech\Documents nécessaires.htm",
+        new TopicCopyRule
+        {
+            SourceRelativePath =
+                Path.Combine(
+                    topicsFolder,
+                    "Documents nécessaires.htm"),
 
-                    TargetFileNamePattern =
-                        "Documents_{ref}.htm"
-                },
+            TargetFileNamePattern =
+                "Documents_{ref}.htm"
+        },
 
-                new TopicCopyRule
-                {
-                    // Durée d'intervention et remplacements.
-                    SourceRelativePath =
-                        @"Content\Template_tech\Duree_inter_Remplacements.htm",
+        new TopicCopyRule
+        {
+            SourceRelativePath =
+                Path.Combine(
+                    topicsFolder,
+                    "Duree_inter_Remplacements.htm"),
 
-                    TargetFileNamePattern =
-                        "Duree_inter_Remplacements_{ref}.htm"
-                },
+            TargetFileNamePattern =
+                "Duree_inter_Remplacements_{ref}.htm"
+        },
 
-                new TopicCopyRule
-                {
-                    // Prérequis nécessaires avant l'intervention.
-                    SourceRelativePath =
-                        @"Content\Template_tech\Prérequis.htm",
+        new TopicCopyRule
+        {
+            SourceRelativePath =
+                Path.Combine(
+                    topicsFolder,
+                    "Prérequis.htm"),
 
-                    TargetFileNamePattern =
-                        "Prerequis_{ref}.htm"
-                },
+            TargetFileNamePattern =
+                "Prerequis_{ref}.htm"
+        },
 
-                new TopicCopyRule
-                {
-                    // Premier chapitre générique du nouveau document.
-                    SourceRelativePath =
-                        @"Content\Template_tech\1er_chapitre.htm",
+        new TopicCopyRule
+        {
+            SourceRelativePath =
+                Path.Combine(
+                    topicsFolder,
+                    "1er_chapitre.htm"),
 
-                    TargetFileNamePattern =
-                        "1er_chapitre.htm"
-                }
-            };
+            TargetFileNamePattern =
+                "1er_chapitre.htm"
+        }
+    };
         }
 
         /// <summary>
