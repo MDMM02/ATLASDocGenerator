@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using ATLASDocGenerator.Models.AitImportFinalizer;
+using ATLASDocGenerator.Services;
 
 namespace ATLASDocGenerator.Services.AitImportFinalizer
 {
@@ -114,7 +115,9 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             }
 
             // Crée une sauvegarde avant la première modification de la TOC.
-            CreateBackup(tocPath);
+            FileBackupService.CreateInitialBackup(
+                tocPath,
+                ".bak");
 
             foreach (XElement entry in entriesToRemove)
             {
@@ -135,26 +138,6 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             );
 
             return removedEntries;
-        }
-
-        /// <summary>
-        /// Crée une copie de sauvegarde de la TOC.
-        ///
-        /// Le fichier .bak est créé uniquement s'il n'existe pas déjà.
-        /// Il représente donc l'état initial de la TOC avant la première exécution du Finalizer.
-        /// </summary>
-        /// <param name="filePath">Chemin du fichier TOC à sauvegarder.</param>
-        private void CreateBackup(string filePath)
-        {
-            string backupPath = filePath + ".bak";
-
-            if (!File.Exists(backupPath))
-            {
-                File.Copy(
-                    filePath,
-                    backupPath
-                );
-            }
         }
 
         /// <summary>

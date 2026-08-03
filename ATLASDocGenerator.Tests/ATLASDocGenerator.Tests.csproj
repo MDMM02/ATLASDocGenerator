@@ -1,0 +1,78 @@
+<Project Sdk="MSTest.Sdk/4.3.2">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="B3.PluginAPIKit">
+      <HintPath>..\..\..\..\..\..\Program Files\MadCap Software\MadCap Flare 21\Flare.app\B3.PluginAPIKit.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Les sources métier testées sont liées directement au projet de tests.
+      La DLL du plug-in référence l'API MadCap et son chargement hors de Flare
+      peut être bloqué par la politique d'exécution Windows de l'entreprise.
+    -->
+    <Compile Include="..\ATLASDocGenerator\Models\CleanupReport.cs"
+             Link="Production\Models\CleanupReport.cs" />
+    <Compile Include="..\ATLASDocGenerator\Models\DocGeneratorRequest.cs"
+             Link="Production\Models\DocGeneratorRequest.cs" />
+    <Compile Include="..\ATLASDocGenerator\Models\GenerationResult.cs"
+             Link="Production\Models\GenerationResult.cs" />
+    <Compile Include="..\ATLASDocGenerator\Models\TopicCopyRule.cs"
+             Link="Production\Models\TopicCopyRule.cs" />
+    <Compile Include="..\ATLASDocGenerator\Models\AitImportFinalizer\AitDocumentProfile.cs"
+             Link="Production\Models\AitImportFinalizer\AitDocumentProfile.cs" />
+    <Compile Include="..\ATLASDocGenerator\Models\AitImportFinalizer\AitDocumentType.cs"
+             Link="Production\Models\AitImportFinalizer\AitDocumentType.cs" />
+    <Compile Include="..\ATLASDocGenerator\Models\AitImportFinalizer\AitImportFinalizerOptions.cs"
+             Link="Production\Models\AitImportFinalizer\AitImportFinalizerOptions.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\FileNameSanitizer.cs"
+             Link="Production\Services\FileNameSanitizer.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\FileBackupService.cs"
+             Link="Production\Services\FileBackupService.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AtlasDocGenerationService.cs"
+             Link="Production\Services\AtlasDocGenerationService.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\EmbeddedDocGeneratorTemplates.cs"
+             Link="Production\Services\EmbeddedDocGeneratorTemplates.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\Checklist\ChecklistGeneratorService.cs"
+             Link="Production\Services\Checklist\ChecklistGeneratorService.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\TopicDuplicator.cs"
+             Link="Production\Services\TopicDuplicator.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\TopicPostProcessor.cs"
+             Link="Production\Services\TopicPostProcessor.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\TocDuplicator.cs"
+             Link="Production\Services\TocDuplicator.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\TargetDuplicator.cs"
+             Link="Production\Services\TargetDuplicator.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitCleanup\SimpleStyleCleanupTransformer.cs"
+             Link="Production\Services\AitCleanup\SimpleStyleCleanupTransformer.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitCleanup\ActionResultListTransformer.cs"
+             Link="Production\Services\AitCleanup\ActionResultListTransformer.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitCleanup\BulletListTransformer.cs"
+             Link="Production\Services\AitCleanup\BulletListTransformer.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitCleanup\CalloutTransformer.cs"
+             Link="Production\Services\AitCleanup\CalloutTransformer.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitCleanup\FigureTransformer.cs"
+             Link="Production\Services\AitCleanup\FigureTransformer.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitCleanup\IhmVariables\FrenchIhmTemplateDetector.cs"
+             Link="Production\Services\AitCleanup\IhmVariables\FrenchIhmTemplateDetector.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitCleanup\IhmVariables\FrenchIhmVariableSetGenerator.cs"
+             Link="Production\Services\AitCleanup\IhmVariables\FrenchIhmVariableSetGenerator.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitCleanup\IhmVariables\IhmVariableReferenceTransformer.cs"
+             Link="Production\Services\AitCleanup\IhmVariables\IhmVariableReferenceTransformer.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitImportFinalizer\ResourceCopyService.cs"
+             Link="Production\Services\AitImportFinalizer\ResourceCopyService.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitImportFinalizer\TargetConfiguratorService.cs"
+             Link="Production\Services\AitImportFinalizer\TargetConfiguratorService.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitImportFinalizer\TocCleanerService.cs"
+             Link="Production\Services\AitImportFinalizer\TocCleanerService.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\AitImportFinalizer\VariableUpdaterService.cs"
+             Link="Production\Services\AitImportFinalizer\VariableUpdaterService.cs" />
+  </ItemGroup>
+</Project>

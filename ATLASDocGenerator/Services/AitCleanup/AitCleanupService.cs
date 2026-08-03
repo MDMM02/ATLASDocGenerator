@@ -60,17 +60,17 @@ namespace ATLASDocGenerator.Services.AitCleanup
         /// </summary>
         public CleanupReport Run(AitCleanupOptions options)
         {
+            if (options == null)
+            {
+                throw new ArgumentNullException(
+                    "options",
+                    "Les options AIT Cleanup sont absentes.");
+            }
+
             CleanupReport report = new CleanupReport();
 
             try
             {
-                if (options == null)
-                {
-                    throw new ArgumentNullException(
-                        "options",
-                        "Les options AIT Cleanup sont absentes.");
-                }
-
                 /*
                  * ÉTAPE 1
                  * Recherche les fichiers HTML à traiter.
@@ -166,9 +166,18 @@ namespace ATLASDocGenerator.Services.AitCleanup
                 report.FinishedAt =
                     DateTime.Now;
 
-                _logService.WriteLog(
-                    options,
-                    report);
+                try
+                {
+                    _logService.WriteLog(
+                        options,
+                        report);
+                }
+                catch (Exception logException)
+                {
+                    report.Errors.Add(
+                        "La création du journal AIT Cleanup a échoué : "
+                        + logException.Message);
+                }
             }
 
             return report;

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using ATLASDocGenerator.Models.AitImportFinalizer;
+using ATLASDocGenerator.Services;
 
 namespace ATLASDocGenerator.Services.AitImportFinalizer
 {
@@ -75,9 +76,6 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                     variableSetPath
                 );
             }
-
-            // Crée une sauvegarde du fichier avant sa première modification.
-            CreateBackup(variableSetPath);
 
             // Charge le fichier comme document XML
             // en conservant les espaces et retours à la ligne existants.
@@ -168,31 +166,17 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 Safe(options.MrefReference)
             );
 
+            // La sauvegarde est créée seulement après validation et préparation
+            // complète du document, immédiatement avant la première écriture.
+            FileBackupService.CreateInitialBackup(
+                variableSetPath,
+                ".bak");
+
             // Sauvegarde sans reformater inutilement tout le document XML.
             document.Save(
                 variableSetPath,
                 SaveOptions.DisableFormatting
             );
-        }
-
-        /// <summary>
-        /// Crée une copie de sauvegarde du fichier.
-        ///
-        /// Le backup est créé uniquement s'il n'existe pas déjà.
-        /// Il représente donc l'état initial du fichier avant la première exécution.
-        /// </summary>
-        /// <param name="filePath">Chemin du fichier à sauvegarder.</param>
-        private void CreateBackup(string filePath)
-        {
-            string backupPath = filePath + ".bak";
-
-            if (!File.Exists(backupPath))
-            {
-                File.Copy(
-                    filePath,
-                    backupPath
-                );
-            }
         }
 
         /// <summary>

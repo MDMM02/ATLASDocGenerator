@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 using ATLASDocGenerator.Models;
 
 namespace ATLASDocGenerator.Services
@@ -39,92 +42,285 @@ namespace ATLASDocGenerator.Services
         /// </returns>
         public GenerationResult CreateDocumentFolder(DocGenerationRequest request)
         {
-            // Vérifie la présence et la validité des informations utilisateur.
             ValidateRequest(request);
 
-            // Normalise la référence et le titre abrégé afin de produire
-            // des noms compatibles avec les règles de nommage du projet.
             string safeReference = FileNameSanitizer.ToSafeName(
                 request.DocumentReference
             );
-
             string safeShortTitle = FileNameSanitizer.ToSafeName(
                 request.ShortTitle
             );
-
-            // Le nom du dossier documentaire est composé de la référence et du titre abrégé normalisés.
             string folderName = safeReference + "_" + safeShortTitle;
-
-            // Tous les documents générés sont placés dans le dossier Content du projet.
-            string contentFolder = Path.Combine(
+            string contentFolder = Path.Combine(request.ProjectRoot, "Content");
+            string documentFolder = Path.Combine(contentFolder, folderName);
+            string tocPath = Path.Combine(
                 request.ProjectRoot,
-                "Content"
+                "Project",
+                "TOCs",
+                folderName + ".fltoc"
             );
-
-            string documentFolder = Path.Combine(
-                contentFolder,
-                folderName
+            string targetPath = Path.Combine(
+                request.ProjectRoot,
+                "Project",
+                "Targets",
+                folderName + ".fltar"
             );
 
             if (!Directory.Exists(contentFolder))
             {
-                throw new Exception(
+                throw new DirectoryNotFoundException(
                     "Le dossier Content est introuvable dans le projet sélectionné :\n"
                     + contentFolder
                 );
             }
 
-            // Empêche d'écraser un dossier documentaire existant.
             if (Directory.Exists(documentFolder))
             {
-                throw new Exception(
-                    "Le dossier documentaire existe déjà :\n"
-                    + documentFolder
+                throw new IOException(
+                    "Le dossier documentaire existe déjà :\n" + documentFolder
                 );
             }
 
-            // Création du dossier qui recevra les topics du document.
-            Directory.CreateDirectory(documentFolder);
-
-            // Initialise l'objet qui contiendra tous les résultats de la génération.
-            GenerationResult result = new GenerationResult
-            {
-                FolderName = folderName,
-                DocumentFolderPath = documentFolder
-            };
-
-            // Étape 1 : duplication des topics modèles dans le nouveau dossier.
             TopicDuplicator topicDuplicator = new TopicDuplicator();
-
-            result.CreatedTopicPaths = topicDuplicator.DuplicateTopics(
-                request.ProjectRoot,
-                documentFolder,
-                safeReference,
-                request
-            );
-
-            // Étape 2 : duplication et adaptation de la TOC modèle.
             TocDuplicator tocDuplicator = new TocDuplicator();
-
-            result.TocPath = tocDuplicator.DuplicateAndUpdateToc(
-                request.ProjectRoot,
-                folderName,
-                safeReference
-            );
-
-            // Étape 3 : duplication et adaptation de la target modèle.
             TargetDuplicator targetDuplicator = new TargetDuplicator();
 
-            result.TargetPath = targetDuplicator.DuplicateAndUpdateTarget(
-                request.ProjectRoot,
-                folderName,
-                safeReference,
-                request.Range,
-                request.Device,
-                request.FullTitle
+            // Valide toutes les entrées avant la première écriture afin qu'une
+            // erreur de modèle ne laisse pas un document partiellement créé.
+            ValidateProjectPrerequisites(
+                request,
+                topicDuplicator,
+                tocDuplicator,
+                targetDuplicator,
+                tocPath,
+                targetPath
             );
 
-            return result;
+            try
+            {
+                Directory.CreateDirectory(documentFolder);
+
+                GenerationResult result = new GenerationResult
+                {
+                    FolderName = folderName,
+                    DocumentFolderPath = documentFolder
+                };
+
+                result.CreatedTopicPaths = topicDuplicator.DuplicateTopics(
+                    request.ProjectRoot,
+                    documentFolder,
+                    safeReference,
+                    request
+                );
+                result.TocPath = tocDuplicator.DuplicateAndUpdateToc(
+                    request.ProjectRoot,
+                    folderName,
+                    safeReference
+                );
+                result.TargetPath = targetDuplicator.DuplicateAndUpdateTarget(
+                    request.ProjectRoot,
+                    folderName,
+                    safeReference,
+                    request.Range,
+                    request.Device,
+                    request.FullTitle
+                );
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                TryRollbackGeneratedArtifacts(
+                    documentFolder,
+                    tocPath,
+                    targetPath,
+                    ex
+                );
+                throw;
+            }
+        }
+
+        private void ValidateProjectPrerequisites(
+            DocGenerationRequest request,
+            TopicDuplicator topicDuplicator,
+            TocDuplicator tocDuplicator,
+            TargetDuplicator targetDuplicator,
+            string targetTocPath,
+            string targetTargetPath)
+        {
+            if (File.Exists(targetTocPath))
+            {
+                throw new IOException(
+                    "Une TOC existe déjà avec ce nom :\n" + targetTocPath
+                );
+            }
+
+            if (File.Exists(targetTargetPath))
+            {
+                throw new IOException(
+                    "Une target existe déjà avec ce nom :\n" + targetTargetPath
+                );
+            }
+
+            List<TopicCopyRule> rules = topicDuplicator.GetRules(
+                request.DocumentType
+            );
+            foreach (TopicCopyRule rule in rules)
+            {
+                string topicPath = Path.Combine(
+                    request.ProjectRoot,
+                    rule.SourceRelativePath
+                );
+                RequireFile(topicPath, "Topic modèle");
+                ValidateXmlFile(topicPath, "topic modèle");
+            }
+
+            string sourceTocDescription;
+            XDocument sourceToc = tocDuplicator.LoadSourceToc(
+                request.ProjectRoot,
+                out sourceTocDescription
+            );
+            ValidateTocLinks(
+                request.ProjectRoot,
+                sourceToc,
+                sourceTocDescription
+            );
+
+            string sourceTargetDescription;
+            targetDuplicator.LoadSourceTarget(
+                request.ProjectRoot,
+                out sourceTargetDescription
+            );
+
+            string stylesheetRelativePath = targetDuplicator
+                .GetStylesheetPath(request.Range)
+                .TrimStart('/')
+                .Replace('/', Path.DirectorySeparatorChar);
+
+            RequireFile(
+                Path.Combine(request.ProjectRoot, stylesheetRelativePath),
+                "Feuille de style"
+            );
+            RequireFile(
+                Path.Combine(
+                    request.ProjectRoot,
+                    "Content",
+                    "Resources",
+                    "PageLayouts",
+                    "Tech.flpgl"),
+                "Mise en page Tech"
+            );
+            RequireFile(
+                Path.Combine(
+                    request.ProjectRoot,
+                    "Project",
+                    "VariableSets",
+                    "General.flvar"),
+                "Jeu de variables General"
+            );
+        }
+
+        private XDocument ValidateXmlFile(string path, string description)
+        {
+            try
+            {
+                return XDocument.Load(path, LoadOptions.PreserveWhitespace);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidDataException(
+                    "Le " + description + " n'est pas un XML valide :\n"
+                    + path
+                    + "\n\nDétail : "
+                    + ex.Message,
+                    ex
+                );
+            }
+        }
+
+        private void ValidateTocLinks(
+            string projectRoot,
+            XDocument sourceToc,
+            string sourceTocPath)
+        {
+            IEnumerable<string> contentLinks = sourceToc
+                .Descendants()
+                .SelectMany(element => element.Attributes())
+                .Where(attribute => attribute.Name.LocalName.Equals(
+                    "Link",
+                    StringComparison.OrdinalIgnoreCase))
+                .Select(attribute => attribute.Value)
+                .Where(link => !string.IsNullOrWhiteSpace(link))
+                .Where(link => link.Replace('\\', '/').StartsWith(
+                    "/Content/",
+                    StringComparison.OrdinalIgnoreCase));
+
+            foreach (string link in contentLinks)
+            {
+                string normalizedLink = link.Replace('\\', '/');
+                int fragmentIndex = normalizedLink.IndexOfAny(
+                    new[] { '#', '?' }
+                );
+                if (fragmentIndex >= 0)
+                {
+                    normalizedLink = normalizedLink.Substring(0, fragmentIndex);
+                }
+
+                string relativePath = Uri.UnescapeDataString(
+                    normalizedLink.TrimStart('/')
+                ).Replace('/', Path.DirectorySeparatorChar);
+                string linkedPath = Path.Combine(projectRoot, relativePath);
+
+                if (!File.Exists(linkedPath))
+                {
+                    throw new FileNotFoundException(
+                        "La TOC modèle référence un fichier introuvable :\n"
+                        + linkedPath
+                        + "\n\nTOC : "
+                        + sourceTocPath,
+                        linkedPath
+                    );
+                }
+            }
+        }
+
+        private void RequireFile(string path, string description)
+        {
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException(
+                    description + " introuvable :\n" + path,
+                    path
+                );
+            }
+        }
+
+        private void TryRollbackGeneratedArtifacts(
+            string documentFolder,
+            string tocPath,
+            string targetPath,
+            Exception originalException)
+        {
+            try
+            {
+                if (File.Exists(targetPath))
+                {
+                    File.Delete(targetPath);
+                }
+                if (File.Exists(tocPath))
+                {
+                    File.Delete(tocPath);
+                }
+                if (Directory.Exists(documentFolder))
+                {
+                    Directory.Delete(documentFolder, true);
+                }
+            }
+            catch (Exception rollbackException)
+            {
+                originalException.Data["RollbackError"] =
+                    rollbackException.Message;
+            }
         }
 
         /// <summary>

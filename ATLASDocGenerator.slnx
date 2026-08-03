@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="ATLASDocGenerator/ATLASDocGenerator.csproj" Id="4f0f2877-e41c-4210-8ba2-bdb980a257c6" />
+  <Project Path="ATLASDocGenerator.Tests/ATLASDocGenerator.Tests.csproj" Id="a52e66d2-8c22-46c6-b94e-9de5704a984a" />
 </Solution>

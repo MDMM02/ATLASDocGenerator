@@ -95,8 +95,20 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             {
                 try
                 {
-                    _resourceCopyService.CopyResources(options.ProjectRootPath, profile);
+                    ResourceCopyResult copyResult =
+                        _resourceCopyService.CopyResources(
+                            options.ProjectRootPath,
+                            profile);
+
                     report.ResourcesCopied = true;
+
+                    report.Warnings.Add(
+                        "Resource copy: "
+                        + copyResult.FilesCopied + " added, "
+                        + copyResult.FilesUpdated + " updated, "
+                        + copyResult.FilesUnchanged + " unchanged, "
+                        + copyResult.FilesPreserved + " preserved, "
+                        + copyResult.BackupsCreated + " backup(s) created.");
                 }
                 catch (Exception ex)
                 {
