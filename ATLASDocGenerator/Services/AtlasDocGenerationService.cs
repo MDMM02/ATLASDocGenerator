@@ -115,7 +115,8 @@ namespace ATLASDocGenerator.Services
                 result.TocPath = tocDuplicator.DuplicateAndUpdateToc(
                     request.ProjectRoot,
                     folderName,
-                    safeReference
+                    safeReference,
+                    request.DocumentType
                 );
                 result.TargetPath = targetDuplicator.DuplicateAndUpdateTarget(
                     request.ProjectRoot,
@@ -167,10 +168,9 @@ namespace ATLASDocGenerator.Services
             );
             foreach (TopicCopyRule rule in rules)
             {
-                string topicPath = Path.Combine(
+                string topicPath = topicDuplicator.ResolveSourceTopicPath(
                     request.ProjectRoot,
-                    rule.SourceRelativePath
-                );
+                    rule);
                 RequireFile(topicPath, "Topic modèle");
                 ValidateXmlFile(topicPath, "topic modèle");
             }
@@ -178,6 +178,7 @@ namespace ATLASDocGenerator.Services
             string sourceTocDescription;
             XDocument sourceToc = tocDuplicator.LoadSourceToc(
                 request.ProjectRoot,
+                request.DocumentType,
                 out sourceTocDescription
             );
             ValidateTocLinks(

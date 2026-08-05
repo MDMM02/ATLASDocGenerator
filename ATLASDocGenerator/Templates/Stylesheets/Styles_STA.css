@@ -1602,6 +1602,12 @@ p.a_bleu_gras
 	color: var(--Main);
 }
 
+p.ss_section
+{
+	font-weight: bold;
+	color: var(--Main);
+}
+
 p.Logo_PDP
 {
 	background-image: var(--Pdp_chapter);

@@ -109,6 +109,30 @@ namespace ATLASDocGenerator.Tests
         }
 
         [TestMethod]
+        public void UpdateVariables_ReferenceManual_DoesNotChangeMrefVariables()
+        {
+            const string original =
+                "<VariableSet><Variable Name=\"Mref\">MREF-EXISTANTE</Variable>"
+                + "<Variable Name=\"ReferenceMref\">REF-EXISTANTE</Variable></VariableSet>";
+            string variableSetPath = Path.Combine(
+                _temporaryDirectory, "Project", "VariableSets", "General.flvar");
+            Directory.CreateDirectory(Path.GetDirectoryName(variableSetPath));
+            File.WriteAllText(variableSetPath, original, new UTF8Encoding(false));
+
+            new VariableSetUpdaterService().UpdateGeneralVariables(
+                _temporaryDirectory,
+                new AitImportFinalizerOptions
+                {
+                    DocumentType = AitDocumentType.ReferenceManual,
+                    MrefReference = "NE-DOIT-PAS-ETRE-ECRITE"
+                });
+
+            XDocument updated = XDocument.Load(variableSetPath);
+            Assert.AreEqual("MREF-EXISTANTE", GetVariableValue(updated, "Mref"));
+            Assert.AreEqual("REF-EXISTANTE", GetVariableValue(updated, "ReferenceMref"));
+        }
+
+        [TestMethod]
         public void UpdateVariables_InvalidXmlDoesNotCreateBackup()
         {
             string variableSetPath = Path.Combine(

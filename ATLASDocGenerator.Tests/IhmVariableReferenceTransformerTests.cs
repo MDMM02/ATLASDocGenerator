@@ -81,6 +81,7 @@ namespace ATLASDocGenerator.Tests
             Assert.AreEqual(
                 "Menu_STR.Abréviation",
                 variable.Attribute("name").Value);
+            Assert.AreEqual("IHM", variable.Attribute("class").Value);
 
             Assert.AreEqual(
                 1,
@@ -98,6 +99,33 @@ namespace ATLASDocGenerator.Tests
                 Directory.GetFiles(
                     contentRoot,
                     "topic.htm.before-ihm-variables.*.bak").Length);
+        }
+
+        [TestMethod]
+        public void Transform_AlsoProcessesSnippetFiles()
+        {
+            string projectRoot = Path.Combine(_temporaryDirectory, "FlareProject");
+            string snippets = Path.Combine(projectRoot, "Content", "Resources", "Snippets");
+            Directory.CreateDirectory(snippets);
+            Directory.CreateDirectory(Path.Combine(projectRoot, "Project"));
+            string snippetPath = Path.Combine(snippets, "Parent.flsnp");
+            File.WriteAllText(snippetPath,
+                "<html xmlns:MadCap=\"" + MadCapNamespace + "\"><body>"
+                + "<MadCap:snippetText src=\"Topic42.flsnp\" /></body></html>",
+                new UTF8Encoding(false));
+
+            FrenchIhmVariableSetGenerationResult variables =
+                new FrenchIhmVariableSetGenerationResult { VariableSetName = "Menu_STR" };
+            variables.TopicIdToVariableName.Add("42", "Confirmer");
+
+            IhmVariableReferenceTransformResult result =
+                new IhmVariableReferenceTransformer().Transform(projectRoot, new[] { variables });
+
+            Assert.AreEqual(1, result.ReferencesReplaced);
+            XElement variable = XDocument.Load(snippetPath)
+                .Descendants(XName.Get("variable", MadCapNamespace)).Single();
+            Assert.AreEqual("Menu_STR.Confirmer", (string)variable.Attribute("name"));
+            Assert.AreEqual("IHM", (string)variable.Attribute("class"));
         }
     }
 }

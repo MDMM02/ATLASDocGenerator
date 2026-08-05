@@ -20,6 +20,8 @@
     -->
     <Compile Include="..\ATLASDocGenerator\Models\CleanupReport.cs"
              Link="Production\Models\CleanupReport.cs" />
+    <Compile Include="..\ATLASDocGenerator\Models\ChecklistGenerationRequest.cs"
+             Link="Production\Models\ChecklistGenerationRequest.cs" />
     <Compile Include="..\ATLASDocGenerator\Models\DocGeneratorRequest.cs"
              Link="Production\Models\DocGeneratorRequest.cs" />
     <Compile Include="..\ATLASDocGenerator\Models\GenerationResult.cs"
@@ -36,6 +38,8 @@
              Link="Production\Services\FileNameSanitizer.cs" />
     <Compile Include="..\ATLASDocGenerator\Services\FileBackupService.cs"
              Link="Production\Services\FileBackupService.cs" />
+    <Compile Include="..\ATLASDocGenerator\Services\FlareProjectContextService.cs"
+             Link="Production\Services\FlareProjectContextService.cs" />
     <Compile Include="..\ATLASDocGenerator\Services\AtlasDocGenerationService.cs"
              Link="Production\Services\AtlasDocGenerationService.cs" />
     <Compile Include="..\ATLASDocGenerator\Services\EmbeddedDocGeneratorTemplates.cs"

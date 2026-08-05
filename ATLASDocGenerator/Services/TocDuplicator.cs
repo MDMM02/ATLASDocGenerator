@@ -44,7 +44,8 @@ namespace ATLASDocGenerator.Services
         public string DuplicateAndUpdateToc(
             string projectRoot,
             string folderName,
-            string safeReference)
+            string safeReference,
+            string documentType)
         {
             string targetTocPath = Path.Combine(
                 projectRoot,
@@ -64,6 +65,7 @@ namespace ATLASDocGenerator.Services
             string sourceDescription;
             XDocument document = LoadSourceToc(
                 projectRoot,
+                documentType,
                 out sourceDescription
             );
 
@@ -100,6 +102,7 @@ namespace ATLASDocGenerator.Services
         /// </summary>
         internal XDocument LoadSourceToc(
             string projectRoot,
+            string documentType,
             out string sourceDescription)
         {
             string tocFolder = Path.Combine(
@@ -108,11 +111,14 @@ namespace ATLASDocGenerator.Services
                 "TOCs"
             );
 
-            string[] candidates =
-            {
-                Path.Combine(tocFolder, "PS_DR_tech.fltoc"),
-                Path.Combine(tocFolder, "Doc_SAV.fltoc")
-            };
+            bool isNotice = string.Equals(documentType, "Notice", StringComparison.OrdinalIgnoreCase);
+            string[] candidates = isNotice
+                ? new[] { Path.Combine(tocFolder, "Notice.fltoc") }
+                : new[]
+                {
+                    Path.Combine(tocFolder, "PS_DR_tech.fltoc"),
+                    Path.Combine(tocFolder, "Doc_SAV.fltoc")
+                };
 
             foreach (string candidate in candidates)
             {
@@ -140,19 +146,23 @@ namespace ATLASDocGenerator.Services
                 }
             }
 
-            sourceDescription = "TOC PS embarquée dans ATLASDocGenerator.dll";
+            sourceDescription = isNotice
+                ? "TOC Notice embarquée dans ATLASDocGenerator.dll"
+                : "TOC PS embarquée dans ATLASDocGenerator.dll";
 
             try
             {
                 return XDocument.Parse(
-                    EmbeddedDocGeneratorTemplates.GetPsTocXml(),
+                    isNotice
+                        ? EmbeddedDocGeneratorTemplates.GetNoticeTocXml()
+                        : EmbeddedDocGeneratorTemplates.GetPsTocXml(),
                     LoadOptions.PreserveWhitespace
                 );
             }
             catch (Exception ex)
             {
                 throw new InvalidDataException(
-                    "Impossible de lire la TOC PS embarquée dans la DLL.",
+                    "Impossible de lire la TOC embarquée dans la DLL.",
                     ex
                 );
             }
@@ -182,15 +192,13 @@ namespace ATLASDocGenerator.Services
 
             foreach (XElement element in elements)
             {
-                RemoveConditionsFromAttribute(
-                    element,
-                    "conditions"
-                );
+                XAttribute plainConditions = element.Attribute("conditions");
+                if (plainConditions != null)
+                    plainConditions.Remove();
 
-                RemoveConditionsFromAttribute(
-                    element,
-                    MadCapNs + "conditions"
-                );
+                XAttribute madCapConditions = element.Attribute(MadCapNs + "conditions");
+                if (madCapConditions != null)
+                    madCapConditions.Remove();
             }
         }
 

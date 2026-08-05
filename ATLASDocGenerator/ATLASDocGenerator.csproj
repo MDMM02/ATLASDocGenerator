@@ -59,12 +59,16 @@
     <Compile Include="Forms\AitImportFinalizerForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\ChecklistGeneratorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Models\AitCleanupOptions.cs" />
     <Compile Include="Models\AitImportFinalizer\AitDocumentProfile.cs" />
     <Compile Include="Models\AitImportFinalizer\AitDocumentType.cs" />
     <Compile Include="Models\AitImportFinalizer\AitImportFinalizerOptions.cs" />
     <Compile Include="Models\AitImportFinalizer\AitImportFinalizerReport.cs" />
     <Compile Include="Models\CleanupReport.cs" />
+    <Compile Include="Models\ChecklistGenerationRequest.cs" />
     <Compile Include="Models\DocGeneratorRequest.cs" />
     <Compile Include="Models\GenerationResult.cs" />
     <Compile Include="Models\TopicCopyRule.cs" />
@@ -97,6 +101,7 @@
     <Compile Include="Services\Checklist\ChecklistGeneratorService.cs" />
     <Compile Include="Services\FileNameSanitizer.cs" />
     <Compile Include="Services\FileBackupService.cs" />
+    <Compile Include="Services\FlareProjectContextService.cs" />
     <Compile Include="Services\TargetDuplicator.cs" />
     <Compile Include="Services\TocDuplicator.cs" />
     <Compile Include="Services\TopicDuplicator.cs" />
