@@ -106,7 +106,7 @@ namespace ATLASDocGenerator.Services
                 );
             }
 
-            // Retire la condition Contenu commun des éléments du topic copié.
+            // Un document dupliqué doit être autonome : retire toutes les conditions.
             RemoveCommonContentCondition(document);
 
             // Recalcule les chemins des ressources par rapport au nouveau dossier du topic.
@@ -149,15 +149,13 @@ namespace ATLASDocGenerator.Services
 
             foreach (XElement element in elements)
             {
-                RemoveConditionFromAttribute(
-                    element,
-                    MadCapNs + "conditions"
-                );
+                XAttribute madCapConditions = element.Attribute(MadCapNs + "conditions");
+                if (madCapConditions != null)
+                    madCapConditions.Remove();
 
-                RemoveConditionFromAttribute(
-                    element,
-                    "conditions"
-                );
+                XAttribute plainConditions = element.Attribute("conditions");
+                if (plainConditions != null)
+                    plainConditions.Remove();
             }
         }
 

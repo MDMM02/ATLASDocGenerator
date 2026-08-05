@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using B3.PluginAPIKit;
 using ATLASDocGenerator.Commands;
 using ATLASDocGenerator.Forms;
+using ATLASDocGenerator.Services;
 using ATLASDocGenerator.Services.Checklist;
 
 namespace ATLASDocGenerator
@@ -163,9 +164,17 @@ namespace ATLASDocGenerator
         {
             try
             {
+                if (_editorContext == null || _editorContext.GetActiveDocument() == null)
+                {
+                    throw new InvalidOperationException(
+                        "Ouvrez un topic du projet Flare avant de lancer le Doc Generator.");
+                }
+
+                string projectRoot = FlareProjectContextService.ResolveProjectRoot(
+                    _editorContext.GetActiveDocument());
                 Form parentForm = _navContext.GetParentForm();
 
-                using (DocGeneratorForm form = new DocGeneratorForm())
+                using (DocGeneratorForm form = new DocGeneratorForm(projectRoot))
                 {
                     form.ShowDialog(parentForm);
                 }
@@ -229,53 +238,26 @@ namespace ATLASDocGenerator
         {
             try
             {
-                if (_editorContext == null)
+                if (_editorContext == null || _editorContext.GetActiveDocument() == null)
+                    throw new InvalidOperationException(
+                        "Ouvrez un topic du projet Flare avant de lancer le Checklist Generator.");
+
+                string projectRoot = FlareProjectContextService.ResolveProjectRoot(
+                    _editorContext.GetActiveDocument());
+                Form parentForm = _navContext.GetParentForm();
+                using (ChecklistGeneratorForm form = new ChecklistGeneratorForm(projectRoot))
                 {
-                    MessageBox.Show(
-                        "No editor context found. Open a topic before generating a checklist.",
-                        "ATLAS Checklist Generator",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
-                    return;
+                    if (form.ShowDialog(parentForm) == DialogResult.OK
+                        && !string.IsNullOrWhiteSpace(form.GeneratedTopicPath))
+                    {
+                        _editorContext.OpenDocument(form.GeneratedTopicPath, EditorView.Xml);
+                    }
                 }
-
-                IDocument activeDocument = _editorContext.GetActiveDocument();
-
-                if (activeDocument == null)
-                {
-                    MessageBox.Show(
-                        "No active topic found. Open a MadCap topic first.",
-                        "ATLAS Checklist Generator",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
-                    return;
-                }
-
-                ChecklistGeneratorService service = new ChecklistGeneratorService();
-                int count = service.GenerateChecklistFromActiveDocument(activeDocument);
-
-                string generatedFilePath = service.LastGeneratedFilePath;
-
-                activeDocument.Close();
-
-                if (!string.IsNullOrEmpty(generatedFilePath))
-                {
-                    _editorContext.OpenDocument(generatedFilePath, EditorView.Xml);
-                }
-
-                MessageBox.Show(
-                    "Checklist generated successfully.\n\nSections found: " + count,
-                    "ATLAS Checklist Generator",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Checklist generation failed:\n\n" + ex.ToString(),
+                    "Erreur pendant l'ouverture du Checklist Generator :\n\n" + ex.Message,
                     "ATLAS Checklist Generator",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error

@@ -277,7 +277,10 @@ namespace ATLASDocGenerator.Services.AitCleanup.IhmVariables
                             MadCapNamespace),
                         new XAttribute(
                             "name",
-                            target.FullVariableName));
+                            target.FullVariableName),
+                        new XAttribute(
+                            "class",
+                            "IHM"));
 
                 snippetReference.ReplaceWith(
                     variableReference);

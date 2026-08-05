@@ -10,8 +10,7 @@ namespace ATLASDocGenerator.Forms
     public class DocGeneratorForm : Form
     {
         private ComboBox cmbDocumentType;
-        private TextBox txtProjectPath;
-        private Button btnBrowse;
+        private readonly string projectRoot;
         private TextBox txtShortTitle;
         private TextBox txtDocumentReference;
         private ComboBox cmbDevice;
@@ -21,8 +20,12 @@ namespace ATLASDocGenerator.Forms
         private Button btnGenerate;
         private Button btnCancel;
 
-        public DocGeneratorForm()
+        public DocGeneratorForm(string projectRootPath)
         {
+            if (string.IsNullOrWhiteSpace(projectRootPath))
+                throw new ArgumentException("Le chemin du projet actif est vide.", "projectRootPath");
+
+            projectRoot = projectRootPath;
             InitializeComponent();
         }
 
@@ -30,7 +33,7 @@ namespace ATLASDocGenerator.Forms
         {
             Text = "Doc Generator - ATLAS";
             Width = 620;
-            Height = 430;
+            Height = 400;
             StartPosition = FormStartPosition.CenterParent;
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -49,25 +52,10 @@ namespace ATLASDocGenerator.Forms
             cmbDocumentType.Width = fieldWidth;
             cmbDocumentType.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbDocumentType.Items.Add("PS");
+            cmbDocumentType.Items.Add("Notice");
+            cmbDocumentType.Items.Add("Liste des améliorations / corrections (à venir)");
             cmbDocumentType.SelectedIndex = 0;
             Controls.Add(cmbDocumentType);
-
-            top += rowHeight;
-
-            AddLabel("Dossier du projet", labelLeft, top);
-            txtProjectPath = new TextBox();
-            txtProjectPath.Left = fieldLeft;
-            txtProjectPath.Top = top - 3;
-            txtProjectPath.Width = 250;
-            Controls.Add(txtProjectPath);
-
-            btnBrowse = new Button();
-            btnBrowse.Text = "Parcourir";
-            btnBrowse.Left = fieldLeft + 260;
-            btnBrowse.Top = top - 5;
-            btnBrowse.Width = 80;
-            btnBrowse.Click += BtnBrowse_Click;
-            Controls.Add(btnBrowse);
 
             top += rowHeight;
 
@@ -96,9 +84,8 @@ namespace ATLASDocGenerator.Forms
             cmbDevice.Top = top - 3;
             cmbDevice.Width = fieldWidth;
             cmbDevice.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbDevice.Items.Add("STA Compact");
-            cmbDevice.Items.Add("Multi");
-            cmbDevice.Items.Add("Autre");
+            foreach (string device in FlareProjectContextService.LoadDeviceNames(projectRoot))
+                cmbDevice.Items.Add(device);
             cmbDevice.SelectedIndex = 0;
             cmbDevice.SelectedIndexChanged += CmbDevice_SelectedIndexChanged;
             Controls.Add(cmbDevice);
@@ -122,7 +109,6 @@ namespace ATLASDocGenerator.Forms
             cmbRange.Width = fieldWidth;
             cmbRange.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRange.Items.Add("sthemX");
-            cmbRange.Items.Add("Max");
             cmbRange.Items.Add("STA");
             cmbRange.SelectedIndex = 0;
             Controls.Add(cmbRange);
@@ -166,18 +152,6 @@ namespace ATLASDocGenerator.Forms
             Controls.Add(label);
         }
 
-        private void BtnBrowse_Click(object sender, EventArgs e)
-        {
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
-            {
-                dialog.Description = "Sélectionner le dossier racine du projet MadCap";
-                dialog.ShowNewFolderButton = false;
-
-                if (dialog.ShowDialog(this) == DialogResult.OK)
-                    txtProjectPath.Text = dialog.SelectedPath;
-            }
-        }
-
         private void CmbDevice_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedDevice = cmbDevice.SelectedItem.ToString();
@@ -197,7 +171,7 @@ namespace ATLASDocGenerator.Forms
 
                 DocGenerationRequest request = new DocGenerationRequest
                 {
-                    ProjectRoot = txtProjectPath.Text.Trim(),
+                    ProjectRoot = projectRoot,
                     DocumentType = cmbDocumentType.Text,
                     ShortTitle = txtShortTitle.Text.Trim(),
                     DocumentReference = txtDocumentReference.Text.Trim(),
@@ -241,11 +215,8 @@ namespace ATLASDocGenerator.Forms
 
         private void ValidateForm()
         {
-            if (string.IsNullOrWhiteSpace(txtProjectPath.Text))
-                throw new Exception("Le dossier du projet est obligatoire.");
-
-            if (!Directory.Exists(txtProjectPath.Text))
-                throw new Exception("Le dossier du projet sélectionné n'existe pas.");
+            if (cmbDocumentType.Text.IndexOf("à venir", StringComparison.OrdinalIgnoreCase) >= 0)
+                throw new Exception("Le modèle Liste des améliorations / corrections n'est pas encore disponible.");
 
             if (string.IsNullOrWhiteSpace(txtShortTitle.Text))
                 throw new Exception("Le titre doc abrégé est obligatoire.");

@@ -1135,6 +1135,12 @@ p.a_bleu_gras
 	color: var(--Primary);
 }
 
+p.ss_section
+{
+	font-weight: bold;
+	color: var(--Primary);
+}
+
 p.a_italique
 {
 	font-style: italic;

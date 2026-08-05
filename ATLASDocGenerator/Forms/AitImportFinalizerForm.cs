@@ -26,6 +26,7 @@ namespace ATLASDocGenerator.Forms
         private TextBox indexTextBox;
         private TextBox languageTextBox;
         private TextBox mrefTextBox;
+        private Label mrefLabel;
 
         private TextBox tocPathTextBox;
         private Button browseTocButton;
@@ -150,6 +151,7 @@ namespace ATLASDocGenerator.Forms
                     AitDocumentType.MultiInstrumentTechnicalDocument));
 
             documentTypeComboBox.SelectedIndex = 0;
+            documentTypeComboBox.SelectedIndexChanged += DocumentTypeComboBox_SelectedIndexChanged;
 
             Controls.Add(documentTypeLabel);
             Controls.Add(documentTypeComboBox);
@@ -276,9 +278,21 @@ namespace ATLASDocGenerator.Forms
 
             top += 35;
 
-            mrefTextBox = AddTextField(
-                "Réf. MRef :",
-                top);
+            mrefLabel = new Label
+            {
+                Text = "Réf. MRef :",
+                Left = 20,
+                Top = top + 4,
+                Width = 170
+            };
+            mrefTextBox = new TextBox
+            {
+                Left = 200,
+                Top = top,
+                Width = 440
+            };
+            Controls.Add(mrefLabel);
+            Controls.Add(mrefTextBox);
 
             top += 50;
 
@@ -367,6 +381,22 @@ namespace ATLASDocGenerator.Forms
             CancelButton = cancelButton;
 
             UpdateControlStates();
+        }
+
+        private void DocumentTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboItem selectedItem = documentTypeComboBox.SelectedItem as ComboItem;
+            bool isReferenceManual = selectedItem != null
+                && selectedItem.DocumentType == AitDocumentType.ReferenceManual;
+
+            if (mrefLabel != null)
+                mrefLabel.Visible = !isReferenceManual;
+            if (mrefTextBox != null)
+            {
+                mrefTextBox.Visible = !isReferenceManual;
+                if (isReferenceManual)
+                    mrefTextBox.Text = string.Empty;
+            }
         }
 
         /// <summary>

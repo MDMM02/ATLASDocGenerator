@@ -152,19 +152,13 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 Safe(options.DocumentTitle)
             );
 
-            // Mref et MRef ne sont pas appelées séparément,
-            // car la recherche ne tient pas compte des majuscules.
-            SetVariable(
-                document,
-                "Mref",
-                Safe(options.MrefReference)
-            );
-
-            SetVariable(
-                document,
-                "ReferenceMref",
-                Safe(options.MrefReference)
-            );
+            if (options.DocumentType != AitDocumentType.ReferenceManual)
+            {
+                // Mref et MRef ne sont pas appelées séparément,
+                // car la recherche ne tient pas compte des majuscules.
+                SetVariable(document, "Mref", Safe(options.MrefReference));
+                SetVariable(document, "ReferenceMref", Safe(options.MrefReference));
+            }
 
             // La sauvegarde est créée seulement après validation et préparation
             // complète du document, immédiatement avant la première écriture.

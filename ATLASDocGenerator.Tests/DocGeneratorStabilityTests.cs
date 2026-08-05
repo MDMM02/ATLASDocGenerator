@@ -80,6 +80,14 @@ namespace ATLASDocGenerator.Tests
             Assert.AreEqual(
                 "Guide de validation",
                 GetTargetVariable(target, "General/GuideType"));
+            Assert.IsFalse(new[] { target.Root }.Concat(target.Descendants())
+                .SelectMany(element => element.Attributes())
+                .Any(attribute => attribute.Name.LocalName.IndexOf("condition", StringComparison.OrdinalIgnoreCase) >= 0));
+            Assert.IsFalse(target.Descendants()
+                .Any(element => element.Name.LocalName.Equals("ConditionTagExpression", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsFalse(new[] { toc.Root }.Concat(toc.Descendants())
+                .SelectMany(element => element.Attributes())
+                .Any(attribute => attribute.Name.LocalName.Equals("conditions", StringComparison.OrdinalIgnoreCase)));
 
             XDocument firstChapter = XDocument.Load(
                 Path.Combine(
@@ -88,6 +96,29 @@ namespace ATLASDocGenerator.Tests
             Assert.AreEqual(
                 "../Resources/Images/Logos/MonLogo.png",
                 (string)firstChapter.Descendants("img").Single().Attribute("src"));
+            Assert.IsFalse(result.CreatedTopicPaths
+                .Select(XDocument.Load)
+                .SelectMany(document => new[] { document.Root }.Concat(document.Descendants()))
+                .SelectMany(element => element.Attributes())
+                .Any(attribute => attribute.Name.LocalName.Equals("conditions", StringComparison.OrdinalIgnoreCase)));
+        }
+
+        [TestMethod]
+        public void CreateDocumentFolder_Notice_UsesNoticeStructure()
+        {
+            string projectRoot = CreateParentProjectFixture();
+            DocGenerationRequest request = CreateRequest(projectRoot);
+            request.DocumentType = "Notice";
+
+            GenerationResult result = new AtlasDocGenerationService().CreateDocumentFolder(request);
+
+            Assert.AreEqual(7, result.CreatedTopicPaths.Count);
+            Assert.IsFalse(result.CreatedTopicPaths.Any(path =>
+                Path.GetFileName(path).StartsWith("Mesures_securite", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsFalse(result.CreatedTopicPaths.Any(path =>
+                Path.GetFileName(path).StartsWith("Duree_inter", StringComparison.OrdinalIgnoreCase)));
+            Assert.IsTrue(XDocument.Load(result.TocPath).Descendants("TocEntry").Any(entry =>
+                ((string)entry.Attribute("Link") ?? string.Empty).EndsWith("/1er_chapitre.htm", StringComparison.OrdinalIgnoreCase)));
         }
 
         [TestMethod]
@@ -323,7 +354,7 @@ namespace ATLASDocGenerator.Tests
 
         private static string CreateParentToc()
         {
-            return "<CatapultToc Version=\"1\">"
+            return "<CatapultToc Version=\"1\" conditions=\"Test.Condition\">"
                 + TocEntry("/Content/Template_tech/Title_doc.htm")
                 + TocEntry("/Content/Resources/Commun Stago/topics_Tech/Historique_tech.htm")
                 + TocEntry("/Content/Template_tech/Objectif.htm")
@@ -338,7 +369,8 @@ namespace ATLASDocGenerator.Tests
 
         private static string CreateParentTarget()
         {
-            return "<CatapultTarget Version=\"2\" Type=\"PDF\" "
+            return "<CatapultTarget Version=\"2\" Type=\"PDF\" conditions=\"Test.Condition\" "
+                + "ConditionTagExpression=\"exclude[Test.Condition]\" "
                 + "MasterToc=\"/Project/TOCs/Notice.fltoc\" "
                 + "MasterStylesheet=\"/Content/Resources/Stylesheets/Styles.css\" "
                 + "MasterPageLayout=\"/Content/Resources/PageLayouts/Tech.flpgl\">"
@@ -346,12 +378,12 @@ namespace ATLASDocGenerator.Tests
                 + "<Variables><Variable Name=\"General/dispositif\">Ancien</Variable>"
                 + "<Variable Name=\"General/GuideType\">Ancien</Variable>"
                 + "<Variable Name=\"General/DocumentReference\">Ancien</Variable>"
-                + "</Variables></CatapultTarget>";
+                + "</Variables><ConditionTagExpression><Tag Name=\"Test.Condition\" Action=\"Exclude\" /></ConditionTagExpression></CatapultTarget>";
         }
 
         private static string Topic(string title)
         {
-            return "<html xmlns:MadCap=\"http://www.madcapsoftware.com/Schemas/MadCap.xsd\">"
+            return "<html xmlns:MadCap=\"http://www.madcapsoftware.com/Schemas/MadCap.xsd\" MadCap:conditions=\"Test.Condition\">"
                 + "<head><title>" + title + "</title></head><body><p>" + title + "</p></body></html>";
         }
 

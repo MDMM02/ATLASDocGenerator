@@ -99,10 +99,7 @@ namespace ATLASDocGenerator.Services
             foreach (TopicCopyRule rule in rules)
             {
                 // Construit le chemin complet du topic modèle.
-                string sourcePath = Path.Combine(
-                    projectRoot,
-                    rule.SourceRelativePath
-                );
+                string sourcePath = ResolveSourceTopicPath(projectRoot, rule);
 
                 // Remplace {ref} dans le nom cible par la référence normalisée du document.
                 string targetFileName = rule
@@ -155,6 +152,24 @@ namespace ATLASDocGenerator.Services
             }
 
             return createdTopics;
+        }
+
+        internal string ResolveSourceTopicPath(string projectRoot, TopicCopyRule rule)
+        {
+            string primaryPath = Path.Combine(projectRoot, rule.SourceRelativePath);
+            if (File.Exists(primaryPath))
+                return primaryPath;
+
+            const string currentFolder = @"Content\Resources\Commun Stago\Topics_Tech";
+            if (rule.SourceRelativePath.StartsWith(currentFolder, StringComparison.OrdinalIgnoreCase))
+            {
+                string fileName = Path.GetFileName(rule.SourceRelativePath);
+                string legacyPath = Path.Combine(projectRoot, "Content", "Template_tech", fileName);
+                if (File.Exists(legacyPath))
+                    return legacyPath;
+            }
+
+            return primaryPath;
         }
 
         /// <summary>
@@ -327,10 +342,18 @@ namespace ATLASDocGenerator.Services
         /// <returns>Liste des règles utilisées pour les Notices.</returns>
         private List<TopicCopyRule> GetNoticeRules()
         {
-            throw new Exception(
-                "La génération Notice n'est pas encore configurée. "
-                + "Tester d'abord avec PS."
-            );
+            const string topicsFolder = @"Content\Resources\Commun Stago\Topics_Tech";
+
+            return new List<TopicCopyRule>
+            {
+                new TopicCopyRule { SourceRelativePath = Path.Combine(topicsFolder, "Title_doc.htm"), TargetFileNamePattern = "Title_{ref}.htm" },
+                new TopicCopyRule { SourceRelativePath = Path.Combine(topicsFolder, "Historique_tech.htm"), TargetFileNamePattern = "Historique_{ref}.htm" },
+                new TopicCopyRule { SourceRelativePath = Path.Combine(topicsFolder, "Objectif.htm"), TargetFileNamePattern = "Objectif_{ref}.htm" },
+                new TopicCopyRule { SourceRelativePath = Path.Combine(topicsFolder, "Matériel nécessaire.htm"), TargetFileNamePattern = "Materiel_{ref}.htm" },
+                new TopicCopyRule { SourceRelativePath = Path.Combine(topicsFolder, "Documents nécessaires.htm"), TargetFileNamePattern = "Documents_{ref}.htm" },
+                new TopicCopyRule { SourceRelativePath = Path.Combine(topicsFolder, "Prérequis.htm"), TargetFileNamePattern = "Prerequis_{ref}.htm" },
+                new TopicCopyRule { SourceRelativePath = Path.Combine(topicsFolder, "1er_chapitre.htm"), TargetFileNamePattern = "1er_chapitre.htm" }
+            };
         }
     }
 }
