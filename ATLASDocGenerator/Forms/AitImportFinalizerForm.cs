@@ -549,6 +549,7 @@ namespace ATLASDocGenerator.Forms
         {
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
+                dialog.AutoUpgradeEnabled = true;
                 dialog.Title =
                     "Sélectionner la TOC MadCap";
 
@@ -574,6 +575,7 @@ namespace ATLASDocGenerator.Forms
         {
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
+                dialog.AutoUpgradeEnabled = true;
                 dialog.Title =
                     "Sélectionner la target PDF MadCap";
 

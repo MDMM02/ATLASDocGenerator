@@ -109,6 +109,7 @@
     <Compile Include="Services\FileNameSanitizer.cs" />
     <Compile Include="Services\FileBackupService.cs" />
     <Compile Include="Services\FlareProjectContextService.cs" />
+    <Compile Include="Services\ModernFolderPicker.cs" />
     <Compile Include="Services\TargetDuplicator.cs" />
     <Compile Include="Services\TocDuplicator.cs" />
     <Compile Include="Services\TopicDuplicator.cs" />

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ATLASDocGenerator.Models;
+using ATLASDocGenerator.Services;
 using ATLASDocGenerator.Services.AitCleanup;
 using ATLASDocGenerator.Services.AitCleanup.IhmVariables;
 
@@ -389,16 +390,14 @@ namespace ATLASDocGenerator.Forms
 
         private void OnBrowseFolderClicked(object sender, EventArgs e)
         {
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            string selectedPath;
+            if (ModernFolderPicker.TrySelectFolder(
+                this,
+                "Sélectionner la racine du projet Flare ou le dossier importé",
+                txtSelectedFolder.Text,
+                out selectedPath))
             {
-                dialog.Description =
-                    "Sélectionner la racine du projet Flare, le dossier Content "
-                    + "ou le sous-dossier importé depuis Author-it.";
-
-                if (dialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    txtSelectedFolder.Text = dialog.SelectedPath;
-                }
+                txtSelectedFolder.Text = selectedPath;
             }
         }
 
@@ -410,6 +409,7 @@ namespace ATLASDocGenerator.Forms
         {
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
+                dialog.AutoUpgradeEnabled = true;
                 dialog.Title = "Sélectionner le XML Author-it source";
 
                 dialog.Filter =
