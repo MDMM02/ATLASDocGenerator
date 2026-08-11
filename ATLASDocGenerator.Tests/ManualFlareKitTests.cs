@@ -154,8 +154,9 @@ namespace ATLASDocGenerator.Tests
                 resourceService.CopyResources(projectRoot, profile);
 
             Assert.IsTrue(firstCopy.FilesCopied > 0);
-            Assert.AreEqual(2, firstCopy.FilesUpdated);
-            Assert.AreEqual(2, firstCopy.BackupsCreated);
+            Assert.AreEqual(1, firstCopy.FilesUpdated);
+            Assert.AreEqual(1, firstCopy.FilesPreserved);
+            Assert.AreEqual(1, firstCopy.BackupsCreated);
 
             AitImportFinalizerOptions options =
                 new AitImportFinalizerOptions
@@ -193,7 +194,7 @@ namespace ATLASDocGenerator.Tests
                 "DocumentReference",
                 "DOC-TEST-001"));
             Assert.IsTrue(File.Exists(generalPath + ".bak"));
-            Assert.IsTrue(File.Exists(
+            Assert.IsFalse(File.Exists(
                 generalPath + ".before-ait-finalizer.bak"));
 
             XDocument target = XDocument.Load(targetPath);

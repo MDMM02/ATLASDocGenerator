@@ -71,7 +71,8 @@ namespace ATLASDocGenerator.Tests
 
             Assert.AreEqual(0, secondResult.FilesCopied);
             Assert.AreEqual(0, secondResult.FilesUpdated);
-            Assert.AreEqual(6, secondResult.FilesUnchanged);
+            Assert.AreEqual(5, secondResult.FilesUnchanged);
+            Assert.AreEqual(1, secondResult.FilesPreserved);
             Assert.AreEqual(0, secondResult.BackupsCreated);
             Assert.AreEqual(
                 "ancienne feuille",
@@ -100,7 +101,7 @@ namespace ATLASDocGenerator.Tests
         }
 
         [TestMethod]
-        public void CopyResources_PreservesCustomizedGeneralVariablesOnRerun()
+        public void CopyResources_AlwaysPreservesExistingGeneralVariables()
         {
             string packageRoot = CreateCompleteResourcePackage();
             string projectRoot = CreateFlareProject();
@@ -111,6 +112,7 @@ namespace ATLASDocGenerator.Tests
                 "General.flvar");
 
             WriteFile(generalPath, "variables importées");
+            string originalGeneral = File.ReadAllText(generalPath);
 
             ResourceCopyService service =
                 new ResourceCopyService(packageRoot);
@@ -118,8 +120,10 @@ namespace ATLASDocGenerator.Tests
                 projectRoot,
                 CreateProfile());
 
-            Assert.AreEqual("variables", File.ReadAllText(generalPath));
-            Assert.AreEqual(1, firstResult.FilesUpdated);
+            Assert.AreEqual(originalGeneral, File.ReadAllText(generalPath));
+            Assert.AreEqual(1, firstResult.FilesPreserved);
+            Assert.AreEqual(0, firstResult.FilesUpdated);
+            Assert.IsFalse(File.Exists(generalPath + ".before-ait-finalizer.bak"));
 
             WriteFile(generalPath, "variables personnalisées");
             ResourceCopyResult secondResult = service.CopyResources(

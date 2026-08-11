@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using ATLASDocGenerator.Models.AitImportFinalizer;
@@ -40,7 +41,7 @@ namespace ATLASDocGenerator.Tests
             string targetPath = WriteFile(
                 Path.Combine(_temporaryDirectory, "Project", "Targets", "Doc.fltar"),
                 "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-                + "<CatapultTarget><PrintedOutput MasterToc=\"old-toc\" "
+                + "<CatapultTarget Type=\"PDF\"><PrintedOutput MasterToc=\"old-toc\" "
                 + "MasterStylesheet=\"old-style\" MasterPageLayout=\"old-layout\" />"
                 + "</CatapultTarget>");
 
@@ -71,6 +72,9 @@ namespace ATLASDocGenerator.Tests
             Assert.AreEqual(
                 "/Content/Resources/PageLayouts/Tech.flpgl",
                 printedOutput.Attribute("MasterPageLayout").Value);
+            Assert.AreEqual(
+                "true",
+                document.Root.Attribute("PatchHeadingLevels").Value);
         }
 
         [TestMethod]
@@ -96,6 +100,75 @@ namespace ATLASDocGenerator.Tests
 
             Assert.AreEqual(original, File.ReadAllText(targetPath));
             Assert.IsFalse(File.Exists(targetPath + ".bak"));
+        }
+
+        [TestMethod]
+        public void ValidateTarget_ReportsDifferencesWithoutWriting()
+        {
+            string original =
+                "<CatapultTarget Type=\"PDF\" MasterToc=\"old.fltoc\" "
+                + "MasterStylesheet=\"old.css\" MasterPageLayout=\"old.flpgl\" "
+                + "conditions=\"FPS.Device\" ConditionTagExpression=\"include[FPS.Device]\">"
+                + "<Variables><Variable Name=\"General/DocumentReference\">DOC-1</Variable></Variables>"
+                + "</CatapultTarget>";
+            string targetPath = WriteFile(
+                Path.Combine(_temporaryDirectory, "Project", "Targets", "Doc.fltar"),
+                original);
+            string tocPath = WriteFile(
+                Path.Combine(_temporaryDirectory, "Project", "TOCs", "Doc.fltoc"),
+                "<CatapultToc />");
+
+            TargetValidationResult result = new TargetConfiguratorService()
+                .ValidateTarget(targetPath, tocPath, CreateProfile());
+
+            Assert.IsFalse(result.IsValid);
+            Assert.AreEqual(4, result.Differences.Count);
+            Assert.IsTrue(result.Differences.Any(difference =>
+                difference.SettingName == "PatchHeadingLevels"
+                && difference.ExpectedValue == "true"));
+            Assert.AreEqual(original, File.ReadAllText(targetPath));
+            Assert.IsFalse(File.Exists(targetPath + ".bak"));
+        }
+
+        [TestMethod]
+        public void ConfigureTarget_PreservesConditionsAndVariables()
+        {
+            string targetPath = WriteFile(
+                Path.Combine(_temporaryDirectory, "Project", "Targets", "Doc.fltar"),
+                "<CatapultTarget Type=\"PDF\" MasterToc=\"old\" MasterStylesheet=\"old\" MasterPageLayout=\"old\" "
+                + "conditions=\"FPS.Device\" ConditionTagExpression=\"include[FPS.Device]\">"
+                + "<Variables><Variable Name=\"General/DocumentReference\">DOC-1</Variable></Variables>"
+                + "</CatapultTarget>");
+            string tocPath = WriteFile(
+                Path.Combine(_temporaryDirectory, "Project", "TOCs", "Doc.fltoc"),
+                "<CatapultToc />");
+
+            new TargetConfiguratorService().ConfigureTarget(targetPath, tocPath, CreateProfile());
+
+            XDocument target = XDocument.Load(targetPath);
+            Assert.AreEqual("FPS.Device", (string)target.Root.Attribute("conditions"));
+            Assert.AreEqual("include[FPS.Device]", (string)target.Root.Attribute("ConditionTagExpression"));
+            Assert.AreEqual(
+                "DOC-1",
+                target.Descendants("Variable").Single().Value);
+            Assert.AreEqual("true", (string)target.Root.Attribute("PatchHeadingLevels"));
+        }
+
+        [TestMethod]
+        public void ConfigureTarget_DoesNotAddPrintHeadingOptionToHtmlTarget()
+        {
+            string targetPath = WriteFile(
+                Path.Combine(_temporaryDirectory, "Project", "Targets", "Web.fltar"),
+                "<CatapultTarget Type=\"WebHelp2\" MasterToc=\"old\" "
+                + "MasterStylesheet=\"old\" MasterPageLayout=\"old\" />");
+            string tocPath = WriteFile(
+                Path.Combine(_temporaryDirectory, "Project", "TOCs", "Doc.fltoc"),
+                "<CatapultToc />");
+
+            new TargetConfiguratorService().ConfigureTarget(targetPath, tocPath, CreateProfile());
+
+            XDocument target = XDocument.Load(targetPath);
+            Assert.IsNull(target.Root.Attribute("PatchHeadingLevels"));
         }
 
         private AitDocumentProfile CreateProfile()
