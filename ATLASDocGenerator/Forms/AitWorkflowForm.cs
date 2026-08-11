@@ -240,11 +240,14 @@ namespace ATLASDocGenerator.Forms
 
         private void BrowseFolderClicked(object sender, EventArgs e)
         {
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            string selectedPath;
+            if (ModernFolderPicker.TrySelectFolder(
+                this,
+                "Sélectionner le dossier importé à nettoyer",
+                cleanupFolderTextBox.Text,
+                out selectedPath))
             {
-                dialog.Description = "Sélectionner le dossier importé à nettoyer.";
-                if (dialog.ShowDialog(this) == DialogResult.OK)
-                    cleanupFolderTextBox.Text = dialog.SelectedPath;
+                cleanupFolderTextBox.Text = selectedPath;
             }
         }
 
@@ -252,6 +255,7 @@ namespace ATLASDocGenerator.Forms
         {
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
+                dialog.AutoUpgradeEnabled = true;
                 dialog.Filter = "Fichiers XML (*.xml)|*.xml|Tous les fichiers (*.*)|*.*";
                 if (dialog.ShowDialog(this) != DialogResult.OK)
                     return;
