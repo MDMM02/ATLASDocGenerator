@@ -172,11 +172,9 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                     continue;
                 }
 
-                // General.flvar est personnalisé par l'étape suivante du
-                // Finalizer. Dès qu'une sauvegarde prouve qu'il a déjà été
-                // installé ou mis à jour, une relance ne doit plus l'écraser
-                // avec le modèle livré dans le plug-in.
-                if (IsCustomizedGeneralVariableSet(destinationFilePath))
+                // General.flvar appartient au contenu commun. Un fichier déjà
+                // présent dans le projet ne doit jamais être écrasé.
+                if (IsExistingGeneralVariableSet(destinationFilePath))
                 {
                     result.FilesPreserved++;
                     continue;
@@ -213,7 +211,7 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             }
         }
 
-        private bool IsCustomizedGeneralVariableSet(
+        private bool IsExistingGeneralVariableSet(
             string destinationFilePath)
         {
             if (!Path.GetFileName(destinationFilePath).Equals(
@@ -234,12 +232,7 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 return false;
             }
 
-            return File.Exists(
-                       destinationFilePath
-                       + ".before-ait-finalizer.bak")
-                   || File.Exists(
-                       destinationFilePath
-                       + ".bak");
+            return File.Exists(destinationFilePath);
         }
 
         private bool FilesAreEqual(

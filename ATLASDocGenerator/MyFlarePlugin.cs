@@ -138,26 +138,39 @@ namespace ATLASDocGenerator
             IRibbonGroup authorItGroup = atlasTab.AddNewRibbonGroup("Author-it");
 
             authorItGroup.AddRibbonButton(
-                "AIT Cleanup",
-                new RelayCommand(OpenAitCleanupPopup),
+                "Finaliser import AIT",
+                new RelayCommand(OpenAitWorkflowPopup),
                 null,
                 null,
                 RibbonIconSize.Collapsed,
-                "AIT Cleanup",
-                "Open Author-it cleanup options.",
+                "Finaliser import AIT",
+                "Installer les ressources, nettoyer l'import et vérifier la target.",
                 "C"
             );
+        }
 
-            authorItGroup.AddRibbonButton(
-                "AIT Import Finalizer",
-                new RelayCommand(OpenAitImportFinalizerPopup),
-                null,
-                null,
-                RibbonIconSize.Collapsed,
-                "AIT Import Finalizer",
-                "Finalize an Author-it import: TOC, resources, variables, target and cleanup.",
-                "F"
-            );
+        private void OpenAitWorkflowPopup(object parameter)
+        {
+            try
+            {
+                if (_editorContext == null || _editorContext.GetActiveDocument() == null)
+                    throw new InvalidOperationException(
+                        "Ouvrez un topic du projet Flare avant de finaliser un import AIT.");
+
+                string projectRoot = FlareProjectContextService.ResolveProjectRoot(
+                    _editorContext.GetActiveDocument());
+                Form parentForm = _navContext.GetParentForm();
+                using (AitWorkflowForm form = new AitWorkflowForm(projectRoot))
+                    form.ShowDialog(parentForm);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Erreur pendant l'ouverture de la finalisation AIT :\n\n" + ex.Message,
+                    "Finaliser import AIT",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void OpenDocGeneratorPopup(object parameter)

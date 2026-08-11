@@ -18,6 +18,53 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
     /// </summary>
     public class TargetConfiguratorService
     {
+        public TargetValidationResult ValidateTarget(
+            string targetPath,
+            string tocPath,
+            AitDocumentProfile profile)
+        {
+            if (string.IsNullOrWhiteSpace(targetPath) || !File.Exists(targetPath))
+                throw new FileNotFoundException("Le fichier target est introuvable.", targetPath);
+            if (string.IsNullOrWhiteSpace(tocPath) || !File.Exists(tocPath))
+                throw new FileNotFoundException("Le fichier TOC est introuvable.", tocPath);
+            if (profile == null)
+                throw new ArgumentNullException("profile");
+
+            XDocument document = XDocument.Load(targetPath, LoadOptions.PreserveWhitespace);
+            if (document.Root == null)
+                throw new InvalidOperationException("Le fichier target ne possède pas de racine XML.");
+
+            TargetValidationResult result = new TargetValidationResult();
+            AddDifferenceIfNeeded(
+                result,
+                document,
+                new[] { "MasterToc", "MasterTOC", "PrimaryToc", "PrimaryTOC", "Toc", "TOC" },
+                "MasterToc",
+                ConvertTocPathToFlarePath(tocPath));
+            AddDifferenceIfNeeded(
+                result,
+                document,
+                new[] { "MasterStylesheet", "PrimaryStylesheet", "Stylesheet" },
+                "MasterStylesheet",
+                NormalizeContentRelativePath(profile.PrimaryStylesheet));
+            AddDifferenceIfNeeded(
+                result,
+                document,
+                new[] { "MasterPageLayout", "PrimaryPageLayout", "PageLayout" },
+                "MasterPageLayout",
+                NormalizeContentRelativePath(profile.PrimaryPageLayout));
+            if (IsPrintedTarget(document.Root))
+            {
+                AddDifferenceIfNeeded(
+                    result,
+                    document,
+                    new[] { "PatchHeadingLevels" },
+                    "PatchHeadingLevels",
+                    "true");
+            }
+            return result;
+        }
+
         /// <summary>
         ///  Configure une target M dCap avec les ressources du profil sélectionné
         ///  Traitement:
@@ -85,6 +132,18 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
             //Configure le layout de page principal de la target.
            
            SetAttributeValue(document,new[] { "MasterPageLayout", "PrimaryPageLayout", "PageLayout" }, "MasterPageLayout",pageLayoutValue);
+
+            // MadCap doit adapter les niveaux h1 des topics à leur profondeur
+            // dans la TOC. Sans ce réglage, chaque topic devient un chapitre
+            // de niveau 1 dans le PDF (2, 3, 4...) au lieu de 2.1, 2.2, 2.2.1...
+            if (IsPrintedTarget(document.Root))
+            {
+                SetAttributeValue(
+                    document,
+                    new[] { "PatchHeadingLevels" },
+                    "PatchHeadingLevels",
+                    "true");
+            }
 
             // Crée la sauvegarde seulement après validation complète du XML,
             // juste avant la première écriture sur disque.
@@ -227,6 +286,75 @@ namespace ATLASDocGenerator.Services.AitImportFinalizer
                 defaultAttributeName,
                 value
             );
+        }
+
+        private void AddDifferenceIfNeeded(
+            TargetValidationResult result,
+            XDocument document,
+            string[] possibleAttributeNames,
+            string settingName,
+            string expectedValue)
+        {
+            XAttribute attribute = FindUniqueSettingAttribute(
+                document,
+                possibleAttributeNames,
+                settingName);
+            string currentValue = attribute == null ? string.Empty : attribute.Value;
+            if (NormalizePathForComparison(currentValue).Equals(
+                NormalizePathForComparison(expectedValue),
+                StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            result.Differences.Add(new TargetConfigurationDifference
+            {
+                SettingName = settingName,
+                CurrentValue = currentValue,
+                ExpectedValue = expectedValue
+            });
+        }
+
+        private XAttribute FindUniqueSettingAttribute(
+            XDocument document,
+            string[] possibleAttributeNames,
+            string settingName)
+        {
+            List<XAttribute> rootAttributes = document.Root.Attributes()
+                .Where(attribute => possibleAttributeNames.Any(name =>
+                    attribute.Name.LocalName.Equals(name, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+            if (rootAttributes.Count > 1)
+                throw CreateAmbiguousAttributeException(settingName, rootAttributes);
+            if (rootAttributes.Count == 1)
+                return rootAttributes[0];
+
+            List<XAttribute> descendantAttributes = document.Root.Descendants()
+                .SelectMany(element => element.Attributes())
+                .Where(attribute => possibleAttributeNames.Any(name =>
+                    attribute.Name.LocalName.Equals(name, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+            if (descendantAttributes.Count > 1)
+                throw CreateAmbiguousAttributeException(settingName, descendantAttributes);
+            return descendantAttributes.FirstOrDefault();
+        }
+
+        private string NormalizePathForComparison(string value)
+        {
+            return (value ?? string.Empty)
+                .Replace('\\', '/')
+                .Trim()
+                .TrimStart('/');
+        }
+
+        private bool IsPrintedTarget(XElement root)
+        {
+            if (root == null)
+                return false;
+
+            string targetType = (string)root.Attribute("Type") ?? string.Empty;
+            return targetType.Equals("PDF", StringComparison.OrdinalIgnoreCase)
+                || targetType.IndexOf("Word", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private InvalidOperationException CreateAmbiguousAttributeException(

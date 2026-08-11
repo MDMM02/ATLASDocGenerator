@@ -59,6 +59,9 @@
     <Compile Include="Forms\AitImportFinalizerForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\AitWorkflowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\ChecklistGeneratorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +70,9 @@
     <Compile Include="Models\AitImportFinalizer\AitDocumentType.cs" />
     <Compile Include="Models\AitImportFinalizer\AitImportFinalizerOptions.cs" />
     <Compile Include="Models\AitImportFinalizer\AitImportFinalizerReport.cs" />
+    <Compile Include="Models\AitImportFinalizer\TargetValidationResult.cs" />
+    <Compile Include="Models\AitWorkflowOptions.cs" />
+    <Compile Include="Models\AitWorkflowReport.cs" />
     <Compile Include="Models\CleanupReport.cs" />
     <Compile Include="Models\ChecklistGenerationRequest.cs" />
     <Compile Include="Models\DocGeneratorRequest.cs" />
@@ -97,6 +103,7 @@
     <Compile Include="Services\AitImportFinalizer\TocCleanerService.cs" />
     <Compile Include="Services\AitImportFinalizer\VariableUpdaterService.cs" />
     <Compile Include="Services\AtlasDocGenerationService.cs" />
+    <Compile Include="Services\AitWorkflowService.cs" />
     <Compile Include="Services\EmbeddedDocGeneratorTemplates.cs" />
     <Compile Include="Services\Checklist\ChecklistGeneratorService.cs" />
     <Compile Include="Services\FileNameSanitizer.cs" />

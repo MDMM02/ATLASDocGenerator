@@ -34,6 +34,8 @@
              Link="Production\Models\AitImportFinalizer\AitDocumentType.cs" />
     <Compile Include="..\ATLASDocGenerator\Models\AitImportFinalizer\AitImportFinalizerOptions.cs"
              Link="Production\Models\AitImportFinalizer\AitImportFinalizerOptions.cs" />
+    <Compile Include="..\ATLASDocGenerator\Models\AitImportFinalizer\TargetValidationResult.cs"
+             Link="Production\Models\AitImportFinalizer\TargetValidationResult.cs" />
     <Compile Include="..\ATLASDocGenerator\Services\FileNameSanitizer.cs"
              Link="Production\Services\FileNameSanitizer.cs" />
     <Compile Include="..\ATLASDocGenerator\Services\FileBackupService.cs"
