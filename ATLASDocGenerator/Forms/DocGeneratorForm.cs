@@ -192,7 +192,7 @@ namespace ATLASDocGenerator.Forms
                     "Étape suivante : ouvrir MadCap et vérifier que la target générée pointe vers la bonne TOC.";
                 MessageBox.Show(
                     recap,
-                    "ATLAS Doc Generator",
+                    "ATLAS",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
                 );
@@ -201,7 +201,7 @@ namespace ATLASDocGenerator.Forms
             {
                 MessageBox.Show(
                     ex.Message,
-                    "ATLAS Doc Generator",
+                    "ATLAS",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );

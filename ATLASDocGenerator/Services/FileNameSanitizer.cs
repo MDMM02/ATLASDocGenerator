@@ -5,7 +5,7 @@ using System.Text;
 namespace ATLASDocGenerator.Services
 {
     /// <summary>
-    /// Cette classe fournit une méthode de normalisation pour créer des noms de fichiers et de dossiers compatibles avec les règles du projet ATLAS Doc Generator.
+    /// Cette classe fournit une méthode de normalisation pour créer des noms de fichiers et de dossiers compatibles avec les règles du plugin ATLAS.
     ///
     /// La normalisation applique les règles suivantes :
     /// - suppression des espaces placés au début et à la fin

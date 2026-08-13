@@ -37,7 +37,7 @@ namespace ATLASDocGenerator
 
         public string GetName()
         {
-            return "ATLAS Doc Generator";
+            return "ATLAS";
         }
 
         public string GetVersion()
@@ -79,7 +79,7 @@ namespace ATLASDocGenerator
             {
                 MessageBox.Show(
                     "Erreur pendant l'activation du plugin ATLAS :\n\n" + ex,
-                    "ATLAS Doc Generator",
+                    "ATLAS",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
@@ -118,7 +118,7 @@ namespace ATLASDocGenerator
                 null,
                 RibbonIconSize.Collapsed,
                 "Doc Generator",
-                "Open ATLAS Doc Generator",
+                "Ouvrir le Doc Generator d'ATLAS",
                 "D"
             );
 
@@ -196,7 +196,7 @@ namespace ATLASDocGenerator
             {
                 MessageBox.Show(
                     "Erreur pendant l'ouverture du Doc Generator :\n\n" + ex,
-                    "ATLAS Doc Generator",
+                    "ATLAS",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
@@ -271,7 +271,7 @@ namespace ATLASDocGenerator
             {
                 MessageBox.Show(
                     "Erreur pendant l'ouverture du Checklist Generator :\n\n" + ex.Message,
-                    "ATLAS Checklist Generator",
+                    "ATLAS",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );

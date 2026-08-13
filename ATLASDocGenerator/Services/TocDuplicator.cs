@@ -311,6 +311,19 @@ namespace ATLASDocGenerator.Services
         }
 
         /// <summary>
+        /// Indique si un lien de la TOC modèle sera remplacé par un topic créé
+        /// dans le nouveau dossier documentaire.
+        /// </summary>
+        internal bool IsGeneratedTopicTemplateLink(string link)
+        {
+            string normalizedLink = NormalizeFlarePath(link);
+            return BuildLinkReplacementMap(
+                "GeneratedDocument",
+                "GeneratedReference"
+            ).ContainsKey(normalizedLink);
+        }
+
+        /// <summary>
         /// Crée la table de correspondance entre les topics modèles et les topics du nouveau document.
         ///
         /// La clé correspond au lien présent dans la TOC technique modèle.

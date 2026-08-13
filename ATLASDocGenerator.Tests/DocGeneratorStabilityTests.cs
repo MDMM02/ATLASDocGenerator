@@ -222,6 +222,55 @@ namespace ATLASDocGenerator.Tests
                 (string)target.Root.Attribute("MasterToc"));
         }
 
+        [TestMethod]
+        public void CreateDocumentFolder_WithCurrentTopicLocationAndEmbeddedToc_DoesNotRequireLegacyTemplateFolder()
+        {
+            string projectRoot = CreateParentProjectFixture();
+            string legacyFolder = Path.Combine(
+                projectRoot,
+                "Content",
+                "Template_tech");
+            string currentFolder = Path.Combine(
+                projectRoot,
+                "Content",
+                "Resources",
+                "Commun Stago",
+                "Topics_Tech");
+
+            Directory.CreateDirectory(currentFolder);
+            foreach (string legacyTopic in Directory.GetFiles(legacyFolder))
+            {
+                File.Move(
+                    legacyTopic,
+                    Path.Combine(currentFolder, Path.GetFileName(legacyTopic)));
+            }
+            Directory.Delete(legacyFolder);
+
+            File.Delete(Path.Combine(
+                projectRoot,
+                "Project",
+                "TOCs",
+                "PS_DR_tech.fltoc"));
+            File.Delete(Path.Combine(
+                projectRoot,
+                "Project",
+                "Targets",
+                "Doc_SAV.fltar"));
+
+            GenerationResult result =
+                new AtlasDocGenerationService().CreateDocumentFolder(
+                    CreateRequest(projectRoot));
+
+            Assert.AreEqual(9, result.CreatedTopicPaths.Count);
+            Assert.IsTrue(result.CreatedTopicPaths.All(File.Exists));
+            Assert.IsFalse(XDocument.Load(result.TocPath)
+                .Descendants("TocEntry")
+                .Select(entry => (string)entry.Attribute("Link") ?? string.Empty)
+                .Any(link => link.IndexOf(
+                    "/Template_tech/",
+                    StringComparison.OrdinalIgnoreCase) >= 0));
+        }
+
         private string CreateParentProjectFixture()
         {
             string projectRoot = Path.Combine(

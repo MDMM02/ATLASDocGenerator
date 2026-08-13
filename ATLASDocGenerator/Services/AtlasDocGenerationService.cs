@@ -184,7 +184,8 @@ namespace ATLASDocGenerator.Services
             ValidateTocLinks(
                 request.ProjectRoot,
                 sourceToc,
-                sourceTocDescription
+                sourceTocDescription,
+                tocDuplicator
             );
 
             string sourceTargetDescription;
@@ -242,7 +243,8 @@ namespace ATLASDocGenerator.Services
         private void ValidateTocLinks(
             string projectRoot,
             XDocument sourceToc,
-            string sourceTocPath)
+            string sourceTocPath,
+            TocDuplicator tocDuplicator)
         {
             IEnumerable<string> contentLinks = sourceToc
                 .Descendants()
@@ -265,6 +267,15 @@ namespace ATLASDocGenerator.Services
                 if (fragmentIndex >= 0)
                 {
                     normalizedLink = normalizedLink.Substring(0, fragmentIndex);
+                }
+
+                // Les liens de la TOC modèle vers les anciens topics Template_tech
+                // sont remplacés par les topics créés dans le nouveau document.
+                // Leurs sources ont déjà été validées via TopicDuplicator, qui
+                // prend aussi en charge le nouvel emplacement Topics_Tech.
+                if (tocDuplicator.IsGeneratedTopicTemplateLink(normalizedLink))
+                {
+                    continue;
                 }
 
                 string relativePath = Uri.UnescapeDataString(

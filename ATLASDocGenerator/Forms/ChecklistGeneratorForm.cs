@@ -169,7 +169,7 @@ namespace ATLASDocGenerator.Forms
                     "Checklist créée avec succès.\n\nSections : " + result.SectionCount
                     + "\nTOC : " + result.TocPath
                     + (string.IsNullOrWhiteSpace(result.TargetPath) ? string.Empty : "\nTarget : " + result.TargetPath),
-                    "ATLAS Checklist Generator",
+                    "ATLAS",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
@@ -177,7 +177,7 @@ namespace ATLASDocGenerator.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "ATLAS Checklist Generator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.Message, "ATLAS", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
