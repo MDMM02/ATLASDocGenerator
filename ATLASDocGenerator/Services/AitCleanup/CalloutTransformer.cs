@@ -276,23 +276,20 @@ namespace ATLASDocGenerator.Services.AitCleanup
             // INFORMATION = bleu
             if (ContainsIgnoreCase(iconSource, "information")
                 || ContainsIgnoreCase(iconSource, "info")
-                || ContainsIgnoreCase(iconSource, "Image5150")
-                || ContainsIgnoreCase(tableStyle, "#0070C0")
-                || ContainsIgnoreCase(tableStyle, "#005EB8")
-                || ContainsIgnoreCase(tableStyle, "#4472C4")
-                || ContainsIgnoreCase(tableStyle, "blue"))
+                || ContainsIgnoreCase(iconSource, "multi_symb_pat_information.png")
+                || ContainsIgnoreCase(iconSource, "multi_pic_PAT_Information2020.png"))
             {
                 return "a_Information";
             }
 
             // PRECAUTION = orange
+            // image5150 pas ds le projet parent, uniquement ds AIT donc qd c'est importé cest a remplacer par la div precaution
             if (ContainsIgnoreCase(iconSource, "precaution")
-                || ContainsIgnoreCase(iconSource, "warning")
                 || ContainsIgnoreCase(iconSource, "caution")
-                || ContainsIgnoreCase(tableStyle, "#B57406")
-                || ContainsIgnoreCase(tableStyle, "#F4B183")
-                || ContainsIgnoreCase(tableStyle, "orange"))
-            {
+                || ContainsIgnoreCase(iconSource, "multi_pic_PAT_precaution2020.png")
+                || ContainsIgnoreCase(iconSource, "image5150.jpg"))
+
+                     {
                 return "a_Precaution";
             }
 
@@ -300,15 +297,15 @@ namespace ATLASDocGenerator.Services.AitCleanup
             if (ContainsIgnoreCase(iconSource, "attention")
                 || ContainsIgnoreCase(iconSource, "danger")
                 || ContainsIgnoreCase(iconSource, "alert")
-                || ContainsIgnoreCase(tableStyle, "#C00000")
-                || ContainsIgnoreCase(tableStyle, "#FF0000")
-                || ContainsIgnoreCase(tableStyle, "red"))
+                || ContainsIgnoreCase(iconSource, "multi_pic_PAT_Attention_doc.png")
+                || ContainsIgnoreCase(iconSource, "multi_pic_PAT_Attention2020.png"))
             {
                 return "a_Attention";
             }
             // Classe information qui sert de filet de sauvetage
             usedFallback = true;
-            return "a_Information";
+            return "z_note_pour_condition";
+
         }
         // Nettoie le contenu copié depuis la cellule de texte du callout
         private void CleanCalloutContentElement(XElement element)
