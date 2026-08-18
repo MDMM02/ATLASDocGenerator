@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
-    <body>
-        <div class="a_Attention">
-            <MadCap:snippetBlock src="RISQUE DE RÉSULTATS ERRONÉS.flsnp" />
-            <p>L'identification manuelle peut être source d'erreurs de saisie. Elle s'effectue donc sous l'entière responsabilité de l'utilisateur.</p>
-        </div>
-    </body>
-</html>

@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
-    <body>
-        <div class="a_Precaution">
-            <p>L’électricité statique peut endommager les composants électroniques sensibles à l’intérieur de l’instrument. Avant et pendant toute intervention nécessitant l’ouverture d’un capot de l’instrument, l’utilisateur doit se décharger de l’électricité statique accumulée.</p>
-            <p>Pour se décharger de l’électricité statique accumulée, l’utilisateur doit toucher une surface métallique non peinte (chape du support vérin à gauche<MadCap:conditionalText MadCap:conditions="Applicability.sthemO 301 DTS,Applicability.sthemO301"> ou à droite</MadCap:conditionalText>).</p>
-        </div>
-    </body>
-</html>
