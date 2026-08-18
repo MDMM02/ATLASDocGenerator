@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun">
-    <body>
-        <div class="a_NOpagebreak">
-            <p class="a_bleu_gras">N’installer aucun logiciel non autorisé sans accord préalable de <MadCap:variable name="General.LegalCompanyName" /></p>
-            <p>Seuls les logiciels autorisés par <MadCap:variable name="General.LegalCompanyName" /> peuvent être installés sur les équipements <MadCap:variable name="General.BrandCompany" /> sans autorisation préalable.</p>
-        </div>
-    </body>
-</html>

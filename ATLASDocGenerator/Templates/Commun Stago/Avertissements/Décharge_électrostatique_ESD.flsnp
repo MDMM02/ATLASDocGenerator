@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Stago_Gestion.Contenu commun,Stago_Gestion.Commun_Tech">
-    <body>
-        <MadCap:snippetBlock src="RISQUE DE DÉCHARGE ÉLECTROSTATIQUE_ESD.flsnp" />
-        <p>Les charges électrostatiques sont générées lors du frottement de deux matériaux différents. Au moment de la séparation de ces deux éléments ils se déchargent brusquement au contact d’un matériau de potentiel différent. Les décharges peuvent êtres violentes jusqu’à l’étincelle.</p>
-        <p>Pour éviter tout risque ESD : <img src="../../Images/Picto_doc/S_ic_PAT_Risque ESD_Logo.png" class="icons" style="width: 30px; height: 30px;" /></p>
-        <p>Porter un bracelet ESD.</p>
-    </body>
-</html>
